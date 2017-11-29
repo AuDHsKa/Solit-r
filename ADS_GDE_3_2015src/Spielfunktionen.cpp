@@ -15,6 +15,8 @@ void	austeilen(stack<Card*>* start, vector<field_stack>& ziel)
 	size_t	iii = 0;
 	Card*	jojo;
 
+	// eingefügt 
+	srand(time(NULL));
 
 	// take every card of every stack on the target field 
 	for (size_t i = 0; i < 13; i++)
