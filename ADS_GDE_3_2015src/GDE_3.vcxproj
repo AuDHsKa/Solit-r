@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="data_file.cpp" />
+    <ClCompile Include="Eingabe_Ausgabe.cpp" />
     <ClCompile Include="GDE_3.cpp" />
     <ClCompile Include="GDE_3Doc.cpp" />
     <ClCompile Include="GDE_3View.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data_file.h" />
+    <ClInclude Include="Eingabe_Ausgabe.h" />
     <ClInclude Include="GDE_3.h" />
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />
@@ -178,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="daten.txt" />
+    <Text Include="daten2.txt" />
     <Text Include="Readme2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

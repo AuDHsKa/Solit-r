@@ -11,20 +11,24 @@
 #include "graphic.h"
 
 #ifndef Spielfunktionen.h
-	#include "Spielfunktionen.h"
+#include "Spielfunktionen.h"
 #endif
 
 #ifndef __Klassen__
-	#include "Klassen.h"
+#include "Klassen.h"
 #endif
 
-//#ifndef __k7scan2__
-//#include "k7scan2.h"
-//#endif 
+#ifndef __k7scan2__
+#include "k7scan2.h"
+#endif 
 
 #ifndef __data_file__
 #include "data_file.h"
 #endif
+
+#ifndef Eingabe_Ausgabe.h
+#include	"Eingabe_Ausgabe.h"
+#endif // !Eingabe_Ausgabe.h
 
 
 #ifndef _USE_OLD_OSTREAMS
@@ -63,20 +67,30 @@ void user_main()
 
 	initialize_cards(cards);
 
-	for (size_t yy = 0; yy < 4; yy++)
+	cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
+	cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
+	cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
+	cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
+
+	read_data(cards, target_stack, field_stack);
+
+	/*for (size_t yy = 0; yy < 4; yy++)
 	{
 		for (size_t ii = 0; ii < 13; ii++)
 		{
 			target_stack[yy].push(&cards[13 * yy + ii]);
 		}
-	}
+	}*/
 
 	cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
 	cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
 	cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
 	cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
 
-	austeilen(target_stack, field_stack);
+	if (target_stack[0].size() == 13 & target_stack[1].size() == 13&target_stack[2].size() == 13&target_stack[3].size() == 13)
+	{
+		austeilen(target_stack, field_stack);
+	}
 
 	for (size_t i = 0; i < 7; i++)
 	{

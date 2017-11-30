@@ -66,6 +66,9 @@
     <ClCompile Include="Klassen.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Eingabe_Ausgabe.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -125,6 +128,9 @@
     <ClInclude Include="data_file.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Eingabe_Ausgabe.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\GDE_3.ico">
@@ -154,5 +160,8 @@
   <ItemGroup>
     <Text Include="daten.txt" />
     <Text Include="Readme2.txt" />
+    <Text Include="daten2.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
   </ItemGroup>
 </Project>
