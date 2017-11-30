@@ -6,6 +6,7 @@
 #include <fstream>
 #include "math.h"
 
+
 #ifndef __Klassen__
 	#include "Klassen.h"
 #endif
@@ -26,7 +27,7 @@ COLORREF Colref[] = { BLACK,RED,GREEN,BLUE,YELLOW,BROWN };
 char w_suit[4] = { 'S', 'H', 'D', 'C'};
 char* w_colour;
 
-char w_card[14] = {'0','A','2', '3', '4' , '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'};
+char w_card[14] = {'0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K'};
 
 
 void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, char w_colour)
