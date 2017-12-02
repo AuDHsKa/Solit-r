@@ -1,11 +1,10 @@
-#include "graphic.h"
+Ôªø#include "graphic.h"
 #include "stdafx.h"
 #include "user.h"
 #include "graphics\graphicfunctions.h"
 #include <iostream>
 #include <fstream>
 #include "math.h"
-
 
 #ifndef __Klassen__
 	#include "Klassen.h"
@@ -25,7 +24,6 @@ COLORREF Colref[] = { BLACK,RED,GREEN,BLUE,YELLOW,BROWN };
 #define white RGB(250,240,220)
 
 char w_suit[4] = { 'S', 'H', 'D', 'C'};
-char* w_colour;
 
 char w_card[14] = {'0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K'};
 
@@ -77,32 +75,35 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 	}
 }
 
-
-void w_target_field(int x, int y, stack<Card*>* tsp, int feld)
+int w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 {
 	int bx = 310 + feld * 100;
 	int hx = 380 + feld * 100;
 	int by = 10;
 	int hy = 120;
 
+	bool hidden = false;
+	bool aktiv = false;
+	int mclickcard = 53;//ung√ºltig 
+
+	if ((bx < x) && (x < hx) && (by < y) && (y < hy))
+	{
+		aktiv = true;
+		cout << "######################################\n";
+		cout << "Mausklick auf target_stack_Pik\n";
+		cout << "######################################\n\n";
+		mclickcard = aktiv;
+
+	}
+	else
+	{
+		aktiv = false;
+	}
+
 	if (tsp->size())
 	{
-		bool hidden = false;
+		
 		hidden = tsp->top()->is_card_hidden();
-
-		bool aktiv = false;
-		if ((bx < x) && (x < hx) && (by < y) && (y < hy))
-		{
-			aktiv = true;
-			cout << "######################################\n";
-			cout << "Mausklick auf target_stack_Pik\n";
-			cout << "######################################\n\n";
-
-		}
-		else
-		{
-			aktiv = false;
-		}
 
 		KARTE(bx, by, hx, hy, aktiv, hidden, w_card[tsp->top()->get_card_value()], w_suit[tsp->top()->get_card_colour()]);
 	}
@@ -110,8 +111,10 @@ void w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 	{
 		KARTE(bx, by, hx, hy, 0, 0, w_card[0], w_suit[0]);
 	}
+
+	return mclickcard;
 };
-void w_field(int x, int y, vector<field_stack>& f1, int feld)
+int w_field(int x, int y, vector<field_stack>& f1, int feld)
 {
 	int	bx = 10 +feld*100;
 	int	hx = 80 +feld*100;
@@ -122,6 +125,9 @@ void w_field(int x, int y, vector<field_stack>& f1, int feld)
 	int abstand = 20;
 	bool aktiv = false;
 	bool hidden = false;
+	
+	int mclickcard = 53;//unm√∂gliches ergebnis zum erkenn keine karte ausgew√§hlt
+					//zahlt von 0 ab
 	
 
 	if (posnumber)
@@ -140,7 +146,7 @@ void w_field(int x, int y, vector<field_stack>& f1, int feld)
 					cout << "######################################\n";
 					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i + 1) << " ausgewaehlt\n";
 					cout << "######################################\n\n";
-
+					mclickcard = i;
 					aktiv = true;
 				}
 			}
@@ -151,7 +157,7 @@ void w_field(int x, int y, vector<field_stack>& f1, int feld)
 					cout << "######################################\n";
 					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i+1) << " ausgewaehlt\n";
 					cout << "######################################\n\n";
-
+					mclickcard = i;
 					aktiv = true;
 				}
 			}
@@ -163,8 +169,10 @@ void w_field(int x, int y, vector<field_stack>& f1, int feld)
 	{
 		KARTE(bx, by, hx, hy, 0, 0, w_card[0], w_suit[0]);
 	}
+
+	return mclickcard;
 };
-void w_deck(int x, int y, vector<field_stack>& deck)
+int w_deck(int x, int y, vector<field_stack>& deck)
 {
 	int posnumber = 0;
 	int abstand = 20;
@@ -173,14 +181,15 @@ void w_deck(int x, int y, vector<field_stack>& deck)
 	int hx = 80;
 	int hy = 120;
 	bool hidden = false;
-	bool deckleer = true; //true f¸r st‰tere abfrage
-	bool aktiv = false; //aktiv false f+r sp‰tere abfrage
-	bool aktiv2 = true; //aktiv2 true f+r sp‰tere abfrage
+	bool deckleer = true; //true f√ºr st√§tere abfrage
+	bool aktiv = false; //aktiv false f+r sp√§tere abfrage
+	bool aktiv2 = true; //aktiv2 true f+r sp√§tere abfrage
+	int mclickcard = 53; //ung√ºltige karte
 
 	posnumber = deck[7].field.size();
 
 
-	if (deck[7].field.size()) //f¸r nicht inizialisrung
+	if (deck[7].field.size()) //f√ºr nicht inizialisrung
 	{
 		for (int i = 0; i < posnumber; i++)
 		{
@@ -203,6 +212,7 @@ void w_deck(int x, int y, vector<field_stack>& deck)
 				cout << "######################################\n";
 				cout << "Mausklick auf DECK\n";
 				cout << "######################################\n\n";
+				mclickcard = 1;
 
 			}
 
@@ -220,6 +230,7 @@ void w_deck(int x, int y, vector<field_stack>& deck)
 			if ((bx < x) && (x < hx) && (by < y) && (y < hy))
 			{
 				aktiv = true;
+				mclickcard = 0;
 			}
 			else
 			{
@@ -234,8 +245,9 @@ void w_deck(int x, int y, vector<field_stack>& deck)
 		KARTE(bx, by, hx, hy, 0, 0, w_card[0], w_suit[0]);
 	}
 
-};
 
+	return mclickcard;
+};
 
 void save(int x, int y, int b, int h)
 {
@@ -314,7 +326,7 @@ void solve(int x, int y, int b, int h)
 	if ((x > apx) && (x < epx) &&
 		(y > apy) && (y < epy))
 	{
-		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Lˆsen"));
+		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("L√∂sen"));
 
 		cout << "######################################\n";
 		cout << "Loese Spiel\n";
@@ -322,17 +334,16 @@ void solve(int x, int y, int b, int h)
 	}
 	else
 	{
-		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Lˆsen"));
+		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("L√∂sen"));
 	}
 }
-
 
 void newwindow(int b, int h)
 {
 	rectangle(0, 0, b, h, GREEN, GREEN);
 }
 
-int button(int x, int y, int b, int h)  // maus x, maus y, windowsweite, windowshˆhe
+int button(int x, int y, int b, int h)  // maus x, maus y, windowsweite, windowsh√∂he
 {
 	load(x, y, b, h);
 	save(x, y, b, h);
@@ -340,4 +351,51 @@ int button(int x, int y, int b, int h)  // maus x, maus y, windowsweite, windows
 	solve(x, y, b, h);
 
 	return 0;
+}
+
+void fieldclick(int x, int y,int mclick[2], stack<Card*>* target_stack, vector<field_stack>& field_stack)
+{
+	int mclickcard = 53; //mausclick auf kart
+	int mclickstack = 0; //auf feld
+	int mclickdeck = 0;
+	int click = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		click = 53;
+		click = w_target_field(x, y, &target_stack[i], i);
+
+		if (click < 53)
+		{
+			cout << "mausklick auf target_field" << i << "\n";
+			mclickstack = i + 1;
+			mclickcard = click;
+		}
+	}
+
+
+	for (int i = 0; i < 7; i++)
+	{
+		click = 53;
+		click = w_field(x, y, field_stack, i);
+
+		if (click < 53)
+		{
+			cout << "mausklick auf stack_feld" << i << "      karte" << click << "\n";
+			mclickstack = i + 5;
+			mclickcard = click;
+		}
+	}
+
+	click = 53;
+	click = w_deck(x, y, field_stack);
+		if (click < 53)
+		{
+			cout << "mausklick auf deck" << "      karte" << mclickcard << "\n";
+			mclickstack = 12;
+			mclickcard = click;
+		}
+
+	mclick[0] = mclickstack;
+	mclick[1] = mclickcard;
 }

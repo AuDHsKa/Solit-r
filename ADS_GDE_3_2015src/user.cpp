@@ -42,6 +42,8 @@ void user_main()
 	set_windowpos(0, 0, windowswide, windowsheight);	//windowsfenster öffnen
 	set_drawarea(windowswide, windowsheight);		// Setzen des Zeichenbereiches arbeitsfeld
 
+	int mclick[2] = { 0 , 53 };	//mclickstack , mclickcard
+	
 
 	//karten anlegen
 	const	size_t	length = 52;
@@ -54,7 +56,7 @@ void user_main()
 	{
 		field_stack[i].set_stack_count(i + 1);
 		field_stack[i].set_stack_NOF(0);
-		cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
+		//cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 	}
 
 	// set the playing stacks values
@@ -71,10 +73,10 @@ void user_main()
 		}
 	}
 
-	cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
-	cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
-	cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
-	cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
+	//cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
+	//cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
+	//cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
+	//cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
 
 	austeilen(target_stack, field_stack);
 
@@ -94,46 +96,33 @@ void user_main()
 		cout << "the card number: " << (yy + 1) << "of field number:" << 8 << " value is " << field_stack[7].field.at(yy)->get_card_value() << "\n";
 	}
 
-		cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
-		cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
-		cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
-		cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
+		//cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
+		//cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
+		//cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
+		//cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
 
-		cout << "the size of field stack 1 is:" << field_stack[0].field.size() << "\n";
-		cout << "the size of field stack 2 is:" << field_stack[1].field.size() << "\n";
-		cout << "the size of field stack 3 is:" << field_stack[2].field.size() << "\n";
-		cout << "the size of field stack 4 is:" << field_stack[3].field.size() << "\n";
-		cout << "the size of field stack 5 is:" << field_stack[4].field.size() << "\n";
-		cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
-		cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
-		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
-		cout << "the size of field stack 8 is:" << field_stack[7].get_stack_NOF() << "\n";
+		//cout << "the size of field stack 1 is:" << field_stack[0].field.size() << "\n";
+		//cout << "the size of field stack 2 is:" << field_stack[1].field.size() << "\n";
+		//cout << "the size of field stack 3 is:" << field_stack[2].field.size() << "\n";
+		//cout << "the size of field stack 4 is:" << field_stack[3].field.size() << "\n";
+		//cout << "the size of field stack 5 is:" << field_stack[4].field.size() << "\n";
+		//cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
+		//cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
+		//cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
+		//cout << "the size of field stack 8 is:" << field_stack[7].get_stack_NOF() << "\n";
 
 
 	while (1)
 	{
+		mclick[0] = 0;
+		mclick[1] = 53;
+
 		newwindow(windowswide, windowsheight);
-
-		for (int i = 0; i < 4; i++)
-		{
-			w_target_field(x, y, &target_stack[i],i);
-		}
-
-
-		for (int i = 0; i < 7; i++)
-		{
-			w_field(x, y, field_stack, i);
-		}
-
-		w_deck(x, y, field_stack);
-
-
 		button(x, y, windowswide, windowsheight);
-		
-		//read_file(cards);
-
-
+		fieldclick(x, y, mclick, target_stack, field_stack);
 		updatescr();
+		cout << mclick[0] << "\n" << mclick[1] <<"\n";
+
 		while (!mouseclick(&x, &y) == 1) {}
 
 		if (StopProcess())break;
