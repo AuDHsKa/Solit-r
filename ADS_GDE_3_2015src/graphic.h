@@ -6,7 +6,7 @@
 	#include <stack>
 #endif
 
-void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<field_stack>& field_stack);//ruft alle funktionen auf
+void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<field_stack>& field_stack, int windowswide, int windowsheight);//ruft alle funktionen auf
 
 void newwindow(int b, int h); //  windowsweite, windowshöhe
 

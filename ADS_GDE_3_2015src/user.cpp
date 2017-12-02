@@ -42,8 +42,8 @@ void user_main()
 	set_windowpos(0, 0, windowswide, windowsheight);	//windowsfenster öffnen
 	set_drawarea(windowswide, windowsheight);		// Setzen des Zeichenbereiches arbeitsfeld
 
-	int mclick[2] = { 0 , 53 };	//mclickstack , mclickcard
-	
+	int mclick[2] = { 0 , 100 };	//mclickstack , mclickcard
+	int mclick_first[2] = { 0 , 100 };	//erster maus klick mclickstack , mclickcard
 
 	//karten anlegen
 	const	size_t	length = 52;
@@ -78,7 +78,7 @@ void user_main()
 	//cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
 	//cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
 
-	austeilen(target_stack, field_stack);
+	//austeilen(target_stack, field_stack);
 
 	for (size_t i = 0; i < 7; i++)
 	{
@@ -114,14 +114,14 @@ void user_main()
 
 	while (1)
 	{
-		mclick[0] = 0;
-		mclick[1] = 53;
+		mclick[0] = 0;//stack
+		mclick[1] = 100;// card
 
-		newwindow(windowswide, windowsheight);
-		button(x, y, windowswide, windowsheight);
-		fieldclick(x, y, mclick, target_stack, field_stack);
+		fieldclick(x, y, mclick, target_stack, field_stack, windowswide, windowsheight);
 		updatescr();
 		cout << mclick[0] << "\n" << mclick[1] <<"\n";
+
+		move(mclick, mclick_first, target_stack, field_stack);
 
 		while (!mouseclick(&x, &y) == 1) {}
 
