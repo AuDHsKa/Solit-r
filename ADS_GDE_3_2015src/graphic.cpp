@@ -196,31 +196,27 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 	bool hidden = false;
 	bool deckleer = true; //true für stätere abfrage
 	bool aktiv = false; //aktiv false f+r spätere abfrage
-	bool aktiv2 = true; //aktiv2 true f+r spätere abfrage
 	int mclickcard = 100; //ungültige karte
 
 	posnumber = deck[7].field.size();
 
-
-	if (deck[7].field.size()) //für nicht inizialisrung
+	if (posnumber) //für nicht inizialisrung
 	{
-		for (int i = 0; i < posnumber; i++)
+		int c = 0;
+		for (int i = 0; i > posnumber; i++)
 		{
 			hidden = deck[7].field[i]->is_card_hidden();
 
 			if (hidden == 0)
 			{
-				bx = 110;
-				hx = 180;
+				c++;
 			}
-			else
-			{
-				deckleer = false;
-			}
+		}
+		bx = 110;
+		hx = 180;
 
-			if ( ((bx < x) && (x < hx) && (by < y) && (y < hy)) && (aktiv2  == true) )
+			if ( ((bx < x) && (x < hx) && (by < y) && (y < hy)))
 			{
-				aktiv2 = true;
 				aktiv = true;
 				cout << "######################################\n";
 				cout << "Mausklick auf DECK\n";
@@ -229,15 +225,8 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 
 			}
 
-
-			KARTE(bx, by, hx, hy, aktiv, hidden, w_card[deck[7].field[i]->get_card_value()], w_suit[deck[7].field[i]->get_card_colour()]);
-
-			aktiv2 = false;
-		}
-
-		if (deckleer)
-		{
-			
+			KARTE(bx, by, hx, hy, aktiv, hidden, w_card[deck[7].field[c]->get_card_value()], w_suit[deck[7].field[c]->get_card_colour()]);	
+					
 			bx = 10;
 			hx = 80;
 			if ((bx < x) && (x < hx) && (by < y) && (y < hy))
@@ -249,8 +238,11 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 			{
 				aktiv = false;
 			}
-			KARTE(bx, by, hx, hy, aktiv, 0, w_card[0], w_suit[0]);
-		}
+
+			if (deckleer)
+			{
+				KARTE(bx, by, hx, hy, aktiv, 0, w_card[0], w_suit[0]);
+			}
 
 	}
 	else

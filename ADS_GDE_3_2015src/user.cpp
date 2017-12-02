@@ -78,7 +78,7 @@ void user_main()
 	//cout << "the size of target stack 3 is:" << target_stack[2].size() << "\n";
 	//cout << "the size of target stack 4 is:" << target_stack[3].size() << "\n";
 
-	//austeilen(target_stack, field_stack);
+	austeilen(target_stack, field_stack);
 
 	for (size_t i = 0; i < 7; i++)
 	{
