@@ -256,6 +256,8 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 
 		}
 
+		bx = 10;
+		hx = 80;
 		if (deckleer)
 		{
 			KARTE(bx, by, hx, hy, aktiv, 0, w_card[0], w_suit[0]);
