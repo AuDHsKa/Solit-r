@@ -80,6 +80,8 @@ void user_main()
 
 	austeilen(target_stack, field_stack);
 
+	
+
 	for (size_t i = 0; i < 7; i++)
 	{
 		for (size_t ii = 0; ii < field_stack[i].field.size(); ii++)
@@ -111,7 +113,7 @@ void user_main()
 		//cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
 		//cout << "the size of field stack 8 is:" << field_stack[7].get_stack_NOF() << "\n";
 
-
+	cout << "\n" << field_stack[7].field.at(12)->get_card_colour() << "\n";
 	while (1)
 	{
 		mclick[0] = 0;//stack

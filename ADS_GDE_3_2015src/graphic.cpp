@@ -7,7 +7,7 @@
 #include "math.h"
 
 #ifndef __Klassen__
-	#include "Klassen.h"
+#include "Klassen.h"
 #endif
 
 #ifndef stack
@@ -23,9 +23,9 @@ using namespace std;
 COLORREF Colref[] = { BLACK,RED,GREEN,BLUE,YELLOW,BROWN };
 #define white RGB(250,240,220)
 
-char w_suit[4] = { 'S', 'H', 'D', 'C'};
+char w_suit[4] = { 'S', 'H', 'D', 'C' };
 
-char w_card[14] = {'0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K'};
+char w_card[14] = { '0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K' };
 
 
 void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, char w_colour)
@@ -43,7 +43,7 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 		akt = BLUE;
 	}
 
-	if ((w_colour == w_suit[0]) || (w_colour == w_suit[3]) )
+	if ((w_colour == w_suit[0]) || (w_colour == w_suit[3]))
 	{
 		col = BLACK;
 	}
@@ -71,7 +71,7 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 	else
 	{
 		rectangle(bx, by, hx, hy, BLUE, BLUE);
-		ellipse(bx+10, by+10, hx-10, hy-10, BROWN, BROWN);
+		ellipse(bx + 10, by + 10, hx - 10, hy - 10, BROWN, BROWN);
 	}
 }
 
@@ -106,7 +106,7 @@ int w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 
 	if (tsp->size())
 	{
-		
+
 		hidden = tsp->top()->is_card_hidden();
 
 		KARTE(bx, by, hx, hy, aktiv, hidden, w_card[tsp->top()->get_card_value()], w_suit[tsp->top()->get_card_colour()]);
@@ -120,8 +120,8 @@ int w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 };
 int w_field(int x, int y, vector<field_stack>& f1, int feld)
 {
-	int	bx = 10 +feld*100;
-	int	hx = 80 +feld*100;
+	int	bx = 10 + feld * 100;
+	int	hx = 80 + feld * 100;
 	int	by = 160;
 	int	hy = 270;
 
@@ -129,10 +129,10 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 	int abstand = 20;
 	bool aktiv = false;
 	bool hidden = false;
-	
+
 	int mclickcard = 100;//unmögliches ergebnis zum erkenn keine karte ausgewählt
 					//zahlt von 0 ab
-	
+
 
 	if (posnumber)
 	{
@@ -142,8 +142,8 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 			hy = 270 + i*abstand;
 
 			hidden = f1[feld].field[i]->is_card_hidden();
-				
-			if ((i+1) < posnumber)
+
+			if ((i + 1) < posnumber)
 			{
 				if ((bx < x) && (x < hx) && (by < y) && (y < (by + abstand)))
 				{
@@ -159,7 +159,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 				if ((bx < x) && (x < hx) && (by < y) && (y < hy))
 				{
 					cout << "######################################\n";
-					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i+1) << " ausgewaehlt\n";
+					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i + 1) << " ausgewaehlt\n";
 					cout << "######################################\n\n";
 					mclickcard = i;
 					aktiv = true;
@@ -203,46 +203,63 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 	if (posnumber) //für nicht inizialisrung
 	{
 		int c = 0;
-		for (int i = 0; i > posnumber; i++)
+		for (int i = (posnumber-1); i >= 0; i--)
 		{
 			hidden = deck[7].field[i]->is_card_hidden();
 
 			if (hidden == 0)
 			{
-				c++;
-			}
-		}
-		bx = 110;
-		hx = 180;
+				bx = 110;
+				hx = 180;
+				if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
+				{
+					aktiv = true;
+				}
 
-			if ( ((bx < x) && (x < hx) && (by < y) && (y < hy)))
-			{
-				aktiv = true;
-				cout << "######################################\n";
-				cout << "Mausklick auf DECK\n";
-				cout << "######################################\n\n";
-				mclickcard = 1;
+				KARTE(bx, by, hx, hy, aktiv, deck[7].field[i]->is_card_hidden(), w_card[deck[7].field[i]->get_card_value()], w_suit[deck[7].field[i]->get_card_colour()]);
 
-			}
-
-			KARTE(bx, by, hx, hy, aktiv, hidden, w_card[deck[7].field[c]->get_card_value()], w_suit[deck[7].field[c]->get_card_colour()]);	
-					
-			bx = 10;
-			hx = 80;
-			if ((bx < x) && (x < hx) && (by < y) && (y < hy))
-			{
-				aktiv = true;
-				mclickcard = 0;
 			}
 			else
 			{
-				aktiv = false;
-			}
+				bx = 10;
+				hx = 80;
+				if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
+				{
+					aktiv = true;
+				}
 
-			if (deckleer)
-			{
-				KARTE(bx, by, hx, hy, aktiv, 0, w_card[0], w_suit[0]);
+				KARTE(bx, by, hx, hy, aktiv, deck[7].field[i]->is_card_hidden(), w_card[deck[7].field[i]->get_card_value()], w_suit[deck[7].field[i]->get_card_colour()]);
+				deckleer = false;
+				c++;
 			}
+		}
+		 
+		bx = 10;
+		hx = 80;
+		if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
+		{
+			cout << "######################################\n";
+			cout << "Mausklick auf DECK\n";
+			cout << "######################################\n\n";
+			mclickcard = 0;
+
+		}
+
+		bx = 110;
+		hx = 180;
+		if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
+		{
+			cout << "######################################\n";
+			cout << "Mausklick auf DECK\n";
+			cout << "######################################\n\n";
+			mclickcard = c;
+
+		}
+
+		if (deckleer)
+		{
+			KARTE(bx, by, hx, hy, aktiv, 0, w_card[0], w_suit[0]);
+		}
 
 	}
 	else
@@ -380,7 +397,7 @@ void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<
 			mclickstack = i + 1;
 			mclickcard = click;
 		}
-		
+
 	}
 
 
@@ -399,12 +416,12 @@ void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<
 
 	click = 100;
 	click = w_deck(x, y, field_stack);
-		if (click < 100)
-		{
-			cout << "mausklick auf deck" << "      karte" << mclickcard << "\n";
-			mclickstack = 12;
-			mclickcard = click;
-		}
+	if (click < 100)
+	{
+		cout << "mausklick auf deck" << "      karte" << mclickcard << "\n";
+		mclickstack = 12;
+		mclickcard = click;
+	}
 
 	mclick[0] = mclickstack;
 	mclick[1] = mclickcard;

@@ -80,11 +80,11 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 		}
 		else
 		{
-				if ((mclick_first[0] == 12) && (mclick_first[1] == 1)) // deck to field
+				if ((mclick_first[0] == 12) && (0 < mclick_first[1] < 53)) // deck to field
 				{
-					jojo = field_stack[jojo_card_first].field.back();
+					jojo = field_stack[jojo_card_first].field[mclick_first[1]];
 					// clear the top card of the stack 
-					field_stack[jojo_card_first].field.pop_back();
+					field_stack[jojo_card_first].field.erase(field_stack[jojo_card_first].field.begin()+mclick_first[1]);
 
 					field_stack[jojo_card_second].field.push_back(jojo);
 					field_stack[jojo_card_second].raise_cards();
@@ -142,7 +142,7 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 		}
 	}
 
-	if ( mclick[0] == 12 && mclick[1] == 0)
+	if ( mclick[0] == 12 && mclick[1] == 0) //mausklick auf verdecktes deck
 	{
 		int c = 0;
 
