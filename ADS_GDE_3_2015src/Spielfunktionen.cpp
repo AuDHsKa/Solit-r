@@ -80,7 +80,7 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 		}
 		else
 		{
-				if ((mclick_first[0] == 12) && (0 < mclick_first[1] < 53)) // deck to field
+				if ((mclick_first[0] == 12) && (mclick[0] > 4) && (0 < mclick_first[1] < 53)) // deck to field
 				{
 					jojo = field_stack[jojo_card_first].field[mclick_first[1]];
 					// clear the top card of the stack 
@@ -90,7 +90,16 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 					field_stack[jojo_card_second].raise_cards();
 				}    
 
-				if ((mclick_first[0] < 12) && (mclick[0] < 12) && (mclick_first[0] > 4) && (mclick[0] > 4))// field to field
+				if ((mclick_first[0] == 12) && (mclick[0] < 5) && (0 < mclick_first[1] < 53)) // deck to target
+				{
+					jojo = field_stack[jojo_card_first].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[jojo_card_first].field.begin() + mclick_first[1]);
+
+					target_stack[(mclick[0] - 1)].push(jojo);
+				}
+
+				if ((mclick_first[0] < 12)  && (mclick_first[0] > 4) && (mclick[0] < 12) && (mclick[0] > 4))// field to field
 				{
 					// get the top card of the actual stack 
 					jojo = field_stack[jojo_card_first].field.back();
@@ -109,6 +118,7 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 
 				}
 
+
 				if ((mclick_first[0] < 5) && (mclick[0] < 12) && (mclick[0] > 4) && mclick_first[1] < 53) //target to field übergabe
 				{
 					jojo = target_stack[ (mclick_first[0]-1) ].top();
@@ -119,7 +129,7 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 					field_stack[jojo_card_second].raise_cards();
 				}
 
-				if ((mclick_first[0] > 5) && (mclick[0] < 5) && mclick_first[1] < 53) //target to field übergabe
+				if ((mclick_first[0] > 4) && (mclick_first[0] < 12) && (mclick[0] < 5) && mclick_first[1] < 53) // field to target_stack übergabe
 				{
 					// get the top card of the actual stack 
 					jojo = field_stack[jojo_card_first].field.back();
