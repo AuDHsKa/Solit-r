@@ -123,6 +123,7 @@ void user_main()
 		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
 		cout << "the size of field stack 8 is:" << field_stack[7].get_stack_NOF() << "\n";
 
+		write_data(cards, target_stack, field_stack);
 
 	while (1)
 	{

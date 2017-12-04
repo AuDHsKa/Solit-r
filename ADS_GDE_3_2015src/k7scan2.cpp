@@ -103,7 +103,7 @@ int CParser::Sucheadresse(int col, int val, vector<Card>& arr)
 		//cout << "Wir sind hierher gekommen!";
 		if (arr[zz].get_card_colour() == col &&  arr[zz].get_card_value()==val)
 		{
-			cout << zz << "\n";
+			//cout << zz << "\n";
 			return zz; // adressrückgabe
 		}
 		//else return NULL;
@@ -190,17 +190,25 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld, stack<Card*>*
 			break;
 		case(INTEGER1) :
 			//printf("%s %d ", IP_revToken_table[tok].c_str(), yylval.i);
-			cout << stapel << "\n";
+			//cout << stapel << "\n";
 			farb = yylval.i;
 			farb = farb / 1000; // Berechnung der Farbe
 			wert = (yylval.i - farb * 1000) / 10; // Berechnung des Wertes
 			hidden = yylval.i % 2; // wenn hidden = 1 dann ist die Karte Verdekt wenn hidden = 0 dann ist die karte offen
 			//cout << "Wir sind hierher gekommen!";
 			//field_stack. = 
+			if (hidden == 1)
+			{
+				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
+			}
+			else
+			{
+				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
+			}
 			if (stapel < 4)
 			{
 				startfeld[stapel].push(&arr[CParser::Sucheadresse(farb, wert, arr)]);
-				//arr[CParser::Sucheadresse(farb, wert, arr).hide_card();
+				
 			}
 			else
 			{
