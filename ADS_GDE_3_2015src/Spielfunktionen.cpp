@@ -184,3 +184,5 @@ void	move(int mclick[2], int mclick_first[2], stack<Card*>* target_stack, vector
 
 
 }
+
+//void	Spielregeln(int mclick[2], int mclick_first[2])

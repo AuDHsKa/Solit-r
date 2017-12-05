@@ -20,21 +20,22 @@ using namespace std;
 #endif
 
 #define kart RGB(250,240,220)
-COLORREF Colref[] = { BLACK,RED,GREEN,BLUE,YELLOW,BROWN };
+COLORREF Colref[] = { BLACK, RED, GREEN, BLUE, YELLOW, BROWN };
 #define white RGB(250,240,220)
 
-char w_suit[4] = { 'S', 'H', 'D', 'C' };
+char w_suit[4] = { 'S', 'H', 'D', 'C' }; // Card suit of Spades, Hearts, Diamonds, Clubs
 
-char w_card[14] = { '0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K' };
+char w_card[14] = { '0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K' }; // Cards value, Z=10, J= Jack, Q=Queen, K=King
 
-
+// Card=Karte function is to print a card to the window : 
+// bx, by, hx, hy =card position, aktiv= click on this card, karte= number of w_card, w_colour= number of w_suit
 void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, char w_colour)
 {
-	int col = GREEN;
-	int akt = GREEN;
-	int abstand = 20;
+	int col = GREEN;	//colour for the card_suit (green = emty field)
+	int akt = GREEN;	//colour for aktiv (green = emty field)
+	int abstand = 20;	//distance to the next card on the field
 
-	if (aktiv == true)
+	if (aktiv == true)//is card activ
 	{
 		akt = YELLOW;
 	}
@@ -43,7 +44,7 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 		akt = BLUE;
 	}
 
-	if ((w_colour == w_suit[0]) || (w_colour == w_suit[3]))
+	if ((w_colour == w_suit[0]) || (w_colour == w_suit[3]))	//which colour is selected
 	{
 		col = BLACK;
 	}
@@ -56,25 +57,27 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 		col = GREEN;
 	}
 
-	if (hidden == 0) //karte zeichenen an position
+	if (hidden == 0)	//if card is not hide (hidden=1) draw card
 	{
-		if (karte != w_card[0])
+		if (karte != w_card[0]) //field is not empty
 		{
 			textbox(bx, by, hx, hy, 22, white, akt, col, LEFT_ALIGN,
 				" %c    %c    %c\n %c          %c\n %c    %c    %c\n %c          %c\n %c    %c    %c\n", w_colour, karte, w_colour, karte, karte, w_colour, karte, w_colour, karte, karte, w_colour, karte, w_colour);
 		}
-		else
+		else		//field is empty
 		{
 			rectangle(bx, by, hx, hy, akt, GREEN);
 		}
 	}
-	else
+	else //card is hidden (hidden=1)
 	{
 		rectangle(bx, by, hx, hy, BLUE, BLUE);
 		ellipse(bx + 10, by + 10, hx - 10, hy - 10, BROWN, BROWN);
 	}
-}
+}  
 
+
+//draw cards on target_field
 int w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 {
 	int bx = 310 + feld * 100;
@@ -118,6 +121,7 @@ int w_target_field(int x, int y, stack<Card*>* tsp, int feld)
 
 	return mclickcard;
 };
+//draw cards on field
 int w_field(int x, int y, vector<field_stack>& f1, int feld)
 {
 	int	bx = 10 + feld * 100;
@@ -185,6 +189,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 
 	return mclickcard;
 };
+//draw cards on deck
 int w_deck(int x, int y, vector<field_stack>& deck)
 {
 	int posnumber = 0;
@@ -273,6 +278,7 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 	return mclickcard;
 };
 
+//draw botten save, load, restart and solve 
 void save(int x, int y, int b, int h)
 {
 
@@ -362,11 +368,12 @@ void solve(int x, int y, int b, int h)
 	}
 }
 
+//new green window
 void newwindow(int b, int h)
 {
 	rectangle(0, 0, b, h, GREEN, GREEN);
 }
-
+//load button
 int button(int x, int y, int b, int h)  // maus x, maus y, windowsweite, windowshöhe
 {
 	load(x, y, b, h);
@@ -377,17 +384,17 @@ int button(int x, int y, int b, int h)  // maus x, maus y, windowsweite, windows
 	return 0;
 }
 
+//search for a click on a card
 void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<field_stack>& field_stack, int windowswide, int windowsheight)
 {
-	int mclickcard = 100; //mausclick auf kart
-	int mclickstack = 0; //auf feld
-	int mclickdeck = 0;
-	int click = 0;
+	int mclickcard = 100;	//mouseclick on card_number (100= no card is seleced,)
+	int mclickstack = 0;	//mouseclick on field_number (0= no stack is seleced)
+	int click = 0;			//save mclickcard (so mclick will not be overwritten)
 
 	newwindow(windowswide, windowsheight);
 	button(x, y, windowswide, windowsheight);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++) //window target_field
 	{
 		click = 100;
 		click = w_target_field(x, y, &target_stack[i], i);
@@ -421,10 +428,10 @@ void fieldclick(int x, int y, int mclick[2], stack<Card*>* target_stack, vector<
 	if (click < 100)
 	{
 		cout << "mausklick auf deck" << "      karte" << mclickcard << "\n";
-		mclickstack = 12;
+		mclickstack = 12; //click on top of deck
 		mclickcard = click;
 	}
 
-	mclick[0] = mclickstack;
-	mclick[1] = mclickcard;
+	mclick[0] = mclickstack; //handover mclick first stack
+	mclick[1] = mclickcard; //handover mclick second card
 }
