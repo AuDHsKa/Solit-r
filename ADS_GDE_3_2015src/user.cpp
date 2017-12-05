@@ -18,14 +18,17 @@
 	#include "Klassen.h"
 #endif
 
-//#ifndef __k7scan2__
-//#include "k7scan2.h"
-//#endif 
+#ifndef __k7scan2__
+#include "k7scan2.h"
+#endif 
 
 #ifndef __data_file__
 #include "data_file.h"
 #endif
 
+#ifndef Eingabe_Ausgabe.h
+#include	"Eingabe_Ausgabe.h"
+#endif // !Eingabe_Ausgabe.h
 
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
@@ -65,13 +68,15 @@ void user_main()
 
 	initialize_cards(cards);
 
-	for (size_t yy = 0; yy < 4; yy++)
-	{
-		for (size_t ii = 0; ii < 13; ii++)
-		{
-			target_stack[yy].push(&cards[13 * yy + ii]);
-		}
-	}
+	read_data(cards, target_stack, field_stack);
+
+	//for (size_t yy = 0; yy < 4; yy++)
+	//{
+	//	for (size_t ii = 0; ii < 13; ii++)
+	//	{
+	//		target_stack[yy].push(&cards[13 * yy + ii]);
+	//	}
+	//}
 
 	//cout << "the size of target stack 1 is:" << target_stack[0].size() << "\n";
 	//cout << "the size of target stack 2 is:" << target_stack[1].size() << "\n";
@@ -80,7 +85,7 @@ void user_main()
 
 	austeilen(target_stack, field_stack);
 
-	
+	write_data(cards, target_stack, field_stack);
 
 	for (size_t i = 0; i < 7; i++)
 	{
@@ -113,7 +118,6 @@ void user_main()
 		//cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
 		//cout << "the size of field stack 8 is:" << field_stack[7].get_stack_NOF() << "\n";
 
-	cout << "\n" << field_stack[7].field.at(12)->get_card_colour() << "\n";
 	while (1)
 	{
 		mclick[0] = 0;//stack

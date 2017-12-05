@@ -197,14 +197,14 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld, stack<Card*>*
 			hidden = yylval.i % 2; // wenn hidden = 1 dann ist die Karte Verdekt wenn hidden = 0 dann ist die karte offen
 			//cout << "Wir sind hierher gekommen!";
 			//field_stack. = 
-			if (hidden == 1)
-			{
-				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
-			}
-			else
-			{
-				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
-			}
+			//if (hidden == 1)
+			//{
+			//	arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
+			//}
+			//else
+			//{
+			//	arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
+			//}
 			if (stapel < 4)
 			{
 				startfeld[stapel].push(&arr[CParser::Sucheadresse(farb, wert, arr)]);
