@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <stack>
 
 #ifndef __Klassen__
 	#include "Klassen.h"
@@ -40,7 +41,7 @@ public:
 	int prflag;									//controls printing
 	map<string, int> IP_Token_table;				//Tokendefinitions
 	map<int, string> IP_revToken_table;			//reverse Tokendefinitions
-	Card* add;
+	//vector<Card>& add;
 	int stapel;
 	
 
@@ -49,13 +50,13 @@ public:
 	void CParser::yyerror(char *ers);			//error reporter
 	int CParser::IP_MatchToken(string &tok);	//checks the token
 	void CParser::InitParse(FILE *inp, FILE *err, FILE *lst);
-	int	CParser::yyparse();						//parser
+	int	CParser::yyparse(vector<Card>& arr, vector<field_stack>& feld, stack<Card*>* target);						//parser
 	void CParser::pr_tokentable();				//test output for tokens
 	void CParser::IP_init_token_table();		//loads the tokens
 	void CParser::Load_tokenentry(string str, int index);//load one token
 	void CParser::PushString(char c);			//Used for dtring assembly
 
-	Card* CParser::Sucheadresse(int col, int val); //Adressensucher
-	void CParser::uebergabe(Card* address);
+	int CParser::Sucheadresse(int col, int val, vector<Card>& arr); //Adressensucher
+	void CParser::uebergabe(vector<Card>& address);
 	CParser(){ IP_LineNumber = 1; ugetflag = 0; prflag = 0; };	//Constructor
 };

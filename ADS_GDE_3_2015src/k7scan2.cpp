@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "k7scan2.h"
-
+#include <stack>
 #ifndef __Klassen__
 #include "Klassen.h"
 
@@ -86,29 +86,29 @@ public:
 	CParser(){IP_LineNumber = 1;ugetflag=0;prflag=0;};	//Constructor
 };*/
 //------------------------------------------------------------------------
-void CParser::uebergabe(Card* add)
-{
-	// Übergabe der Karten
-	CParser::add = add;
-	//cout << add <<"\n";
-	//show_cards(add, lengt);
-}
+//void CParser::uebergabe(vector<Card>& add)
+//{
+//	// Übergabe der Karten
+//	CParser::add = add;
+//	//cout << add <<"\n";
+//	//show_cards(add, lengt);
+//}
 
-Card* CParser::Sucheadresse(int col, int val)
+int CParser::Sucheadresse(int col, int val, vector<Card>& arr)
 {
 
 	int zz;
 	for (zz = 0; zz < 52; zz++)
 	{
-	
-		if (add[zz].get_card_colour() == col &&  add[zz].get_card_value()==val)
+		//cout << "Wir sind hierher gekommen!";
+		if (arr[zz].get_card_colour() == col &&  arr[zz].get_card_value()==val)
 		{
-			cout << zz << "\n";
-			return &add[zz];// adressrückgabe
+			//cout << zz << "\n";
+			return zz; // adressrückgabe
 		}
 		//else return NULL;
 	}
-	return NULL;
+	//return nullptr;
 }
 
 //------------------------------------------------------------------------
@@ -167,77 +167,137 @@ void CParser::pr_tokentable()
 }
 //------------------------------------------------------------------------
 
-int	CParser::yyparse()
+int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld, stack<Card*>* startfeld)
 {
+
 	int tok;
 	int wert = 1;
 	int farb;
 	int hidden;
-	Card* wo;
+	int wo=0;
+
 	if(prflag)fprintf(IP_List,"%5d ",(int)IP_LineNumber);
 	/*
 	*	Go parse things!
 	*/
 	while ((tok = yylex()) != 0){
 		//printf("%d ", tok);
-		if (tok == STRING1)
+		switch (tok)
+		{
+		case(STRING1) :
+
 			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-		else
-			if (tok == INTEGER1)
+			break;
+		case(INTEGER1) :
+			//printf("%s %d ", IP_revToken_table[tok].c_str(), yylval.i);
+			//cout << stapel << "\n";
+			farb = yylval.i;
+			farb = farb / 1000; // Berechnung der Farbe
+			wert = (yylval.i - farb * 1000) / 10; // Berechnung des Wertes
+			hidden = yylval.i % 2; // wenn hidden = 1 dann ist die Karte Verdekt wenn hidden = 0 dann ist die karte offen
+			//cout << "Wir sind hierher gekommen!";
+			//field_stack. = 
+			if (hidden == 1)
 			{
-					//printf("%s %d ", IP_revToken_table[tok].c_str(), yylval.i);
-					cout << stapel << "\n";
-					farb = yylval.i;
-					farb = farb / 1000; // Berechnung der Farbe
-					wert = (yylval.i - farb * 1000) / 10; // Berechnung des Wertes
-					hidden = yylval.i % 2; // wenn hidden = 1 dann ist die Karte Verdekt wenn hidden = 0 dann ist die karte offen
-					wo = CParser::Sucheadresse(farb, wert); 
-					//Übergabe
-					
+				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
+			}
+			else
+			{
+				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
+			}
+			if (stapel < 4)
+			{
+				startfeld[stapel].push(&arr[CParser::Sucheadresse(farb, wert, arr)]);
+				
+			}
+			else
+			{
+				feld[stapel - 4].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);
+			}
+			//Übergabe
+			break;
+		case(REALNUMBER) :
+			printf("%s %g ", IP_revToken_table[tok].c_str(), yylval.d);
+			break;
+		case(IDENTIFIER) :
+			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			break;
+		case(CLUBS) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 3;
+			//cout << stapel << "\n";
+			break;
+		case(SPADES) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 0;
+			//cout << stapel << "\n";
+			break;
+		case(HEARDS) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 1;
+			//cout << stapel << "\n";
+			break;
+		case(DIAMONDS) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 2;
+			//cout << stapel << "\n";
+			break;
+		case(STACKA) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 4;
+			//cout << stapel << "\n";
+			break;
+		case(STACKB) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 5;
+			//cout << stapel << "\n";
+			break;
+		case(STACKC) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 6;
+			//cout << stapel << "\n";
+			break;
+		case(STACKD) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 7;
+			//cout << stapel << "\n";
+			break;
+		case(STACKE) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 8;
+			//cout << stapel << "\n";
+			break;
+		case(STACKF) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 9;
+			//cout << stapel << "\n";
+			break;
+		case(STACKG) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 10;
+			//cout << stapel << "\n";
+			break;
+		case(STACKDECK) :
+			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			stapel = 11;
+			//cout << stapel << "\n";
+			break;
+		default:
+
+			if (tok >= TOKENSTART)
+				printf("%s ", IP_revToken_table[tok].c_str());
+			else
+			{
+				//printf("%c ", tok);
+				wo++;
 			}
 				
+			break;
 
-			else
-				if (tok == REALNUMBER)
-					printf("%s %g ", IP_revToken_table[tok].c_str(), yylval.d);
-				else
-					if (tok == IDENTIFIER)
-						printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-					else
-						if (tok == CLUBS)
-						{
-							//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-							stapel = 3;
-							cout << stapel << "\n";
-						}
-						else
-							if (tok == SPADES)
-							{
-								//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-								stapel = 0;
-								cout << stapel<<"\n";
-							}
-								else
-									if (tok == HEARDS)
-									{
-										//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-										stapel = 1;
-										cout << stapel << "\n";
-									}
-									else
-										if (tok == DIAMONDS)
-										{
-											//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
-											stapel = 2;
-											cout << stapel << "\n";
-										}
-										else
-									
-											if(tok>=TOKENSTART)
-												printf("%s ",IP_revToken_table[tok].c_str());
-											else
-											//printf("%c ",tok);
-		if(!prflag)printf("\n");
+
+		}
+										
+//		if(!prflag)printf("\n");
 	}
 	return 0;
 
@@ -526,6 +586,7 @@ int CParser::yylex()
 /*
 int main(int argc, char* argv[])
 {
+
 	FILE *inf;
 	char fistr[100] = "";
 	printf("Enter filename:\n");
@@ -545,4 +606,5 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
 */
