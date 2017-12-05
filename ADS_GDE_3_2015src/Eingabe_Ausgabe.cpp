@@ -20,7 +20,7 @@ void	read_data(vector<Card>& arr, stack<Card*>*	target, vector<field_stack>& fel
 	FILE *inf;
 	char fistr[100] = "";
 	printf("Enter filename:\n");
-	gets(fistr);
+	gets_s(fistr);
 	if (strlen(fistr) == 0) strcpy(fistr, "in1.txt");
 	inf = fopen(fistr, "r");
 	if (inf == NULL){

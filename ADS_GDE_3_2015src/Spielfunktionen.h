@@ -7,6 +7,6 @@
 #endif // !__Klassen__
 
 
-void	austeilen(stack<Card*>* start, vector<field_stack>& ziel);
+void	austeilen(vector<field_stack>& ziel);
 
-void	move(int mclick[2], int mclick_first[2], stack<Card*>* start, vector<field_stack>& ziel);
+void	move(int mclick[2], int mclick_first[2], vector<field_stack>& ziel);
