@@ -290,3 +290,141 @@ void	move(int mclick[2], int mclick_first[2], vector<field_stack>& field_stack)
 }
 
 //void	Spielregeln(int mclick[2], int mclick_first[2])
+
+
+// Marcels little KI 
+
+void	take_card(vector<field_stack>&	f1)
+{
+	Card*	jojo;
+
+		for (size_t i = 4; i < (f1.size() - 1); i++)
+		{
+
+
+			for (size_t y = 4; y < (f1.size() - 1); y++)
+			{	
+				if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[i].field.back()->get_card_value() == (f1[y].field.back()->get_card_value() - 1)))
+				{
+					// is the accessed card black?
+					if (f1[i].field.back()->get_card_colour() % 2)
+					{
+
+						if (f1[y].field.back()->get_card_colour() % 2)
+						{
+							//	accessed card is black
+							break;
+						}
+						else
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[i].field.back();
+							// clear the top card of the stack 
+							f1[i].field.pop_back();
+
+							f1[y].field.push_back(jojo);
+							f1[y].raise_cards();
+
+							size_t s = f1[i].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[i].field[s - 1]->undiscover_card();
+							}
+						}
+					}
+					else
+					{
+						//	accessed card is black 
+						if (f1[y].field.back()->get_card_colour() % 2)
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[i].field.back();
+							// clear the top card of the stack 
+							f1[i].field.pop_back();
+
+							f1[y].field.push_back(jojo);
+							f1[y].raise_cards();
+
+							size_t s = f1[i].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[i].field[s - 1]->undiscover_card();
+							}
+						}
+						else
+						{
+							//	accessed card is black
+							break;
+						}
+					}
+				}
+
+				if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.back()->get_card_value() == (f1[i].field.back()->get_card_value() - 1)))
+				{
+					// is the accessed card black?
+					if (f1[y].field.back()->get_card_colour() % 2)
+					{
+
+						if (f1[i].field.back()->get_card_colour() % 2)
+						{
+							//	accessed card is black
+							break;
+						}
+						else
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[y].field.back();
+							// clear the top card of the stack 
+							f1[y].field.pop_back();
+
+							f1[i].field.push_back(jojo);
+							f1[i].raise_cards();
+
+							size_t s = f1[y].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[y].field[s - 1]->undiscover_card();
+							}
+						}
+					}
+					else
+					{
+						//	accessed card is black 
+						if (f1[i].field.back()->get_card_colour() % 2)
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[y].field.back();
+							// clear the top card of the stack 
+							f1[y].field.pop_back();
+
+							f1[i].field.push_back(jojo);
+							f1[i].raise_cards();
+
+							size_t s = f1[y].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[y].field[s - 1]->undiscover_card();
+							}
+						}
+						else
+						{
+							//	accessed card is black
+							break;
+						}
+					}
+				}
+			}
+		}
+}

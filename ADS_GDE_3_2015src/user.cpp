@@ -130,7 +130,9 @@ void user_main()
 
 		move(mclick, mclick_first, field_stack);
 
-		while (!mouseclick(&x, &y) == 1) {}
+		take_card(field_stack);
+
+		while (!mouseclick(&x, &y) == 1) { }
 
 		if (StopProcess())break;
 
