@@ -68,41 +68,92 @@ void	move(int mclick[2], int mclick_first[2], vector<field_stack>& field_stack)
 	int jojo_card_first = (mclick_first[0]);
 	int jojo_card_second = (mclick[0]);
 
-	if ( (mclick[0] == 13) || (mclick_first[1] == 53))
+	if ((mclick[0] == 13) || (mclick_first[1] == 53))
 	{
 		mclick_first[0] = 13;
 		mclick_first[1] = 100;
 	}
 	else
 	{
-		
-		if ( (mclick_first[0] == 13) || (mclick_first[0] == mclick[0]) )
+
+		if ((mclick_first[0] == 13) || (mclick_first[0] == mclick[0]))
 		{
-				mclick_first[0] = mclick[0];
-				mclick_first[1] = mclick[1];
+			mclick_first[0] = mclick[0];
+			mclick_first[1] = mclick[1];
 		}
 		else
 		{
-				if ((mclick_first[0] == 11) && (mclick[0] > 3) && (0 < mclick_first[1] < 53)) // deck to field
-				{
-					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
-					// clear the top card of the stack 
-					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin()+mclick_first[1]);
-
-					field_stack[mclick[0]].field.push_back(jojo);
-					field_stack[mclick[0]].raise_cards();
-				}    
-
-				if ((mclick_first[0] == 11) && (mclick[0] < 4) && (0 < mclick_first[1] < 53)) // deck to target
+			//click deck to field 
+			if ((mclick_first[0] == 11) && (mclick[0] > 3) && (0 <= mclick_first[1] < 53)) // deck to field
+			{
+				if (((field_stack[jojo_card_first].field.empty() == false) && (field_stack[jojo_card_second].field.empty() == false)) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_colour() != field_stack[jojo_card_second].field.back()->get_card_colour()) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() - 1)))
 				{
 					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
 					// clear the top card of the stack 
 					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
 
 					field_stack[mclick[0]].field.push_back(jojo);
+					field_stack[mclick[0]].raise_cards();
 				}
+				else if ((field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == 13) && (field_stack[jojo_card_second].field.empty() == true))
+				{
+					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
 
-				if ((mclick_first[0] < 11)  && (mclick_first[0] > 3) && (mclick[0] < 11) && (mclick[0] > 3))// field to field
+					field_stack[mclick[0]].field.push_back(jojo);
+					field_stack[mclick[0]].raise_cards();
+				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
+
+
+
+			if ((mclick_first[0] == 11) && (mclick[0] < 4) && (0 <= mclick_first[1] < 53)) // deck to target
+			{
+				if (field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == 1)
+				{
+					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
+
+					// setzt die Ass schon auf das "richtige Feld"
+
+					field_stack[jojo->get_card_colour()].field.push_back(jojo);
+				}
+				else if ((field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() + 1)))
+				{
+					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
+
+					field_stack[jojo->get_card_colour()].field.push_back(jojo);
+				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
+
+
+
+			// movement field to field 
+			if ((mclick_first[0] < 11) && (mclick_first[0] > 3) && (mclick[0] < 11) && (mclick[0] > 3))// field to field
+			{
+				// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
+
+				if (((field_stack[jojo_card_first].field.empty() == false) && (field_stack[jojo_card_second].field.empty() == false)) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_colour() != field_stack[jojo_card_second].field.back()->get_card_colour()) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() - 1)))
 				{
 					// get the top card of the actual stack 
 					jojo = field_stack[jojo_card_first].field.back();
@@ -115,31 +166,20 @@ void	move(int mclick[2], int mclick_first[2], vector<field_stack>& field_stack)
 					size_t s = field_stack[jojo_card_first].field.size(); // nächste karte umdrehen
 					if (s)
 					{
-						field_stack[jojo_card_first].field[s-1]->undiscover_card();
+						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
 					}
-					
-
 				}
 
-
-				if ((mclick_first[0] < 4) && (mclick[0] < 11) && (mclick[0] > 3) && mclick_first[1] < 53) //target to field übergabe
-				{
-					jojo = field_stack[ (mclick_first[0]) ].field.back();
-					// clear the top card of the stack 
-					field_stack[ (mclick_first[0]) ].field.pop_back();
-
-					field_stack[mclick[0]].field.push_back(jojo);
-					field_stack[mclick[0]].raise_cards();
-				}
-
-				if ((mclick_first[0] > 3) && (mclick_first[0] < 11) && (mclick[0] < 4) && mclick_first[1] < 53) // field to target_stack übergabe
+				// look after valid move, look for King to empty field
+				else if ((field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == 13) && (field_stack[jojo_card_second].field.empty() == true))
 				{
 					// get the top card of the actual stack 
-					jojo = field_stack[mclick_first[0]].field.back();
+					jojo = field_stack[jojo_card_first].field.back();
 					// clear the top card of the stack 
-					field_stack[mclick_first[0]].field.pop_back();
+					field_stack[jojo_card_first].field.pop_back();
 
-					field_stack[mclick[0]].field.push_back(jojo);
+					field_stack[jojo_card_second].field.push_back(jojo);
+					field_stack[jojo_card_second].raise_cards();
 
 					size_t s = field_stack[jojo_card_first].field.size(); // nächste karte umdrehen
 					if (s)
@@ -147,15 +187,76 @@ void	move(int mclick[2], int mclick_first[2], vector<field_stack>& field_stack)
 						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
 					}
 				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
 
-				fieldclick(0, 0, mclick, field_stack, 700, 600);
 
-				mclick_first[0] = 13;
-				mclick_first[1] = 100;
+
+			}
+
+
+
+			if ((mclick_first[0] < 4) && (mclick[0] < 11) && (mclick[0] > 3) && mclick_first[1] < 53) //target to field übergabe
+			{
+				if (((field_stack[jojo_card_first].field.empty() == false) && (field_stack[jojo_card_second].field.empty() == false)) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_colour() != field_stack[jojo_card_second].field.back()->get_card_colour()) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() - 1)))
+				{
+					jojo = field_stack[(mclick_first[0])].field.back();
+					// clear the top card of the stack 
+					field_stack[(mclick_first[0])].field.pop_back();
+
+					field_stack[mclick[0]].field.push_back(jojo);
+					field_stack[mclick[0]].raise_cards();
+				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
+
+
+
+			if ((mclick_first[0] > 3) && (mclick_first[0] < 11) && (mclick[0] < 4) && mclick_first[1] < 53) // field to target_stack übergabe
+			{
+				if (((field_stack[jojo_card_first].field.empty() == false) && (field_stack[jojo_card_second].field.empty() == false)) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() + 1)))
+				{
+					// get the top card of the actual stack 
+					jojo = field_stack[mclick_first[0]].field.back();
+					// clear the top card of the stack 
+					field_stack[mclick_first[0]].field.pop_back();
+
+					field_stack[jojo->get_card_colour()].field.push_back(jojo);
+
+					size_t s = field_stack[jojo_card_first].field.size(); // nächste karte umdrehen
+					if (s)
+					{
+						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
+					}
+				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
+
+			fieldclick(0, 0, mclick, field_stack, 700, 600);
+
+			mclick_first[0] = 13;
+			mclick_first[1] = 100;
 		}
 	}
 
-	if ( mclick[0] == 11 && mclick[1] == 0) //mausklick auf verdecktes deck
+	if (mclick[0] == 11 && mclick[1] == 0) //mausklick auf verdecktes deck
 	{
 		int c = 0;
 
@@ -176,7 +277,7 @@ void	move(int mclick[2], int mclick_first[2], vector<field_stack>& field_stack)
 		}
 		else
 		{
-			field_stack[11].field[c-1]->undiscover_card();
+			field_stack[11].field[c - 1]->undiscover_card();
 		}
 
 		fieldclick(0, 0, mclick, field_stack, 700, 600);
