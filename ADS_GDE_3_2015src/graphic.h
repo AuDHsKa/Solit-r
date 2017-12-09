@@ -1,19 +1,21 @@
 #ifndef __Klassen__
-	#include "Klassen.h"
+#include "Klassen.h"
 #endif
 
 #ifndef stack
-	#include <stack>
+#include <stack>
 #endif
 
-void fieldclick(int x, int y, int mclick[2], vector<field_stack>& field_stack, int windowswide, int windowsheight);//ruft alle funktionen auf
+#ifndef __window__
+#include "window.h"
+#endif
 
-void newwindow(int b, int h); //  windowsweite, windowshöhe
+void click_window(vector<field_stack>& field_stack, window& win);//ruft alle funktionen auf
 
-int button(int x, int y, int b, int h); // maus x, maus y, windowsweite, windowshöhe
+void newwindow(window& win); //  windowsweite, windowshöhe
 
-int w_target_field(int x, int y, vector<field_stack>& tsp, int target_field);
+int button(window& win); // maus x, maus y, windowsweite, windowshöhe
 
 int w_field(int x, int y, vector<field_stack>& f1, int feld);
 
-int w_deck(int x,int  y, vector<field_stack>& deck);
+int w_deck(int x, int  y, vector<field_stack>& deck);

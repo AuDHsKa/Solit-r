@@ -69,6 +69,9 @@
     <ClCompile Include="Eingabe_Ausgabe.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -129,6 +132,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Eingabe_Ausgabe.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

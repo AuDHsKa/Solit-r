@@ -15,7 +15,7 @@
 /*
 //David Kommentar
 */
-void	read_data(vector<Card>& arr, stack<Card*>*	target, vector<field_stack>& feld)
+void	read_data(vector<Card>& arr, vector<field_stack>& feld)
 {
 	FILE *inf;
 	char fistr[100] = "";
@@ -23,7 +23,7 @@ void	read_data(vector<Card>& arr, stack<Card*>*	target, vector<field_stack>& fel
 	gets_s(fistr);
 	if (strlen(fistr) == 0) strcpy(fistr, "in1.txt");
 	inf = fopen(fistr, "r");
-	if (inf == NULL){
+	if (inf == NULL) {
 		printf("Cannot open input file %s\n", fistr);
 		//return 0;
 	}
@@ -31,7 +31,7 @@ void	read_data(vector<Card>& arr, stack<Card*>*	target, vector<field_stack>& fel
 	//obj.uebergabe(arr);
 	obj.InitParse(inf, stderr, stdout);
 	//	obj.pr_tokentable();
-	obj.yyparse(arr,feld,target);
+	obj.yyparse(arr, feld);
 	//char c; cin >> c;
 	fclose(inf);
 
@@ -77,15 +77,15 @@ void output(char *karten, char* name)
 {
 	FILE *inf;
 	int erri = 1;
-	
-	char ccw [100];
+
+	char ccw[100];
 	char ddw[100];
-	
+
 	char* dd;
-	
+
 	string fistr;
 	//fistr = "outdaten.txt"
-	
+
 	if ((inf = _fsopen(name, "a", _SH_DENYWR)) != NULL)
 	{
 		fprintf(inf, karten);
@@ -107,34 +107,34 @@ void	write_data(vector<Card>& arrw, stack<Card*>*	targetw, vector<field_stack>& 
 	int  hidden;
 	char  karte[20];
 	char*  karten;
-	char cc [100] ="";
-	char* ccst ;
+	char cc[100] = "";
+	char* ccst;
 	int cci;
 	char* leer;
 	int len;
-	char ausgabedatennam[100]="outdaten.txt";
+	char ausgabedatennam[100] = "outdaten.txt";
 	//char namen[200];
 	ccst = zeit();
 	//ccst = itoa(cci, cc, 10);
 	strcat(ccst, ausgabedatennam);
-	strcat(cc,ccst);
-	
+	strcat(cc, ccst);
+
 
 	for (nn = 0; nn < 4; nn++)
 	{
 		uu = targetw[nn].size();
 		switch (nn)
 		{
-		case(0) :
+		case(0):
 			karten = "Spades:";
 			break;
-		case(1) :
+		case(1):
 			karten = "Hearts:";
 			break;
-		case(2) :
+		case(2):
 			karten = "Diamonds:";
 			break;
-		case(3) :
+		case(3):
 			karten = "Clubs:";
 			break;
 		default:
@@ -152,7 +152,7 @@ void	write_data(vector<Card>& arrw, stack<Card*>*	targetw, vector<field_stack>& 
 		for (int zz = 0; zz < uu; zz++)
 		{
 
-			
+
 			targetw[nn].push(helpstack.top());
 			helpstack.pop();
 			coll = targetw[nn].top()->get_card_colour();
@@ -168,26 +168,26 @@ void	write_data(vector<Card>& arrw, stack<Card*>*	targetw, vector<field_stack>& 
 			}
 			karten = itoa((coll * 1000 + wall * 10 + hidden), karte, 10);
 			len = strlen(karten);
-			while ( len< 4)
+			while (len< 4)
 			{
 				leer = "0";
 				output(leer, cc);
 				len++;
-			} 
-			output(karten,cc);
+			}
+			output(karten, cc);
 
 			//printf("%s\n", karten);
 			if ((zz + 1) < uu)
 			{
-			karten = ",";
-			output(karten,  cc);
+				karten = ",";
+				output(karten, cc);
 			}
-			
+
 		}
 		karten = ";\n";
 		output(karten, cc);
 	}
-	
+
 }
 
 

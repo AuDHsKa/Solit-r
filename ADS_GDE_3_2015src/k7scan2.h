@@ -5,7 +5,7 @@
 #include <stack>
 
 #ifndef __Klassen__
-	#include "Klassen.h"
+#include "Klassen.h"
 #endif // !__Klassen__
 
 #define		__k7scan2__
@@ -17,14 +17,14 @@ public:
 	/*
 	*	Lexical analyzer states.
 	*/
-	enum lexstate{
+	enum lexstate {
 		L_START, L_INT, L_REAL, L_EXP, L_FLOAT, L_IDENT, L_STRING, L_STRING2,
 		L_COMMENT, L_TEXT_COMMENT, L_LINE_COMMENT, L_END_TEXT_COMMENT
 	};
 
 
 	string yytext;								//input buffer
-	struct tyylval{								//value return
+	struct tyylval {								//value return
 		string s;								//structure
 		int i;
 		double d;
@@ -41,16 +41,16 @@ public:
 	int prflag;									//controls printing
 	map<string, int> IP_Token_table;				//Tokendefinitions
 	map<int, string> IP_revToken_table;			//reverse Tokendefinitions
-	//vector<Card>& add;
+												//vector<Card>& add;
 	int stapel;
-	
+
 
 	int CParser::yylex();						//lexial analyser
 	int CParser::yylexret(int retv);			//sets ttype ,yylval, sval, nval
 	void CParser::yyerror(char *ers);			//error reporter
 	int CParser::IP_MatchToken(string &tok);	//checks the token
 	void CParser::InitParse(FILE *inp, FILE *err, FILE *lst);
-	int	CParser::yyparse(vector<Card>& arr, vector<field_stack>& feld, stack<Card*>* target);						//parser
+	int	CParser::yyparse(vector<Card>& arr, vector<field_stack>& feld);						//parser
 	void CParser::pr_tokentable();				//test output for tokens
 	void CParser::IP_init_token_table();		//loads the tokens
 	void CParser::Load_tokenentry(string str, int index);//load one token
@@ -58,5 +58,5 @@ public:
 
 	int CParser::Sucheadresse(int col, int val, vector<Card>& arr); //Adressensucher
 	void CParser::uebergabe(vector<Card>& address);
-	CParser(){ IP_LineNumber = 1; ugetflag = 0; prflag = 0; };	//Constructor
+	CParser() { IP_LineNumber = 1; ugetflag = 0; prflag = 0; };	//Constructor
 };

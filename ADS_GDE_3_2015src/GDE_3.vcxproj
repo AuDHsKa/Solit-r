@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
     <PlatformToolset>v141</PlatformToolset>
@@ -137,6 +137,7 @@
     <ClCompile Include="Graphics\Graphicfunctions.cpp" />
     <ClCompile Include="Graphics\Shape.cpp" />
     <ClCompile Include="Console\Console.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data_file.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Graphics\PointerArray.h" />
     <ClInclude Include="Graphics\Shape.h" />
     <ClInclude Include="Console\Console.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
