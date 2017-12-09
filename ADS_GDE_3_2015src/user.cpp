@@ -90,6 +90,10 @@ void user_main()
 
 	austeilen(field_stack);
 
+
+	take_card_from_field_to_field(field_stack);
+	take_card_from_deck_to_field(field_stack);
+	take_card_from_field_to_field(field_stack);
 	//write_data(cards, target_stack, field_stack);
 
 	/*
