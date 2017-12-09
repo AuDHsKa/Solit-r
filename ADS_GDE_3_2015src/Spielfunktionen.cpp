@@ -162,9 +162,54 @@ void	move(vector<field_stack>& field_stack, window& win)
 						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
 					}
 				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
 
-				// look after valid move, look for King to empty field
-				else if ((field_stack[jojo_card_first].field.at(win.first_click_card)->get_card_value() == 13) && (field_stack[jojo_card_second].field.empty() == true))
+
+
+			if ((mclick_first[0] == 11) && (mclick[0] < 4) && (0 <= mclick_first[1] < 53)) // deck to target
+			{
+				if (field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == 1)
+				{
+					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
+
+					// setzt die Ass schon auf das "richtige Feld"
+
+					field_stack[jojo->get_card_colour()].field.push_back(jojo);
+				}
+				else if ((field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() + 1)))
+				{
+					jojo = field_stack[mclick_first[0]].field[mclick_first[1]];
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.erase(field_stack[mclick_first[0]].field.begin() + mclick_first[1]);
+
+					field_stack[jojo->get_card_colour()].field.push_back(jojo);
+				}
+				else
+				{
+					cout << "############################## \n";
+					cout << "invalid move, try again! \n";
+					cout << "############################## \n";
+				}
+			}
+
+
+
+			// movement field to field 
+			if ((mclick_first[0] < 11) && (mclick_first[0] > 3) && (mclick[0] < 11) && (mclick[0] > 3))// field to field
+			{
+				// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
+
+				if (((field_stack[jojo_card_first].field.empty() == false) && (field_stack[jojo_card_second].field.empty() == false)) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_colour() != field_stack[jojo_card_second].field.back()->get_card_colour()) &&
+					(field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == (field_stack[jojo_card_second].field.back()->get_card_value() - 1)))
 				{
 					// get the top card of the actual stack 
 					while (win.first_click_card < field_stack[jojo_card_first].field.size())
@@ -183,16 +228,30 @@ void	move(vector<field_stack>& field_stack, window& win)
 						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
 					}
 				}
+
+				// look after valid move, look for King to empty field
+				else if ((field_stack[jojo_card_first].field.at(mclick_first[1])->get_card_value() == 13) && (field_stack[jojo_card_second].field.empty() == true))
+				{
+					// get the top card of the actual stack 
+					jojo = field_stack[jojo_card_first].field.back();
+					// clear the top card of the stack 
+					field_stack[jojo_card_first].field.pop_back();
+
+					field_stack[jojo_card_second].field.push_back(jojo);
+					field_stack[jojo_card_second].raise_cards();
+
+					size_t s = field_stack[jojo_card_first].field.size(); // nächste karte umdrehen
+					if (s)
+					{
+						field_stack[jojo_card_first].field[s - 1]->undiscover_card();
+					}
+				}
 				else
 				{
 					cout << "############################## \n";
 					cout << "invalid move, try again! \n";
 					cout << "############################## \n";
 				}
-
-
-
-			}
 
 
 
@@ -288,4 +347,250 @@ void	move(vector<field_stack>& field_stack, window& win)
 	}
 
 
+}
+
+//void	Spielregeln(int mclick[2], int mclick_first[2])
+
+
+// Marcels little KI 
+
+void	take_card_from_field_to_field(vector<field_stack>&	f1)
+{
+	Card*	jojo;
+
+		for (size_t i = 4; i < (f1.size() - 1); i++)
+		{
+			for (size_t y = 4; y < (f1.size() - 1); y++)
+			{	
+				if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[i].field.back()->get_card_value() == (f1[y].field.back()->get_card_value() - 1)))
+				{
+					// is the accessed card black?
+					if (f1[i].field.back()->get_card_colour() % 2)
+					{
+
+						if (f1[y].field.back()->get_card_colour() % 2)
+						{
+							//	accessed card is black, no turn possible
+						}
+						else
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[i].field.back();
+							// clear the top card of the stack 
+							f1[i].field.pop_back();
+
+							f1[y].field.push_back(jojo);
+							f1[y].raise_cards();
+
+							size_t s = f1[i].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[i].field[s - 1]->undiscover_card();
+							}
+						}
+					}
+					else
+					{
+						//	accessed card is black 
+						if (f1[y].field.back()->get_card_colour() % 2)
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[i].field.back();
+							// clear the top card of the stack 
+							f1[i].field.pop_back();
+
+							f1[y].field.push_back(jojo);
+							f1[y].raise_cards();
+
+							size_t s = f1[i].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[i].field[s - 1]->undiscover_card();
+							}
+						}
+						else
+						{
+							//	accessed card is black, no turn possible
+						}
+					}
+				}
+
+				if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
+					(f1[y].field.back()->get_card_value() == (f1[i].field.back()->get_card_value() - 1)))
+				{
+					// is the accessed card black?
+					if (f1[y].field.back()->get_card_colour() % 2)
+					{
+
+						if (f1[i].field.back()->get_card_colour() % 2)
+						{
+							//	accessed card is black
+							break;
+						}
+						else
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[y].field.back();
+							// clear the top card of the stack 
+							f1[y].field.pop_back();
+
+							f1[i].field.push_back(jojo);
+							f1[i].raise_cards();
+
+							size_t s = f1[y].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[y].field[s - 1]->undiscover_card();
+							}
+						}
+					}
+					else
+					{
+						//	accessed card is black 
+						if (f1[i].field.back()->get_card_colour() % 2)
+						{
+							//switch_card
+
+							// get the top card of the actual stack 
+							jojo = f1[y].field.back();
+							// clear the top card of the stack 
+							f1[y].field.pop_back();
+
+							f1[i].field.push_back(jojo);
+							f1[i].raise_cards();
+
+							size_t s = f1[y].field.size(); // nächste karte umdrehen
+							if (s)
+							{
+								f1[y].field[s - 1]->undiscover_card();
+							}
+						}
+						else
+						{
+							//	accessed card is black, no turn possible
+						}
+					}
+				}
+			}
+		}
+}
+
+
+void	take_card_from_deck_to_field(vector<field_stack>&	f1)
+{
+	Card*	jojo;
+
+	// hole karten vom deck und lege sie auf das feld; falls es die spielregeln erlauben
+
+	for (size_t ii = 0; ii < f1[11].field.size(); ii++)
+	{
+		for (size_t yy = 4; yy < (f1.size() - 1); yy++)
+		{
+			if ((f1[11].field.empty() == false) &&
+				(f1[yy].field.empty() == false) &&
+				(f1[11].field.at(ii)->get_card_value() == (f1[yy].field.back()->get_card_value() - 1)))
+			{
+				// is the accessed card black?
+				if (f1[11].field.at(ii)->get_card_colour() == 1 || f1[11].field.at(ii)->get_card_colour() == 3)
+				{
+					if (f1[yy].field.back()->get_card_colour() % 2)
+					{
+						//	accessed card is black, no turn possible
+					}
+					else
+					{
+						//switch_card
+
+						// get the top card of the actual stack 
+						jojo = f1[11].field.at(ii);
+
+						// ueberpruefe ob die Karte verdeckt ist
+						if (jojo->is_card_hidden() == true)
+						{
+							// falls ja, drehe sie um 
+							jojo->undiscover_card();
+						}
+
+						// clear the top card of the stack 
+						f1[11].field.erase(f1[11].field.begin() + ii);
+
+						f1[yy].field.push_back(jojo);
+						f1[yy].raise_cards();
+
+						//size_t s = f1[y].field.size(); // nächste karte umdrehen
+						//if (s)
+						//{
+						//	f1[y].field[s - 1]->undiscover_card();
+						//}
+					}
+
+				}
+				else if (f1[11].field.at(ii)->get_card_colour() == 0 || f1[11].field.at(ii)->get_card_colour() == 2)
+				{
+					//	accessed card is black 
+					if (f1[yy].field.back()->get_card_colour() % 2)
+					{
+						//switch_card
+
+						// get the top card of the actual stack 
+						jojo = f1[11].field.at(ii);
+
+						// ueberpruefe ob die Karte verdeckt ist
+						if (jojo->is_card_hidden() == true)
+						{
+							// falls ja, drehe sie um 
+							jojo->undiscover_card();
+						}
+
+						// clear the top card of the stack 
+						f1[11].field.erase(f1[11].field.begin() + ii);
+
+						f1[yy].field.push_back(jojo);
+						f1[yy].raise_cards();
+
+						//size_t s = f1[y].field.size(); // nächste karte umdrehen
+						//if (s)
+						//{
+						//	f1[y].field[s - 1]->undiscover_card();
+						//}
+					}
+					else
+					{
+						//	accessed card is black, no turn possible
+					}
+				}
+
+			}
+
+			if ((f1[yy].field.empty() == true) &&
+				(f1[11].field.at(ii)->get_card_value() == 13))
+			{
+				// get the top card of the actual stack 
+				jojo = f1[11].field.at(ii);
+
+				// ueberpruefe ob die Karte verdeckt ist
+				if (jojo->is_card_hidden() == true)
+				{
+					// falls ja, drehe sie um 
+					jojo->undiscover_card();
+				}
+
+				// clear the top card of the stack 
+				f1[11].field.erase(f1[11].field.begin() + ii);
+
+				f1[yy].field.push_back(jojo);
+				f1[yy].raise_cards();
+
+			}
+		}
+	}
 }
