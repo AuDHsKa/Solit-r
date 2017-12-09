@@ -113,11 +113,11 @@ void user_main()
 		cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
 		cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
 		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
-		cout << "the size of field stack 1 is:" << field_stack[8].field.size() << "\n";
-		cout << "the size of field stack 2 is:" << field_stack[9].field.size() << "\n";
-		cout << "the size of field stack 3 is:" << field_stack[10].field.size() << "\n";
-		cout << "the size of field stack 4 is:" << field_stack[11].field.size() << "\n";
-		cout << "the size of field stack 8 is:" << field_stack[11].get_stack_NOF() << "\n";
+		cout << "the size of field stack 9 is:" << field_stack[8].field.size() << "\n";
+		cout << "the size of field stack 10 is:" << field_stack[9].field.size() << "\n";
+		cout << "the size of field stack 11 is:" << field_stack[10].field.size() << "\n";
+		cout << "the size of field stack 12 is:" << field_stack[11].field.size() << "\n";
+		cout << "the size of field stack 12 is:" << field_stack[11].get_stack_NOF() << "\n";
 
 	while (1)
 	{
@@ -130,7 +130,19 @@ void user_main()
 
 		move(mclick, mclick_first, field_stack);
 
-		take_card(field_stack);
+		take_card_from_field_to_field(field_stack);
+
+		take_card_from_deck_to_field(field_stack);
+
+		cout << "the size of field stack 5 is:" << field_stack[4].field.size() << "\n";
+		cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
+		cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
+		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
+		cout << "the size of field stack 9 is:" << field_stack[8].field.size() << "\n";
+		cout << "the size of field stack 10 is:" << field_stack[9].field.size() << "\n";
+		cout << "the size of field stack 11 is:" << field_stack[10].field.size() << "\n";
+		cout << "the size of field stack 12 is:" << field_stack[11].field.size() << "\n";
+
 
 		while (!mouseclick(&x, &y) == 1) { }
 

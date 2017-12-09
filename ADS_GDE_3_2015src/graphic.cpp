@@ -23,7 +23,7 @@ using namespace std;
 COLORREF Colref[] = { BLACK, RED, GREEN, BLUE, YELLOW, BROWN };
 #define white RGB(250,240,220)
 
-char w_suit[4] = { 'S', 'H', 'D', 'C' }; // Card suit of Spades, Hearts, Diamonds, Clubs
+char w_suit[4] = { 'D', 'S', 'H', 'C' }; // Card suit of Diamonds, Spades, Hearts, Clubs
 
 char w_card[14] = { '0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K' }; // Cards value, Z=10, J= Jack, Q=Queen, K=King
 
@@ -44,11 +44,11 @@ void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, 
 		akt = BLUE;
 	}
 
-	if ((w_colour == w_suit[0]) || (w_colour == w_suit[3]))	//which colour is selected
+	if ((w_colour == w_suit[1]) || (w_colour == w_suit[3]))	//which colour is selected
 	{
 		col = BLACK;
 	}
-	else if ((w_colour == w_suit[1]) || (w_colour == w_suit[2]))
+	else if ((w_colour == w_suit[0]) || (w_colour == w_suit[2]))
 	{
 		col = RED;
 	}
