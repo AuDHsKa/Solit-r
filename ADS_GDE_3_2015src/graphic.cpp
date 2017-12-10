@@ -6,6 +6,10 @@
 #include <fstream>
 #include "math.h"
 
+#ifndef Spielfunktionen.h
+#include "Spielfunktionen.h"
+#endif
+
 #ifndef __Klassen__
 #include "Klassen.h"
 #endif
@@ -361,6 +365,10 @@ void solve(int x, int y, int b, int h)
 		cout << "######################################\n";
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
+
+		//take_card_from_field_to_field(field_stack);
+
+		//take_card_from_deck_to_field(field_stack);
 	}
 	else
 	{
