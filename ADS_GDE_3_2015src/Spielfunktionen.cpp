@@ -96,7 +96,7 @@ void	move(vector<field_stack>& field_stack, window& win)
 					field_stack[win.click_stack].field.push_back(jojo);
 					field_stack[win.click_stack].raise_cards();
 				}
-				else if ((field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == 13) && (field_stack[win.click_stack].field.empty() == true))
+				else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.click_stack].field.empty() == true))
 				{
 					jojo = field_stack[win.first_click_stack].field[win.first_click_card];
 					// clear the top card of the stack 
@@ -108,9 +108,10 @@ void	move(vector<field_stack>& field_stack, window& win)
 			}
 
 
-			if ((win.first_click_stack == 11) && (win.click_stack < 4) && (0 <= win.first_click_card < 53)) // deck to target
+			if ((win.first_click_stack == 11) && (win.click_stack < 4) && (0 <= win.first_click_card < 53) ) // deck to target 
 			{
-				if (field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == 1)
+				//(win.click_card != 53) fehlt noch sonst absturz--click_stack nicht leer
+				if (field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1)
 				{
 					jojo = field_stack[win.first_click_stack].field[win.first_click_card];
 					// clear the top card of the stack 
@@ -120,7 +121,7 @@ void	move(vector<field_stack>& field_stack, window& win)
 
 					field_stack[jojo->get_card_colour()].field.push_back(jojo);
 				}
-				else if ((field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() + 1)))
+				else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() + 1)))
 				{
 					jojo = field_stack[win.first_click_stack].field[win.first_click_card];
 					// clear the top card of the stack 
@@ -144,8 +145,8 @@ void	move(vector<field_stack>& field_stack, window& win)
 				// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
 
 				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_colour() != field_stack[win.click_stack].field.back()->get_card_colour()) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() - 1)))
+					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.click_stack].field.back()->get_card_colour()) &&
+					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() - 1)))
 				{
 					while (win.first_click_card < field_stack[win.first_click_stack].field.size())
 					{
@@ -165,7 +166,7 @@ void	move(vector<field_stack>& field_stack, window& win)
 				}
 
 				// look after valid move, look for King to empty field
-				else if ((field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == 13) && (field_stack[win.click_stack].field.empty() == true))
+				else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.click_stack].field.empty() == true))
 				{
 					// get the top card of the actual stack 
 					while (win.first_click_card < field_stack[win.first_click_stack].field.size())
@@ -200,8 +201,8 @@ void	move(vector<field_stack>& field_stack, window& win)
 			if ((win.first_click_stack < 4) && (win.click_stack < 11) && (win.click_stack > 3) && win.first_click_card < 53) //target to field übergabe
 			{
 				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_colour() != field_stack[win.click_stack].field.back()->get_card_colour()) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() - 1)))
+					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.click_stack].field.back()->get_card_colour()) &&
+					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() - 1)))
 				{
 					jojo = field_stack[(win.first_click_stack)].field.back();
 					// clear the top card of the stack 
@@ -223,7 +224,7 @@ void	move(vector<field_stack>& field_stack, window& win)
 			if ((win.first_click_stack > 3) && (win.first_click_stack < 11) && (win.click_stack < 4) && win.first_click_card < 53) // field to target_stack übergabe
 			{
 				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() + 1)))
+					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.click_stack].field.back()->get_card_value() + 1)))
 				{
 					// get the top card of the actual stack 
 					jojo = field_stack[win.first_click_stack].field.back();
@@ -329,6 +330,7 @@ void	take_card_from_field_to_field(vector<field_stack>&	f1)
 						if (s)
 						{
 							f1[i].field[s - 1]->undiscover_card();
+
 						}
 					}
 				}
@@ -535,3 +537,56 @@ void	take_card_from_deck_to_field(vector<field_stack>&	f1)
 		}
 	}
 }
+
+//sven big ki
+
+void solvealgo(vector<field_stack>&	f1, window& win)
+{
+	int no_change = 1;
+	int hide = 0;
+
+	for (size_t ii = 0; ii < (f1[11].field.size() - 1); ii++)
+	{
+		f1[11].field[ii]->undiscover_card();
+	}
+
+	win.x_mouse = 1;
+	win.y_mouse = 1;
+
+	//while (no_change)
+	//{
+		for (int i = 4; i < (f1.size()); i++)
+		{
+			hide = 0;
+			while (f1[i].field[hide]->is_card_hidden())
+			{
+				hide++;
+			}
+
+			for (hide; hide < f1[i].field.size()  ; hide++)
+			{
+				for (int y = 4; y < 11; y++)
+				{
+					if (i != y)
+					{
+						win.first_click_card = hide;
+						win.first_click_stack = i;
+						win.click_stack = y;
+						win.click_card = f1[y].field.size();
+
+						move(f1, win);
+					}
+					if (win.x_mouse == 0 && win.y_mouse == 0)
+					{
+						break;
+						no_change = 0;
+					}
+				}
+			}
+
+
+		//}
+	}
+
+}
+

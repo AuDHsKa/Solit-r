@@ -90,10 +90,16 @@ void user_main()
 
 	austeilen(field_stack);
 
+	for (size_t ii = 0; ii < (field_stack[11].field.size() - 1); ii++)
+	{
+		field_stack[11].field[ii]->undiscover_card();
+	}
 
-	take_card_from_field_to_field(field_stack);
-	take_card_from_deck_to_field(field_stack);
-	take_card_from_field_to_field(field_stack);
+	//solvealgo(field_stack, win);
+	//solvealgo(field_stack, win);
+	//take_card_from_field_to_field(field_stack);
+	//take_card_from_deck_to_field(field_stack);
+	//take_card_from_field_to_field(field_stack);
 	//write_data(cards, target_stack, field_stack);
 
 	/*
