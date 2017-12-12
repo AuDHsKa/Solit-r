@@ -169,5 +169,6 @@
     <Text Include="daten2.txt">
       <Filter>Ressourcendateien</Filter>
     </Text>
+    <Text Include="2017121217448outdaten.txt" />
   </ItemGroup>
 </Project>

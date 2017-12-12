@@ -22,26 +22,26 @@ vector<Card>	arr(length);
 void	read_data(vector<field_stack>& feld)
 {
 	FILE *inf;
-	//char fistr[100] = "";
-	//printf("Enter filename:\n");
-
-	char fistr[]= "daten.txt";
-	//gets_s(fistr);
-
-
+	char fistr[100] = "";
+	printf("Enter filename:\n");
+	gets_s(fistr);
+	
 	if (strlen(fistr) == 0) strcpy(fistr, "in1.txt");
 	inf = fopen(fistr, "r");
 	if (inf == NULL) {
 		printf("Cannot open input file %s\n", fistr);
 	}
-	CParser obj;
-	//obj.uebergabe(arr);
-	obj.InitParse(inf, stderr, stdout);
-	//	obj.pr_tokentable();
-	obj.yyparse(arr, feld);
-	//char c; cin >> c;
-	fclose(inf);
+	else
+	{
+		CParser obj;
+		//obj.uebergabe(arr);
+		obj.InitParse(inf, stderr, stdout);
+		//	obj.pr_tokentable();
+		obj.yyparse(arr, feld);
+		//char c; cin >> c;
+	}
 
+	fclose(inf);
 }
 
 char*  zeit()

@@ -181,6 +181,7 @@
     </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="2017121217448outdaten.txt" />
     <Text Include="daten.txt" />
     <Text Include="daten2.txt" />
     <Text Include="Readme2.txt" />

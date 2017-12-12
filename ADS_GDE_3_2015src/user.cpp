@@ -62,15 +62,13 @@ void user_main()
 	for (size_t i = 4; i < 11; i++)
 	{
 		field_stack[i].set_stack_count(i - 3);
-		field_stack[i].set_stack_NOF(0);
 		cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 	}
 
 	field_stack[11].set_stack_count(24);
-	field_stack[11].set_stack_NOF(0);
 
 	initialize_cards(cards);
-	//get_arr(cards);
+	get_arr(cards);
 	//read_data(field_stack);
 
 	for (size_t yy = 0; yy < 4; yy++)
@@ -83,31 +81,28 @@ void user_main()
 
 	austeilen(field_stack);
 
-	//for (size_t ii = 0; ii < (field_stack[11].field.size() - 1); ii++)
-	//{
-	//	field_stack[11].field[ii]->undiscover_card();
-	//}
-
-	//write_data(field_stack);
-
 	newwindow(win);
+
+	win.first_click_card = 100;
+	win.first_click_stack = 13;
+	win.second_click_card = 100;
+	win.second_click_stack = 13;
 
 	while (1)
 	{
-		win.click_stack = 13; //stack
-		win.click_card = 100; //card
-		
+		win.second_click_card = 100;
+		win.second_click_stack = 13;
 
 		button(win, field_stack, cards);
 
 		click_window(field_stack, win, cards);
-		move(field_stack, win);
+		playing_rules(field_stack, win);
 		click_window(field_stack, win, cards);
 
 		//cout <<"click on stack" << win.click_stack << "\n" << "card" << win.click_card <<"\n";
 		updatescr();
 
-		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1) {}
+		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 
 		if (StopProcess())break;
 

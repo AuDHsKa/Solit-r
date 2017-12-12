@@ -41,6 +41,8 @@ bool	Card::is_card_hidden()
 	return	hidden;
 }
 
+
+
 /********************************************************************************
 			field_stack		occupy the play cards
 ********************************************************************************/
@@ -49,30 +51,34 @@ void	field_stack::set_stack_count(size_t c)
 {
 	count = c;
 }
-void	field_stack::set_stack_NOF(size_t nof)
+
+void	field_stack::set_cards_hidden(size_t c)
 {
-	number_of_cards = nof;
+	cards_hidden = c;
 }
-void	field_stack::raise_cards()
+
+void	field_stack::raise_hidden_cards()
 {
-	number_of_cards++;
+	cards_hidden++;
 }
+
+
+void	field_stack::reduce_hidden_cards()
+{
+	cards_hidden--;
+}
+
+
 size_t	field_stack::get_stack_count()
 {
 	return count;
 }
-size_t	field_stack::get_stack_NOF()
-{
-	return number_of_cards;
-}
+
 size_t	field_stack::get_cards_hidden()
 {
 	return cards_hidden;
 }
-size_t	field_stack::get_cards_open()
-{
-	return cards_open;
-}
+
 
 
 /********************************************************************************
@@ -158,5 +164,4 @@ void	initialize_cards(vector<Card>&	ca)
 			ca[13 * yy + ii].set_card_value(num);
 		}
 	}
-
 }

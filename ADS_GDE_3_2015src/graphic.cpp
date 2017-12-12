@@ -6,6 +6,10 @@
 #include <fstream>
 #include "math.h"
 
+#ifndef Spielfunktionen.h
+#include "Spielfunktionen.h"
+#endif
+
 #ifndef __Klassen__
 #include "Klassen.h"
 #endif
@@ -22,10 +26,9 @@
 #include "Eingabe_Ausgabe.h"
 #endif
 
-#ifndef Spielfunktionen.h
-#include "Spielfunktionen.h"
+#ifndef __data_file__
+#include "data_file.h"
 #endif
-
 
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
@@ -314,6 +317,8 @@ void load(window& win, vector<field_stack>&  field_stack)
 		cout << "######################################\n";
 		cout << "Datei geladen\n";
 		cout << "######################################\n\n";
+		delete_data(field_stack);
+		read_data(field_stack);
 	}
 	else
 	{
@@ -342,11 +347,8 @@ void restart(window& win, vector<field_stack>&  field_stack, vector<Card>& cards
 		for (size_t i = 4; i < 11; i++)
 		{
 			field_stack[i].set_stack_count(i - 3);
-			field_stack[i].set_stack_NOF(0);
-			cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 		}
 		field_stack[11].set_stack_count(24);
-		field_stack[11].set_stack_NOF(0);
 		for (size_t yy = 0; yy < 4; yy++)
 		{
 			for (size_t ii = 0; ii < 13; ii++)
@@ -379,6 +381,10 @@ void solve(window& win, vector<field_stack>&  field_stack)
 		cout << "######################################\n";
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
+
+		//take_card_from_field_to_field(field_stack);
+
+		//take_card_from_deck_to_field(field_stack);
 	}
 	else
 	{
@@ -410,8 +416,8 @@ int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards) 
 //search for a click on a card
 void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& cards)
 {
-	win.click_card = 100;	//mouseclick on card_number (100= no card is seleced,)
-	win.click_stack = 13;	//mouseclick on field_number (0= no stack is seleced)
+	win.second_click_card = 100;	//mouseclick on card_number (100= no card is seleced,)
+	win.second_click_stack = 13;	//mouseclick on field_number (0= no stack is seleced)
 	int click = 100;			//save mclickcard (so mclick will not be overwritten)
 
 	newwindow_cards(win);
@@ -424,8 +430,8 @@ void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& 
 		if (click < 100)
 		{
 			//cout << "mausklick auf feld" << i << "      karte" << click << "\n";
-			win.click_stack = i;
-			win.click_card = click;
+			win.second_click_stack = i;
+			win.second_click_card = click;
 		}
 	}
 
@@ -434,8 +440,8 @@ void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& 
 	if (click < 100)
 	{
 		//cout << "mausklick auf deck" << "      karte" << win.click_card << "\n";
-		win.click_stack = 11; //click on top of deck
-		win.click_card = click;
+		win.second_click_stack = 11; //click on top of deck
+		win.second_click_card = click;
 	}
 
 }
