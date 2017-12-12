@@ -15,3 +15,5 @@ void	take_card_from_field_to_field(vector<field_stack>&	f1);
 
 void	take_card_from_deck_to_field(vector<field_stack>&	f1);
 
+void	solvealgo ( vector<field_stack>&	f1, window& win);
+
