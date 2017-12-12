@@ -385,8 +385,8 @@ int button(window& win)  // maus x, maus y, windowsweite, windowshöhe
 //search for a click on a card
 void click_window(vector<field_stack>& field_stack, window& win)
 {
-	win.click_card = 100;	//mouseclick on card_number (100= no card is seleced,)
-	win.click_stack = 13;	//mouseclick on field_number (0= no stack is seleced)
+	win.second_click_card = 100;	//mouseclick on card_number (100= no card is seleced,)
+	win.second_click_stack = 13;	//mouseclick on field_number (0= no stack is seleced)
 	int click = 100;			//save mclickcard (so mclick will not be overwritten)
 
 	newwindow(win);
@@ -400,8 +400,8 @@ void click_window(vector<field_stack>& field_stack, window& win)
 		if (click < 100)
 		{
 			//cout << "mausklick auf feld" << i << "      karte" << click << "\n";
-			win.click_stack = i;
-			win.click_card = click;
+			win.second_click_stack = i;
+			win.second_click_card = click;
 		}
 	}
 
@@ -410,8 +410,8 @@ void click_window(vector<field_stack>& field_stack, window& win)
 	if (click < 100)
 	{
 		//cout << "mausklick auf deck" << "      karte" << win.click_card << "\n";
-		win.click_stack = 11; //click on top of deck
-		win.click_card = click;
+		win.second_click_stack = 11; //click on top of deck
+		win.second_click_card = click;
 	}
 
 }

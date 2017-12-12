@@ -20,8 +20,8 @@ public:
 
 	int first_click_stack;
 	int first_click_card;
-	int click_stack;
-	int click_card;
+	int second_click_stack;
+	int second_click_card;
 
 };
 

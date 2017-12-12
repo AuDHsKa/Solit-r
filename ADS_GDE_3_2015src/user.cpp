@@ -63,13 +63,11 @@ void user_main()
 	for (size_t i = 4; i < 11; i++)
 	{
 		field_stack[i].set_stack_count(i - 3);
-		field_stack[i].set_stack_NOF(0);
 		cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 	}
 
 	// set the playing stacks values
 	field_stack[11].set_stack_count(24);
-	field_stack[11].set_stack_NOF(0);
 
 	initialize_cards(cards);
 
@@ -136,19 +134,23 @@ void user_main()
 	cout << "the size of field stack 8 is:" << field_stack[11].get_stack_NOF() << "\n";
 	*/
 
+	win.first_click_card = 100;
+	win.first_click_stack = 13;
+	win.second_click_card = 100;
+	win.second_click_stack = 13;
+
 	while (1)
 	{
-		win.click_stack = 13; //stack
-		win.click_card = 100; //card
+
 
 		click_window(field_stack, win);
-		move(field_stack, win);
+		playing_rules(field_stack, win);
 		click_window(field_stack, win);
 
 		//cout <<"click on stack" << win.click_stack << "\n" << "card" << win.click_card <<"\n";
 		updatescr();
 
-		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1) {}
+		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 
 		if (StopProcess())break;
 
