@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include "k7scan2.h"
 #include <stack>
-
 #ifndef __Klassen__
 #include "Klassen.h"
+
 #endif // !__Klassen__
 //#include "parser.h"
 
@@ -42,7 +42,6 @@ const int lengt = 52;
 using namespace std;
 #define	Getc(s)			getc(s)
 #define	Ungetc(c)		{ungetc(c,IP_Input); ugetflag=1;}
-
 
 int CParser::Sucheadresse(int col, int val, vector<Card>& arr)
 {
@@ -147,23 +146,17 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 			hidden = yylval.i % 2; // wenn hidden = 1 dann ist die Karte Verdekt wenn hidden = 0 dann ist die karte offen
 								   //cout << "Wir sind hierher gekommen!";
 								   //field_stack. = 
-								   //if (hidden == 1)
-								   //{
-								   //	arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
-								   //}
-								   //else
-								   //{
-								   //	arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
-								   //}
-			if (stapel < 4)
+			if (hidden == 1)
 			{
-				feld[stapel].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);
-
+				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
 			}
 			else
 			{
-				feld[stapel - 4].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);
+				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
 			}
+
+			feld[stapel].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);
+
 			//Übergabe
 			break;
 		case(REALNUMBER):
@@ -172,23 +165,23 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 		case(IDENTIFIER):
 			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			break;
-		case(CLUBS):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+		case(CLUBS):// Kreuz
+					//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 3;
 			//cout << stapel << "\n";
 			break;
-		case(SPADES):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+		case(SPADES): //Pik
+					  //printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 0;
 			//cout << stapel << "\n";
 			break;
-		case(HEARDS):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+		case(HEARDS): // Herz
+					  //printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 1;
 			//cout << stapel << "\n";
 			break;
-		case(DIAMONDS):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+		case(DIAMONDS): //Karo
+						//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 2;
 			//cout << stapel << "\n";
 			break;
@@ -556,4 +549,28 @@ int CParser::yylex()
 	}
 }
 //------------------------------------------------------------------------
+/*
+int main(int argc, char* argv[])
+{
 
+FILE *inf;
+char fistr[100] = "";
+printf("Enter filename:\n");
+gets(fistr);
+if(strlen(fistr)==0) strcpy (fistr,"in1.txt");
+inf = fopen(fistr,"r");
+if(inf==NULL){
+printf("Cannot open input file %s\n",fistr);
+return 0;
+}
+CParser obj;
+obj.InitParse(inf,stderr,stdout);
+//	obj.pr_tokentable();
+obj.yyparse();
+char c; cin>>c;
+
+
+return 0;
+}
+
+*/

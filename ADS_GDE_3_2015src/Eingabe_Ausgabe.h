@@ -3,15 +3,19 @@
 #ifndef __k7scan2__
 #include "k7scan2.h"
 #endif // !k7scan2.h
+#define		__einaus__
 
-void	read_data(vector<Card>& arr, vector<field_stack>& feld);
 
-void	write_data(vector<Card>& arrW, stack<Card*>*	target_stackW, vector<field_stack>& feldW);
+void	read_data(vector<field_stack>& feld);
 
-char* zeit();
+void	write_data(vector<field_stack>& feldW);
 
-void output(char *karten, char * name);
+char*	zeit();
 
-void	delete_data(vector<Card>& arrd, stack<Card*>*	target_stackd, vector<field_stack>& feldd);
+void	output(char *karten, char * name);
 
-//void	write_log_data();
+void	delete_data(vector<field_stack>& feldd);
+
+void    get_arr(vector<Card>& arrl);
+
+void	write_log_data(int kartennummer, int start, int ziel);

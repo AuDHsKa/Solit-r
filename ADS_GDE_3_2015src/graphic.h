@@ -10,11 +10,13 @@
 #include "window.h"
 #endif
 
-void click_window(vector<field_stack>& field_stack, window& win);//ruft alle funktionen auf
+void click_window(vector<field_stack>& field_stack, window& win, vector<Card>& cards);//ruft alle funktionen auf
+
+void newwindow_cards(window& win);
 
 void newwindow(window& win); //  windowsweite, windowshöhe
 
-int button(window& win); // maus x, maus y, windowsweite, windowshöhe
+int button(window& win, vector<field_stack>& deck, vector<Card>& cards); // maus x, maus y, windowsweite, windowshöhe
 
 int w_field(int x, int y, vector<field_stack>& f1, int feld);
 

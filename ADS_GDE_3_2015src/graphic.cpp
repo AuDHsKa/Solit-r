@@ -18,6 +18,14 @@
 #include "window.h"
 #endif
 
+#ifndef __einaus__
+#include "Eingabe_Ausgabe.h"
+#endif
+
+#ifndef Spielfunktionen.h
+#include "Spielfunktionen.h"
+#endif
+
 
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
@@ -269,7 +277,7 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 };
 
 //draw botten save, load, restart and solve 
-void save(window& win)
+void save(window& win, vector<field_stack>&  field_stack)
 {
 
 	int apx = win.wide - 120;//anfangspunkt x
@@ -284,13 +292,14 @@ void save(window& win)
 		cout << "######################################\n";
 		cout << "Datei gespeichert\n";
 		cout << "######################################\n\n";
+		write_data(field_stack);
 	}
 	else
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Save"));
 	}
 }
-void load(window& win)
+void load(window& win, vector<field_stack>&  field_stack)
 {
 
 	int apx = win.wide - 245;//anfangspunkt x
@@ -312,7 +321,7 @@ void load(window& win)
 	}
 
 }
-void restart(window& win)
+void restart(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)
 {
 	int apx = 125;//anfangspunkt x
 	int apy = win.height - 40; //anfangpunkt y
@@ -327,13 +336,32 @@ void restart(window& win)
 		cout << "######################################\n";
 		cout << "Neustart\n";
 		cout << "######################################\n\n";
+
+		delete_data(field_stack);
+		initialize_cards(cards);
+		for (size_t i = 4; i < 11; i++)
+		{
+			field_stack[i].set_stack_count(i - 3);
+			field_stack[i].set_stack_NOF(0);
+			cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
+		}
+		field_stack[11].set_stack_count(24);
+		field_stack[11].set_stack_NOF(0);
+		for (size_t yy = 0; yy < 4; yy++)
+		{
+			for (size_t ii = 0; ii < 13; ii++)
+			{
+				field_stack[yy].field.push_back(&cards[13 * yy + ii]);
+			}
+		}
+		austeilen(field_stack);
 	}
 	else
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Restart"));
 	}
 }
-void solve(window& win)
+void solve(window& win, vector<field_stack>&  field_stack)
 {
 
 	int apx = 5;//anfangspunkt x
@@ -363,26 +391,30 @@ void newwindow(window& win)
 {
 	rectangle(0, 0, win.wide, win.height, GREEN, GREEN);
 }
-//load button
-int button(window& win)  // maus x, maus y, windowsweite, windowshöhe
+//neues grünes feld für karten
+void newwindow_cards(window& win)
 {
-	load(win);
-	save(win);
-	restart(win);
-	solve(win);
+	rectangle(0, 0, win.wide-5, win.height-40, GREEN, GREEN);
+}
+//load button
+int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)  // maus x, maus y, windowsweite, windowshöhe
+{
+	load(win, field_stack);
+	save(win, field_stack);
+	restart(win, field_stack, cards);
+	solve(win,  field_stack);
 
 	return 0;
 }
 
 //search for a click on a card
-void click_window(vector<field_stack>& field_stack, window& win)
+void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& cards)
 {
 	win.click_card = 100;	//mouseclick on card_number (100= no card is seleced,)
 	win.click_stack = 13;	//mouseclick on field_number (0= no stack is seleced)
 	int click = 100;			//save mclickcard (so mclick will not be overwritten)
 
-	newwindow(win);
-	button(win);
+	newwindow_cards(win);
 
 	for (int i = 0; i < 11; i++)
 	{

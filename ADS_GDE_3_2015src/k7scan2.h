@@ -57,6 +57,5 @@ public:
 	void CParser::PushString(char c);			//Used for dtring assembly
 
 	int CParser::Sucheadresse(int col, int val, vector<Card>& arr); //Adressensucher
-	void CParser::uebergabe(vector<Card>& address);
 	CParser() { IP_LineNumber = 1; ugetflag = 0; prflag = 0; };	//Constructor
 };
