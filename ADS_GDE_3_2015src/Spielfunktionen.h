@@ -6,6 +6,9 @@
 #include "Klassen.h"
 #endif // !__Klassen__
 
+#ifndef __window__
+#include "window.h"
+#endif
 
 void	austeilen(vector<field_stack>& ziel);
 
