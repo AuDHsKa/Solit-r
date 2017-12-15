@@ -14,7 +14,9 @@ void	austeilen(vector<field_stack>& ziel);
 
 void	playing_rules(vector<field_stack>& ziel, window& win);
 
-void	move(vector<field_stack>& ziel, window& win);
+void window_move(vector<field_stack>& field_stack, window& win);
+
+void	move_cards(vector<field_stack>& ziel, window& win);
 
 void	take_card_from_field_to_field(vector<field_stack>&	f1);
 

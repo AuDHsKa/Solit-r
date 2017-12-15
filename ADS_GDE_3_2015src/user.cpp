@@ -96,7 +96,7 @@ void user_main()
 		button(win, field_stack, cards);
 
 		click_window(field_stack, win, cards);
-		playing_rules(field_stack, win);
+		window_move(field_stack, win);
 		click_window(field_stack, win, cards);
 
 		//cout <<"click on stack" << win.click_stack << "\n" << "card" << win.click_card <<"\n";

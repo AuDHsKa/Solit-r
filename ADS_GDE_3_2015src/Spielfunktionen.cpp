@@ -67,10 +67,8 @@ void	austeilen(vector<field_stack>& ziel)
 	}
 }
 
-void	playing_rules(vector<field_stack>& field_stack, window& win)
+void	window_move(vector<field_stack>& field_stack, window& win)
 {
-	Card*	jojo;
-
 	if ((win.second_click_stack == 13) || (win.first_click_card == 53))
 	{
 		win.first_click_stack = 13;
@@ -78,7 +76,6 @@ void	playing_rules(vector<field_stack>& field_stack, window& win)
 	}
 	else
 	{
-
 		if ((win.first_click_stack == 13) || (win.first_click_stack == win.second_click_stack))
 		{
 			win.first_click_stack = win.second_click_stack;
@@ -86,200 +83,10 @@ void	playing_rules(vector<field_stack>& field_stack, window& win)
 		}
 		else
 		{
-			//click deck to field 
-			if ((win.first_click_stack == 11) && (win.second_click_stack > 3) && (0 <= win.first_click_card < 53)) // deck to field
+			if (win.second_click_stack < 53)
 			{
-				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
-					(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
-				{
-					move(field_stack, win);
-
-					//jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//// clear the top card of the stack 
-					//field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//field_stack[win.click_stack].field.push_back(jojo);
-					//field_stack[win.click_stack].raise_cards();
-				}
-				else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.second_click_stack].field.empty() == true))
-				{
-					move(field_stack, win);
-					//jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//// clear the top card of the stack 
-					//field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//field_stack[win.click_stack].field.push_back(jojo);
-					//field_stack[win.click_stack].raise_cards();
-				}
+				playing_rules(field_stack, win);
 			}
-
-
-			if ((win.first_click_stack == 11) && (win.second_click_stack < 4) && (0 <= win.first_click_card < 53) ) // deck to target 
-			{
-				//(win.click_card != 53) fehlt noch sonst absturz--click_stack nicht leer
-				if ((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false) ||
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1))
-				{
-					win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
-					move(field_stack, win);
-
-					//jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//// clear the top card of the stack 
-					//field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//// setzt die Ass schon auf das "richtige Feld"
-
-					//field_stack[jojo->get_card_colour()].field.push_back(jojo);
-				}
-				else if ((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() + 1)))
-				{
-					move(field_stack, win);
-
-					//jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//// clear the top card of the stack 
-					//field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//field_stack[jojo->get_card_colour()].field.push_back(jojo);
-				}
-				else
-				{
-					cout << "############################## \n";
-					cout << "invalid move, try again! \n";
-					cout << "############################## \n";
-				}
-			}
-
-
-
-			// movement field to field 
-			if ((win.first_click_stack < 11) && (win.first_click_stack > 3) && (win.second_click_stack < 11) && (win.second_click_stack > 3))// field to field
-			{
-				// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
-
-				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) &&
-					((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 2) &&
-					((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 4))
-				{
-					move(field_stack, win);
-
-					//while (win.first_click_card < field_stack[win.first_click_stack].field.size())
-					//{
-					//	jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//	// clear the top card of the stack 
-					//	field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//	field_stack[win.click_stack].field.push_back(jojo);
-					//	field_stack[win.click_stack].raise_cards();
-					//}
-
-					size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
-					if (s)
-					{
-						field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
-					}
-				}
-
-				// look after valid move, look for King to empty field
-				else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.second_click_stack].field.empty() == true))
-				{
-					move(field_stack, win);
-
-					//// get the top card of the actual stack 
-					//while (win.first_click_card < field_stack[win.first_click_stack].field.size())
-					//{
-					//	jojo = field_stack[win.first_click_stack].field[win.first_click_card];
-					//	// clear the top card of the stack 
-					//	field_stack[win.first_click_stack].field.erase(field_stack[win.first_click_stack].field.begin() + win.first_click_card);
-
-					//	field_stack[win.click_stack].field.push_back(jojo);
-					//	field_stack[win.click_stack].raise_cards();
-					//}
-
-					size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
-					if (s)
-					{
-						field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
-					}
-				}
-				else
-				{
-					cout << "############################## \n";
-					cout << "invalid move, try again! \n";
-					cout << "############################## \n";
-				}
-
-
-
-			}
-
-
-
-			if ((win.first_click_stack < 4) && (win.second_click_stack < 11) && (win.second_click_stack > 3) && win.first_click_card < 53) //target to field übergabe
-			{
-				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
-				{
-					move(field_stack, win);
-
-					//jojo = field_stack[(win.first_click_stack)].field.back();
-					//// clear the top card of the stack 
-					//field_stack[(win.first_click_stack)].field.pop_back();
-
-					//field_stack[win.click_stack].field.push_back(jojo);
-					//field_stack[win.click_stack].raise_cards();
-				}
-				else
-				{
-					cout << "############################## \n";
-					cout << "invalid move, try again! \n";
-					cout << "############################## \n";
-				}
-			}
-
-
-
-			if ((win.first_click_stack > 3) && (win.first_click_stack < 11) && (win.second_click_stack < 4) && win.first_click_card < 53) // field to target_stack übergabe
-			{
-				if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-					(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() + 1)))
-				{
-					win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
-					move(field_stack, win);
-
-					//// get the top card of the actual stack 
-					//jojo = field_stack[win.first_click_stack].field.back();
-					//// clear the top card of the stack 
-					//field_stack[win.first_click_stack].field.pop_back();
-
-					//field_stack[jojo->get_card_colour()].field.push_back(jojo);
-
-					size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
-					if (s)
-					{
-						field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
-					}
-				}
-				else
-				{
-					cout << "############################## \n";
-					cout << "invalid move, try again! \n";
-					cout << "############################## \n";
-				}
-			}
-
-
-
-			win.first_click_stack = 13; //rücksetzen des ersen clicks
-			win.first_click_card = 100;
-
-			win.x_mouse = 0;
-			win.y_mouse = 0;
-
 		}
 	}
 
@@ -310,15 +117,198 @@ void	playing_rules(vector<field_stack>& field_stack, window& win)
 		win.first_click_stack = 13; //rücksetzen des ersen clicks
 		win.first_click_card = 100;
 		win.x_mouse = 0;
-		win.y_mouse = 0; 
+		win.y_mouse = 0;
 
 	}
 
-
 }
 
+bool	same_colour(vector<field_stack>& field_stack, window& win)
+{
+	bool same_col = false;
 
-void	move(vector<field_stack>& field_stack, window&	select)
+	return same_col;
+}
+
+bool	field_empty(vector<field_stack>& field_stack, int empty_field) 
+{
+	bool empty = false;
+
+	if (field_stack[empty_field].field.empty())
+	{
+		empty = true;
+	}
+	else
+	{
+		empty = false;
+	}
+
+	return empty;
+}
+
+void	undiscover(vector<field_stack>& field_stack, window& win)
+{
+	if (win.first_click_stack < 11)
+	{
+		if (field_stack[win.first_click_stack].field.size())
+		{
+			field_stack[win.first_click_stack].field[field_stack[win.first_click_stack].field.size() - 1]->undiscover_card();
+		}
+	}
+}
+
+void	target_rules(vector<field_stack>& field_stack, window& win)
+{
+	bool first_stack_empty = field_empty(field_stack, win.first_click_stack);
+	bool second_stack_empty = field_empty(field_stack, win.second_click_stack);
+
+	if (first_stack_empty)
+	{
+		return;
+	}
+
+	if (second_stack_empty)
+	{
+		if(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1)
+		{
+		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
+		move_cards(field_stack, win);
+		undiscover(field_stack, win);
+		}
+	}
+	else
+	{
+			if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
+				(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() + 1)))
+			{
+				win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
+				move_cards(field_stack, win);
+				undiscover(field_stack, win);
+			}
+	}
+}
+
+void	field_rules(vector<field_stack>& field_stack, window& win)
+{
+	bool same_col = same_colour(field_stack, win);
+	bool first_stack_empty = field_empty(field_stack, win.first_click_stack);
+	bool second_stack_empty = field_empty(field_stack, win.second_click_stack);
+
+	if (first_stack_empty)
+	{
+		return;
+	}
+
+	if (second_stack_empty)
+	{
+		if (field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13)
+		{
+			move_cards(field_stack, win);
+			undiscover(field_stack, win);
+		}
+	}
+	else
+	{
+		if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
+			(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)) &&
+			(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) &&
+			((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 2) &&
+			((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 4))
+		{
+			move_cards(field_stack, win);
+			undiscover(field_stack, win);
+		}
+	}
+	////deck to field
+	//if ((win.first_click_stack == 11) && (win.second_click_stack > 3) && (0 <= win.first_click_card < 53)) // deck to field
+	//{
+	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
+	//		(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
+	//		(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
+	//	{
+	//		move_cards(field_stack, win);
+	//	}
+	//}
+
+
+	//// move_cardsment field to field 
+	//if ((win.first_click_stack < 11) && (win.first_click_stack > 3) && (win.second_click_stack < 11) && (win.second_click_stack > 3))// field to field
+	//{
+	//	// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
+
+	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
+	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)) &&
+	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) &&
+	//		((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 2) &&
+	//		((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 4))
+	//	{
+	//		move_cards(field_stack, win);
+
+	//		size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
+	//		if (s)
+	//		{
+	//			field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
+	//		}
+	//	}
+
+	//	// look after valid move_cards, look for King to empty field
+	//	else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.second_click_stack].field.empty() == true))
+	//	{
+	//		move_cards(field_stack, win);
+
+	//		size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
+	//		if (s)
+	//		{
+	//			field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
+	//		}
+	//	}
+	//	else
+	//	{
+	//		cout << "############################## \n";
+	//		cout << "invalid move_cards, try again! \n";
+	//		cout << "############################## \n";
+	//	}
+	//}
+
+
+
+	//if ((win.first_click_stack < 4) && (win.second_click_stack < 11) && (win.second_click_stack > 3) && win.first_click_card < 53) //target to field übergabe
+	//{
+	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
+	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
+	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
+	//	{
+	//		move_cards(field_stack, win);
+	//	}
+	//	else
+	//	{
+	//		cout << "############################## \n";
+	//		cout << "invalid move_cards, try again! \n";
+	//		cout << "############################## \n";
+	//	}
+	//}
+}
+
+void	playing_rules(vector<field_stack>& field_stack, window& win)
+{
+	if (win.second_click_stack < 4)
+	{
+		target_rules(field_stack, win);
+	}
+
+	if (win.second_click_stack > 3)
+	{
+		field_rules(field_stack, win);
+	}
+
+	win.first_click_stack = 13; //rücksetzen des ersen clicks
+	win.first_click_card = 100;
+
+	win.x_mouse = 0;
+	win.y_mouse = 0;
+}
+
+void	move_cards(vector<field_stack>& field_stack, window&	select)
 {
 	Card*	jojo;
 
@@ -618,7 +608,7 @@ void	take_card_from_deck_to_field(vector<field_stack>&	f1)
 //						win.second_click_stack = y;
 //						win.second_click_card = f1[y].field.size();
 //
-//						move(f1, win);
+//						move_cards(f1, win);
 //					}
 //					if (win.x_mouse == 0 && win.y_mouse == 0)
 //					{
