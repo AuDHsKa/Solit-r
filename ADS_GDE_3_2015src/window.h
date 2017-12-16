@@ -17,7 +17,8 @@ public:
 
 	int x_mouse;
 	int y_mouse;
-
+	
+	int test;
 	int first_click_stack;
 	int first_click_card;
 	int second_click_stack;

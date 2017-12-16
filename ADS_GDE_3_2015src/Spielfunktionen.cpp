@@ -152,7 +152,7 @@ void	undiscover(vector<field_stack>& field_stack, window& win)
 	{
 		if (field_stack[win.first_click_stack].field.size())
 		{
-			field_stack[win.first_click_stack].field[field_stack[win.first_click_stack].field.size() - 1]->undiscover_card();
+			field_stack[win.first_click_stack].field[field_stack[win.first_click_stack].field.size()-1]->undiscover_card();
 		}
 	}
 }
@@ -174,6 +174,12 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
 		move_cards(field_stack, win);
 		undiscover(field_stack, win);
+
+		win.first_click_stack = 13; //rücksetzen des ersen clicks
+		win.first_click_card = 100;
+
+		win.x_mouse = 0;
+		win.y_mouse = 0;
 		}
 	}
 	else
@@ -184,6 +190,12 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 				win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
 				move_cards(field_stack, win);
 				undiscover(field_stack, win);
+
+				win.first_click_stack = 13; //rücksetzen des ersen clicks
+				win.first_click_card = 100;
+
+				win.x_mouse = 0;
+				win.y_mouse = 0;
 			}
 	}
 }
@@ -205,6 +217,12 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 		{
 			move_cards(field_stack, win);
 			undiscover(field_stack, win);
+
+			win.first_click_stack = 13; //rücksetzen des ersen clicks
+			win.first_click_card = 100;
+
+			win.x_mouse = 0;
+			win.y_mouse = 0;
 		}
 	}
 	else
@@ -217,76 +235,15 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 		{
 			move_cards(field_stack, win);
 			undiscover(field_stack, win);
+
+			win.first_click_stack = 13; //rücksetzen des ersen clicks
+			win.first_click_card = 100;
+
+			win.x_mouse = 0;
+			win.y_mouse = 0;
 		}
 	}
-	////deck to field
-	//if ((win.first_click_stack == 11) && (win.second_click_stack > 3) && (0 <= win.first_click_card < 53)) // deck to field
-	//{
-	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-	//		(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
-	//		(field_stack[win.first_click_stack].field.at(win.first_click_card)->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
-	//	{
-	//		move_cards(field_stack, win);
-	//	}
-	//}
 
-
-	//// move_cardsment field to field 
-	//if ((win.first_click_stack < 11) && (win.first_click_stack > 3) && (win.second_click_stack < 11) && (win.second_click_stack > 3))// field to field
-	//{
-	//	// @Marcel: Abfrage erweitert; überüprüft ob Karte gelegt werden darf! 
-
-	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)) &&
-	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) &&
-	//		((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 2) &&
-	//		((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() + field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) != 4))
-	//	{
-	//		move_cards(field_stack, win);
-
-	//		size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
-	//		if (s)
-	//		{
-	//			field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
-	//		}
-	//	}
-
-	//	// look after valid move_cards, look for King to empty field
-	//	else if ((field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13) && (field_stack[win.second_click_stack].field.empty() == true))
-	//	{
-	//		move_cards(field_stack, win);
-
-	//		size_t s = field_stack[win.first_click_stack].field.size(); // nächste karte umdrehen
-	//		if (s)
-	//		{
-	//			field_stack[win.first_click_stack].field[s - 1]->undiscover_card();
-	//		}
-	//	}
-	//	else
-	//	{
-	//		cout << "############################## \n";
-	//		cout << "invalid move_cards, try again! \n";
-	//		cout << "############################## \n";
-	//	}
-	//}
-
-
-
-	//if ((win.first_click_stack < 4) && (win.second_click_stack < 11) && (win.second_click_stack > 3) && win.first_click_card < 53) //target to field übergabe
-	//{
-	//	if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
-	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field.back()->get_card_colour()) &&
-	//		(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)))
-	//	{
-	//		move_cards(field_stack, win);
-	//	}
-	//	else
-	//	{
-	//		cout << "############################## \n";
-	//		cout << "invalid move_cards, try again! \n";
-	//		cout << "############################## \n";
-	//	}
-	//}
 }
 
 void	playing_rules(vector<field_stack>& field_stack, window& win)
@@ -301,11 +258,6 @@ void	playing_rules(vector<field_stack>& field_stack, window& win)
 		field_rules(field_stack, win);
 	}
 
-	win.first_click_stack = 13; //rücksetzen des ersen clicks
-	win.first_click_card = 100;
-
-	win.x_mouse = 0;
-	win.y_mouse = 0;
 }
 
 void	move_cards(vector<field_stack>& field_stack, window&	select)
@@ -573,54 +525,128 @@ void	take_card_from_deck_to_field(vector<field_stack>&	f1)
 }
 
 //sven big ki
-//
-//void solvealgo(vector<field_stack>&	f1, window& win)
-//{
-//	int no_change = 1;
-//	int hide = 0;
-//
-//	for (size_t ii = 0; ii < (f1[11].field.size() - 1); ii++)
-//	{
-//		f1[11].field[ii]->undiscover_card();
-//	}
-//
-//	win.x_mouse = 1;
-//	win.y_mouse = 1;
-//
-//	//while (no_change)
-//	//{
-//		for (int i = 4; i < (f1.size()); i++)
-//		{
-//			hide = 0;
-//			while (f1[i].field[hide]->is_card_hidden())
-//			{
-//				hide++;
-//			}
-//
-//			for (hide; hide < f1[i].field.size()  ; hide++)
-//			{
-//				for (int y = 4; y < 11; y++)
-//				{
-//					if (i != y)
-//					{
-//						win.first_click_card = hide;
-//						win.first_click_stack = i;
-//						win.second_click_stack = y;
-//						win.second_click_card = f1[y].field.size();
-//
-//						move_cards(f1, win);
-//					}
-//					if (win.x_mouse == 0 && win.y_mouse == 0)
-//					{
-//						break;
-//						no_change = 0;
-//					}
-//				}
-//			}
-//
-//
-//		//}
-//	}
-//
-//}
+void ki_field_field(vector<field_stack>&	field_stack, window& win)
+{
+	int no_change = 1;
+	int hide = 0;
+	int old_move_card_1 = 0;
+	int old_move_card_2 = 0;
+	int old_move_stack_1 = 0;
+	int old_move_stack_2 = 0;
+	
+	for (int i = 4; i < (field_stack.size()); i++)
+	{
+		win.x_mouse = 1;
+		win.y_mouse = 1;
+
+		//hide = 0;
+		//while (f1[i].field[hide]->is_card_hidden())
+		//{
+		//	hide++;
+		//}
+
+		//for (hide; hide < f1[i].field.size()  ; hide++)
+		//{
+
+
+		for (int y = 4; y < 11; y++)
+		{
+			if (i != y)
+			{
+				win.first_click_stack = i;//win.test;
+				win.first_click_card = field_stack[i].field.size() - 1;//field_stack[win.test].field.size()-1;
+				win.second_click_stack = y;
+				win.second_click_card = field_stack[y].field.size() - 1;
+
+				if (old_move_card_1 == win.first_click_card && old_move_stack_1 == win.first_click_stack)
+				{
+					break;
+				}
+				else
+				{
+					playing_rules(field_stack, win);
+				}
+			}
+			if (win.x_mouse == 0 && win.y_mouse == 0)
+			{
+				old_move_stack_1 = win.second_click_stack;
+				old_move_card_1 = win.second_click_card + 1;
+				no_change = 0;
+				break;
+
+			}
+		}
+	}
+}
+
+void ki_deck_field(vector<field_stack>&	field_stack, window& win)
+{
+	if (field_stack[11].field.size() == 0)
+	{
+		return;
+	}
+
+	int no_change = 1;
+	int hide = 0;
+	int old_move_card_1 = 0;
+	int old_move_card_2 = 0;
+	int old_move_stack_1 = 0;
+	int old_move_stack_2 = 0;
+
+	no_change = 0;
+	win.first_click_stack = 11;
+
+	win.x_mouse = 1;
+		win.y_mouse = 1;
+		no_change == 1;
+
+
+		for (int i = 0; i < field_stack[11].field.size(); i++)
+		{
+			win.first_click_card = i;
+
+			for (int y = 4; y < 11; y++)
+			{
+				win.second_click_stack = y;
+				win.second_click_card = field_stack[y].field.size() - 1;
+
+				playing_rules(field_stack, win);
+
+				if (win.x_mouse == 0 && win.y_mouse == 0)
+				{
+					no_change = 1;
+					break;
+				}
+			}
+			if (win.x_mouse == 0 && win.y_mouse == 0)
+			{
+				no_change = 1;
+				break;
+			}
+		}
+	
+}
+
+void solvealgo(vector<field_stack>&	field_stack, window& win)
+{
+	int no_change = 1;
+	int hide = 0;
+	int old_move_card_1 = 0;
+	int old_move_card_2 = 0;
+	int old_move_stack_1 = 0;
+	int old_move_stack_2 = 0;
+
+	if (field_stack[11].field.size() != 0)
+	{
+		for (size_t ii = 0; ii < (field_stack[11].field.size() - 1); ii++)
+		{
+			field_stack[11].field[ii]->undiscover_card();
+		}
+	}
+
+	ki_field_field(field_stack, win);
+	
+	ki_deck_field(field_stack, win);
+
+}
 

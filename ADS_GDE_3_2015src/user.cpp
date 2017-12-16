@@ -88,6 +88,8 @@ void user_main()
 	win.second_click_card = 100;
 	win.second_click_stack = 13;
 
+	win.test = 3;
+
 	while (1)
 	{
 		win.second_click_card = 100;
@@ -99,13 +101,18 @@ void user_main()
 		window_move(field_stack, win);
 		click_window(field_stack, win, cards);
 
-		//cout <<"click on stack" << win.click_stack << "\n" << "card" << win.click_card <<"\n";
+		//win.test++;
+
+		
+
 		updatescr();
 
 		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 
 		if (StopProcess())break;
+		
 
+		
 	}
 
 

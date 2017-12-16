@@ -382,6 +382,7 @@ void solve(window& win, vector<field_stack>&  field_stack)
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
 
+		solvealgo(field_stack, win);
 		//take_card_from_field_to_field(field_stack);
 
 		//take_card_from_deck_to_field(field_stack);
