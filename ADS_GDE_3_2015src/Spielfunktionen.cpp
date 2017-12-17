@@ -525,67 +525,66 @@ void	take_card_from_deck_to_field(vector<field_stack>&	f1)
 }
 
 //sven big ki
-void ki_field_field(vector<field_stack>&	field_stack, window& win)
+int ki_field_field(vector<field_stack>&	field_stack, window& win)
 {
-	int no_change = 1;
+	int something_game = 0;
 	int hide = 0;
-	int old_move_card_1 = 0;
-	int old_move_card_2 = 0;
-	int old_move_stack_1 = 0;
-	int old_move_stack_2 = 0;
-	
-	for (int i = 4; i < (field_stack.size()); i++)
-	{
-		win.x_mouse = 1;
-		win.y_mouse = 1;
 
-		//hide = 0;
-		//while (f1[i].field[hide]->is_card_hidden())
-		//{
-		//	hide++;
-		//}
-
-		//for (hide; hide < f1[i].field.size()  ; hide++)
-		//{
-
-
-		for (int y = 4; y < 11; y++)
+		for (int i = 4; i < 11; i++)
 		{
-			if (i != y)
-			{
-				win.first_click_stack = i;//win.test;
-				win.first_click_card = field_stack[i].field.size() - 1;//field_stack[win.test].field.size()-1;
-				win.second_click_stack = y;
-				win.second_click_card = field_stack[y].field.size() - 1;
+			win.x_mouse = 1;
+			win.y_mouse = 1;
 
-				if (old_move_card_1 == win.first_click_card && old_move_stack_1 == win.first_click_stack)
+			hide = 0;
+			if (field_stack[i].field.size() != 0)
+			{
+				while (field_stack[i].field[hide]->is_card_hidden())
 				{
-					break;
-				}
-				else
-				{
-					playing_rules(field_stack, win);
+					hide++;
 				}
 			}
-			if (win.x_mouse == 0 && win.y_mouse == 0)
-			{
-				old_move_stack_1 = win.second_click_stack;
-				old_move_card_1 = win.second_click_card + 1;
-				no_change = 0;
-				break;
 
+			for (hide; hide < field_stack[i].field.size(); hide++)
+			{
+
+
+				for (int y = 4; y < 11; y++)
+				{
+					if (i != y)
+					{
+						win.first_click_stack = i;//win.test;
+						win.first_click_card = hide;//field_stack[win.test].field.size()-1;
+						win.second_click_stack = y;
+						win.second_click_card = field_stack[y].field.size() - 1;
+						win.old_move_stack_1 = i;
+						win.old_move_card_1 = hide;
+						playing_rules(field_stack, win);
+					}
+					if (win.x_mouse == 0 && win.y_mouse == 0)
+					{
+						if (win.old_move_card_2 == win.first_click_card && win.old_move_stack_1 == win.first_click_stack)
+						{
+							something_game = 0;
+							return something_game;
+						}
+						else
+						{
+							win.old_move_stack_2 = win.second_click_stack;
+							win.old_move_card_2 = win.second_click_card + 1;
+							something_game = 1;
+							break;
+						}
+					}
+
+				}
 			}
 		}
-	}
+	return something_game;
 }
 
-void ki_deck_field(vector<field_stack>&	field_stack, window& win)
+int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 {
-	if (field_stack[11].field.size() == 0)
-	{
-		return;
-	}
-
+	int something_game = 0;
 	int no_change = 1;
 	int hide = 0;
 	int old_move_card_1 = 0;
@@ -596,45 +595,48 @@ void ki_deck_field(vector<field_stack>&	field_stack, window& win)
 	no_change = 0;
 	win.first_click_stack = 11;
 
-	win.x_mouse = 1;
+		win.x_mouse = 1;
 		win.y_mouse = 1;
 		no_change == 1;
 
-
-		for (int i = 0; i < field_stack[11].field.size(); i++)
-		{
-			win.first_click_card = i;
-
-			for (int y = 4; y < 11; y++)
+			if (field_stack[11].field.size() == 0)
 			{
-				win.second_click_stack = y;
-				win.second_click_card = field_stack[y].field.size() - 1;
+				something_game = 0;
+				return something_game;
+			}
+			no_change = 1;
 
-				playing_rules(field_stack, win);
+			for (int i = 0; i < field_stack[11].field.size(); i++)
+			{
+				win.first_click_card = i;
 
+				for (int y = 4; y < 11; y++)
+				{
+					win.second_click_stack = y;
+					win.second_click_card = field_stack[y].field.size() - 1;
+
+					playing_rules(field_stack, win);
+
+					if (win.x_mouse == 0 && win.y_mouse == 0)
+					{
+						no_change = 0;
+						something_game = 1;
+						break;
+					}
+				}
 				if (win.x_mouse == 0 && win.y_mouse == 0)
 				{
-					no_change = 1;
+					no_change = 0;
+					something_game = 1;
 					break;
 				}
 			}
-			if (win.x_mouse == 0 && win.y_mouse == 0)
-			{
-				no_change = 1;
-				break;
-			}
-		}
-	
+		return something_game;
 }
 
 void solvealgo(vector<field_stack>&	field_stack, window& win)
 {
-	int no_change = 1;
-	int hide = 0;
-	int old_move_card_1 = 0;
-	int old_move_card_2 = 0;
-	int old_move_stack_1 = 0;
-	int old_move_stack_2 = 0;
+	int something_game = 1;
 
 	if (field_stack[11].field.size() != 0)
 	{
@@ -644,9 +646,20 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 		}
 	}
 
-	ki_field_field(field_stack, win);
-	
-	ki_deck_field(field_stack, win);
+	while (something_game == 1)
+	{
+		something_game = 1;
+		while (something_game == 1)
+		{
+			something_game = ki_field_field(field_stack, win);/// fehler wenn karte immer verschiebarist!!S
+		}
+
+		something_game = 1;
+		while (something_game == 1)
+		{
+			something_game = ki_deck_field(field_stack, win);
+		}
+	}
 
 }
 
