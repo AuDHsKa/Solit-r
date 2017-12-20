@@ -530,6 +530,9 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 	int something_game = 0;
 	int hide = 0;
 
+	win.old_card_one = NULL;
+	win.old_card_second = NULL;
+
 		for (int i = 4; i < 11; i++)
 		{
 			win.x_mouse = 1;
@@ -552,31 +555,50 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 				{
 					if (i != y)
 					{
-						win.first_click_stack = i;//win.test;
-						win.first_click_card = hide;//field_stack[win.test].field.size()-1;
+						win.first_click_stack = i;
+						win.first_click_card = hide;
 						win.second_click_stack = y;
-						win.second_click_card = field_stack[y].field.size() - 1;
-						win.old_move_stack_1 = i;
-						win.old_move_card_1 = hide;
-						playing_rules(field_stack, win);
-					}
-					if (win.x_mouse == 0 && win.y_mouse == 0)
-					{
-						if (win.old_move_card_2 == win.first_click_card && win.old_move_stack_1 == win.first_click_stack)
+						if (field_stack[win.second_click_stack].field.size())
 						{
-							something_game = 0;
-							return something_game;
+							win.second_click_card = field_stack[y].field.size() - 1;
 						}
 						else
 						{
-							win.old_move_stack_2 = win.second_click_stack;
-							win.old_move_card_2 = win.second_click_card + 1;
+							win.second_click_card = 53; //leeres feld für könig
+						}
+
+						if (win.second_click_card != 53)
+						{
+							if ( (field_stack[win.first_click_stack].field.at(win.first_click_card) == win.old_card_one)
+								&& (field_stack[win.second_click_stack].field.at(win.second_click_card) == win.old_card_second) )
+							{
+	
+								something_game = 0;
+								break;
+
+							}
+						}
+
+						playing_rules(field_stack, win);
+
+						
+
+						if (win.x_mouse == 0 && win.y_mouse == 0)
+						{
+							cout << "von stack " << i << "  Karte " << hide << "\n";
+							cout << "zu stack " << y << "  Kart" << win.second_click_card << "\n";
 							something_game = 1;
+							win.old_card_one = field_stack[win.second_click_stack].field.at(win.second_click_card + 1); // i-te karte ausgewählt damit nicht selbe karte zwei mal verschoben
+							if (field_stack[i].field.size())
+							{
+								win.old_card_second = field_stack[i].field.back();
+							}
 							break;
 						}
 					}
 
 				}
+
 			}
 		}
 	return something_game;
@@ -585,19 +607,13 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 {
 	int something_game = 0;
-	int no_change = 1;
+	int no_change = 0;
 	int hide = 0;
-	int old_move_card_1 = 0;
-	int old_move_card_2 = 0;
-	int old_move_stack_1 = 0;
-	int old_move_stack_2 = 0;
 
-	no_change = 0;
 	win.first_click_stack = 11;
 
 		win.x_mouse = 1;
 		win.y_mouse = 1;
-		no_change == 1;
 
 			if (field_stack[11].field.size() == 0)
 			{
@@ -636,7 +652,11 @@ int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 
 void solvealgo(vector<field_stack>&	field_stack, window& win)
 {
-	int something_game = 1;
+	int loop_field = 1;
+	int loop_deck = 0;
+	int loop_target = 0;
+	int unterbrechung = 0;
+	int loop_deck_anz = 0;
 
 	if (field_stack[11].field.size() != 0)
 	{
@@ -645,19 +665,34 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 			field_stack[11].field[ii]->undiscover_card();
 		}
 	}
+		
 
-	while (something_game == 1)
+	while (loop_field == 1 || loop_deck == 1 || loop_target == 1)
 	{
-		something_game = 1;
-		while (something_game == 1)
+
+
+		loop_field = 1;
+		while (loop_field == 1)
 		{
-			something_game = ki_field_field(field_stack, win);/// fehler wenn karte immer verschiebarist!!S
+			loop_field = ki_field_field(field_stack, win);/// fehler wenn karte immer verschiebarist!!S
+			unterbrechung++;
+			if (unterbrechung > 3)
+			{
+				loop_field = 0;
+				break;
+			}
 		}
 
-		something_game = 1;
-		while (something_game == 1)
+		loop_deck_anz = 0;
+		loop_deck = 1;
+		while (loop_deck == 1)
 		{
-			something_game = ki_deck_field(field_stack, win);
+			loop_deck = ki_deck_field(field_stack, win);
+			loop_deck_anz++;
+		}
+		if (loop_deck_anz > 2)
+		{
+			loop_field = 1;
 		}
 	}
 

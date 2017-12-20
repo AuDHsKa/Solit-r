@@ -88,7 +88,7 @@ void user_main()
 	win.second_click_card = 100;
 	win.second_click_stack = 13;
 
-	win.test = 3;
+
 
 	while (1)
 	{

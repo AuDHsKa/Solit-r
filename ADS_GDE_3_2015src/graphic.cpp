@@ -44,8 +44,8 @@ char w_suit[4] = { 'D', 'S', 'H', 'C' }; // Card suit of Diamonds, Spades, Heart
 
 char w_card[14] = { '0','A','2', '3', '4' , '5', '6', '7', '8', '9', 'Z', 'J', 'Q', 'K' }; // Cards value, Z=10, J= Jack, Q=Queen, K=King
 
-																						   // Card=Karte function: print a card to the window : 
-																						   // bx, by, hx, hy =card position, aktiv= click on this card, karte= number of w_card, w_colour= number of w_suit
+  // Card=Karte function: print a card to the window : 
+ // bx, by, hx, hy =card position, aktiv= click on this card, karte= number of w_card, w_colour= number of w_suit
 void KARTE(int bx, int by, int hx, int hy, bool aktiv, bool hidden, char karte, char w_colour)
 {
 	int col = GREEN;	//colour for the card_suit (green = emty field)
@@ -138,6 +138,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 
 			hidden = f1[feld].field[i]->is_card_hidden();
 
+			//mausklick auf deck und karte??
 			if ((i + 1) < posnumber)
 			{
 				if ((bx < x) && (x < hx) && (by < y) && (y < (by + abstand))) // auswahl der karte in mitten eines stapels

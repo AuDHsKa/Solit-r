@@ -3,6 +3,11 @@
 #include <string>
 #include <vector>
 
+#ifndef __Klassen__
+#include "Klassen.h"
+#endif // !__Klassen__
+
+
 #define __window__
 
 
@@ -23,10 +28,9 @@ public:
 	int first_click_card;
 	int second_click_stack;
 	int second_click_card;
-	int old_move_stack_1 = 0;
-	int old_move_card_1 = 0;
-	int old_move_stack_2 = 0;
-	int old_move_card_2 = 0;
+
+	Card*	old_card_one;
+	Card*	old_card_second;
 
 };
 
