@@ -22,7 +22,9 @@
 	#include "Spielfunktionen.h"
 #endif // !Spielfunktionen.h
 
-
+#ifndef __einaus__
+#include "Eingabe_Ausgabe.h"
+#endif
 
 void	austeilen(vector<field_stack>& ziel)
 {
@@ -271,6 +273,10 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 		field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
 		field_stack[select.second_click_stack].field.push_back(jojo);
+		
+		cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
+		cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
+		//write_log_data(field_stack, select.first_click_stack * 100 + select.first_click_card, select.second_click_stack * 100 + select.second_click_card);
 	}
 	else
 	{
@@ -280,6 +286,10 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 			field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
 			field_stack[select.second_click_stack].field.push_back(jojo);
+
+			cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
+			cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
+			//write_log_data(field_stack,select.first_click_stack*100+select.first_click_card, select.second_click_stack*100+select.second_click_card +1);
 		}
 	}
 }
@@ -586,10 +596,11 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 
 						if (win.x_mouse == 0 && win.y_mouse == 0)
 						{
-							cout << "von stack " << i << "  Karte " << hide << "\n";
-							cout << "zu stack " << y << "  Kart" << win.second_click_card << "\n";
 							something_game = 1;
-							win.old_card_one = field_stack[win.second_click_stack].field.at(win.second_click_card + 1); // i-te karte ausgewählt damit nicht selbe karte zwei mal verschoben
+							if (win.second_click_card != 53)
+							{
+								win.old_card_one = field_stack[win.second_click_stack].field.at(win.second_click_card + 1); // i-te karte ausgewählt damit nicht selbe karte zwei mal verschoben
+							}
 							if (field_stack[i].field.size())
 							{
 								win.old_card_second = field_stack[i].field.back();
@@ -694,11 +705,49 @@ int ki_field_target(vector<field_stack>&	field_stack, window& win)
 	return something_game;
 }
 
+int ki_deck_target(vector<field_stack>&	field_stack, window& win)
+{
+	int something_game = 0;
+
+	win.first_click_stack = 11;
+
+	win.x_mouse = 1;
+	win.y_mouse = 1;
+
+	if (field_stack[11].field.size() == 0)
+	{
+		something_game = 0;
+		return something_game;
+	}
+
+	for (int i = 0; i < field_stack[11].field.size(); i++)
+	{
+		win.first_click_card = i;
+
+		for (int y = 0; y < 4; y++)
+		{
+			win.second_click_stack = y;
+			win.second_click_card = field_stack[y].field.size() - 1;
+
+			playing_rules(field_stack, win);
+
+			if (win.x_mouse == 0 && win.y_mouse == 0)
+			{
+				something_game = 1;
+				return something_game;
+			}
+		}
+	}
+	return something_game;
+}
+
+
 void solvealgo(vector<field_stack>&	field_stack, window& win)
 {
 	int loop_field = 1;
-	int loop_deck = 1;
-	int loop_target = 0;
+	int loop_deck = 0;
+	int loop_field_target = 0;
+	int loop_deck_target = 0;
 	int unterbrechung = 0;
 	int loop_deck_anz = 0;
 
@@ -711,7 +760,7 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 	}
 		
 
-	while (loop_field == 1 || loop_deck == 1 || loop_target == 1)
+	while (loop_field == 1 || loop_deck == 1 || loop_field_target == 1 || loop_deck_target == 1)
 	{
 
 
@@ -739,11 +788,12 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 			loop_field = 1;
 		}
 
-		loop_target = 1;
-		while (loop_target == 1)
-		{
-			loop_target = ki_field_target(field_stack, win);
-		}
+		loop_field_target = 1;
+		loop_field_target = ki_field_target(field_stack, win);
+
+		loop_deck_target = 1;
+		loop_deck_target = ki_deck_target(field_stack, win);
+		
 
 	}
 
