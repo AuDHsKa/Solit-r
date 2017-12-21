@@ -184,10 +184,11 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 	}
 	else
 	{
+		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
+
 			if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
 				(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() + 1)))
 			{
-				win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
 				move_cards(field_stack, win);
 				undiscover(field_stack, win);
 
@@ -650,10 +651,53 @@ int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 		return something_game;
 }
 
+int ki_field_target(vector<field_stack>&	field_stack, window& win)
+{
+	int something_game = 0;
+
+	for (int i = 4; i < 11; i++)
+	{
+		win.x_mouse = 1;
+		win.y_mouse = 1;
+
+			win.first_click_stack = i;
+			if (field_stack[i].field.size())
+			{
+				win.first_click_card = field_stack[i].field.size()-1;
+			}
+			else
+			{
+				win.first_click_card = 53; //leeres feld für field
+			}
+
+			for (int y = 0; y < 4; y++)
+			{
+				win.second_click_stack = y;
+				if (field_stack[y].field.size())
+				{
+					win.second_click_card = field_stack[y].field.size()-1;
+				}
+				else
+				{
+					win.second_click_card = 53; //leeres feld für target
+				}
+
+				playing_rules(field_stack, win);
+
+				if (win.x_mouse == 0 && win.y_mouse == 0)
+				{
+					something_game = 1;
+					return something_game;
+				}
+			}
+	}
+	return something_game;
+}
+
 void solvealgo(vector<field_stack>&	field_stack, window& win)
 {
 	int loop_field = 1;
-	int loop_deck = 0;
+	int loop_deck = 1;
 	int loop_target = 0;
 	int unterbrechung = 0;
 	int loop_deck_anz = 0;
@@ -694,7 +738,15 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 		{
 			loop_field = 1;
 		}
+
+		loop_target = 1;
+		while (loop_target == 1)
+		{
+			loop_target = ki_field_target(field_stack, win);
+		}
+
 	}
+
 
 }
 
