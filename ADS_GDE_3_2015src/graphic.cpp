@@ -296,6 +296,7 @@ void save(window& win, vector<field_stack>&  field_stack)
 		cout << "Datei gespeichert\n";
 		cout << "######################################\n\n";
 		write_data(field_stack);
+		output("Datei gespeichert\n", "logfile.txt");
 	}
 	else
 	{
@@ -319,6 +320,7 @@ void load(window& win, vector<field_stack>&  field_stack)
 		cout << "######################################\n\n";
 		delete_data(field_stack);
 		read_data(field_stack);
+		output("Dateigeladen augefürt\n", "logfile.txt");
 	}
 	else
 	{
@@ -357,6 +359,7 @@ void restart(window& win, vector<field_stack>&  field_stack, vector<Card>& cards
 			}
 		}
 		austeilen(field_stack);
+		output("Restart augefürt\n", "logfile.txt");
 	}
 	else
 	{
@@ -381,7 +384,7 @@ void solve(window& win, vector<field_stack>&  field_stack)
 		cout << "######################################\n";
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
-
+		output("Lösen augefürt\n", "logfile.txt");
 		//take_card_from_field_to_field(field_stack);
 
 		//take_card_from_deck_to_field(field_stack);

@@ -80,6 +80,7 @@ void user_main()
 	}
 
 	austeilen(field_stack);
+	output("\nProgramm gestartet\n\n", "logfile.txt");
 
 	newwindow(win);
 

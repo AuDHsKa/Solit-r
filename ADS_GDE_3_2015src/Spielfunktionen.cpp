@@ -22,6 +22,9 @@
 	#include "Spielfunktionen.h"
 #endif // !Spielfunktionen.h
 
+#ifndef __einaus__
+#include "Eingabe_Ausgabe.h"
+#endif
 
 
 void	austeilen(vector<field_stack>& ziel)
@@ -324,6 +327,7 @@ void	move(vector<field_stack>& field_stack, window&	select)
 
 	if (select.first_click_stack == 11 || select.first_click_stack < 4 || select.second_click_stack < 4)
 	{
+		write_log_data(field_stack, select);
 		jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 		field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
@@ -333,6 +337,7 @@ void	move(vector<field_stack>& field_stack, window&	select)
 	{
 		while (field_stack[select.first_click_stack].field.size()	>	select.first_click_card)
 		{
+			write_log_data(field_stack, select);
 			jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 			field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 

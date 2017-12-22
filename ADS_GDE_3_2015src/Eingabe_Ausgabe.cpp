@@ -17,9 +17,17 @@
 //David Kommentar
 */
 const	size_t	length = 52;
-vector<Card>	arr(length);
+vector<Card> arr(length);
+
+void get_arr(vector<Card>& arrl)
+{
+	arr = arrl;
+}
 
 void	read_data(vector<field_stack>& feld)
+/*	Von k7scan2 übernommenes "Main" zum Aufruf der einzulesenden Datei
+	und zur Ausfürhrung von k7scan2
+*/
 {
 	FILE *inf;
 	char fistr[100] = "";
@@ -34,17 +42,16 @@ void	read_data(vector<field_stack>& feld)
 	else
 	{
 		CParser obj;
-		//obj.uebergabe(arr);
 		obj.InitParse(inf, stderr, stdout);
 		//	obj.pr_tokentable();
 		obj.yyparse(arr, feld);
-		//char c; cin >> c;
+		
 	}
 
 	fclose(inf);
 }
 
-char*  zeit()
+char*	zeit()
 {
 	int jetzt;
 	int YY;
@@ -80,28 +87,24 @@ char*  zeit()
 	return cct;
 }
 
-void output(char *karten, char* name)
+void	output(char *Ausgabetext, char* dateiname)
+/*  Schreiben in die Ausgabedatei, dabei wird der Übergeben 
+	Text an die auf zu rufenden Datei angefügt bzw. wenn noch 
+	keine Datei vorhanden ist wird sie Erzeugt.
+*/
 {
-	FILE *inf;
-	int erri = 1;
-
-	char ccw[100];
-	char ddw[100];
-
-	char* dd;
-
-	string fistr;
-	//fistr = "outdaten.txt"
-
-	if ((inf = _fsopen(name, "a", _SH_DENYWR)) != NULL)
+	FILE *Ausgabedatei;
+	
+	if ((Ausgabedatei = _fsopen(dateiname, "a", _SH_DENYWR)) != NULL)// "a" Die  Daten werden an die Datei hinten angefügt
 	{
-		fprintf(inf, karten);
-		fclose(inf);
+		fprintf(Ausgabedatei, Ausgabetext);
+		fclose(Ausgabedatei);
 	}
-
-	erri = 2;
-
-
+	else
+	{
+		cout << "Datei konnte nicht geöfnet werden"; 
+	}
+		
 }
 
 void	write_data(vector<field_stack>& feldw)
@@ -232,133 +235,123 @@ void	delete_data(vector<field_stack>& felde)
 	;
 }
 
-void get_arr(vector<Card>& arrl)
-{
-	arr = arrl;
-}
 
-void	write_log_data(int kartennummer, int start, int ziel)
+
+void	write_log_data(vector<field_stack>& feldl, window& wind)
 {
+	/* Erzeugt den Ausgabe String des Logfiles 
+	** in printout wird mit Text der String zusammen gebaut
+	*/
 	int colo;
 	int vaul;
 	int feldw;
 	int reihew;
 	int stzi;
 	char cfeldw[5];
-	char* cfelwst;
-	char* name;
+	//char* cfelwst;
+	string Text;
 	char logname[100] = "logfile.txt";
-	char* printout;
-	colo = arr[kartennummer].get_card_colour();
-	vaul = arr[kartennummer].get_card_value();
-	switch (colo)
+	string printout;
+	char* printarr;
+	colo = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour();
+	vaul = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value();
+	printout = "Karte: ";
+	switch (feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour()) // Farbe der Karte
 	{
-	case(0):
-		printout = "Pik ";
-		break;
 	case(1):
-		printout = "Herz ";
+		Text = "Pik ";
 		break;
 	case(2):
-		printout = "Karo ";
+		Text = "Herz ";
+		break;
+	case(0):
+		Text = "Karo ";
 		break;
 	case(3):
-		printout = "Kreuz ";
+		Text = "Kreuz ";
 		break;
 	default:
-		printout = "kiene Farbe";
+		Text = "keine Farbe";
 		break;
 
 	}
-	output(printout, logname);
-	switch (vaul)
+	printout = printout + Text;
+	
+	switch (feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value()) //Wert der Karte
 	{
 	case(0):
-		printout = "0 ";
+		Text = "0 ";
 		break;
 	case(1):
-		printout = "ASS ";
+		Text = "ASS ";
 		break;
 	case(2):
-		printout = "2 ";
+		Text = "2 ";
 		break;
 	case(3):
-		printout = "3 ";
+		Text = "3 ";
 		break;
 	case(4):
-		printout = "4 ";
+		Text = "4 ";
 		break;
 	case(5):
-		printout = "5 ";
+		Text = "5 ";
 		break;
 	case(6):
-		printout = "6 ";
+		Text = "6 ";
 		break;
 	case(7):
-		printout = "7 ";
+		Text = "7 ";
 		break;
 	case(8):
-		printout = "8 ";
+		Text = "8 ";
 		break;
 	case(9):
-		printout = "9 ";
+		Text = "9 ";
 		break;
 	case(10):
-		printout = "10 ";
+		Text = "10 ";
 		break;
 	case(11):
-		printout = "Bube ";
+		Text = "Bube ";
 		break;
 	case(12):
-		printout = "Dame ";
+		Text = "Dame ";
 		break;
 	case(13):
-		printout = "König ";
+		Text = "König ";
 		break;
 	default:
-		printout = "kienen Wert";
+		Text = "keinen Wert ";
 		break;
 
 	}
-	output(printout, logname);
-
-	for (int gg = 0; gg < 2; gg++)
+	
+	printout = printout+ Text;
+	if ((strlen(const_cast<char*>(printout.c_str())))<16) //Nur zur Schönheit des Logfiles kann man auch weglassen 
 	{
-		if (gg == 0)
-		{
-			stzi = start;
-		}
-		else
-		{
-			printout = " -> ";
-			output(printout, logname);
-			stzi = ziel;
-		}
-		feldw = stzi / 100;
-		reihew = stzi - feldw * 100;
-
-		if (feldw < 4)
-		{
-			cfelwst = itoa(feldw, cfeldw, 10);
-			name = "Zeilstapel";
-
-		}
-		else
-		{
-			cfelwst = itoa(feldw - 4, cfeldw, 10);
-			name = "Feldstapel";
-
-		}
-
-		printout = name;
-		output(printout, logname);
-		printout = cfelwst;
-		output(printout, logname);
-		printout = " Reihe";
-		output(printout, logname);
-		printout = itoa(reihew, cfeldw, 10);
-		output(printout, logname);
+		Text = "\t"; // 
+		printout = printout + Text;
 	}
-	printout = "\n";
-	output(printout, logname);
+	Text = "\tVon: Startstapel ";
+	printout = printout + Text;
+	Text = itoa(wind.first_click_stack, cfeldw, 10); //Stapel
+	printout = printout + Text;
+	Text = "\t Startreihe ";
+	printout = printout + Text;
+	Text = itoa(wind.first_click_card, cfeldw, 10); // Reihe
+	printout = printout + Text;
+	Text = "\t -> Nach: ";
+	printout = printout + Text;
+	Text = " Zielstapel ";
+	printout = printout + Text;
+	Text = itoa(wind.second_click_stack, cfeldw, 10); // Stapel
+	printout = printout + Text;
+	Text = "\t Zielreihe ";
+	printout = printout + Text;
+	Text = itoa((wind.second_click_card+1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+	printout = printout + Text;
+	Text = "\n"; // Neue Zeile
+	printout = printout + Text;
+	output(const_cast<char*>(printout.c_str()), logname);
 }

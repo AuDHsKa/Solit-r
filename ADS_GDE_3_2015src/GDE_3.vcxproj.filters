@@ -170,5 +170,6 @@
       <Filter>Ressourcendateien</Filter>
     </Text>
     <Text Include="2017121217448outdaten.txt" />
+    <Text Include="unloesbar.txt" />
   </ItemGroup>
 </Project>
