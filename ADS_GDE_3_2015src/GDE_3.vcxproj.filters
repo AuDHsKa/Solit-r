@@ -171,5 +171,10 @@
     </Text>
     <Text Include="2017121217448outdaten.txt" />
     <Text Include="unloesbar.txt" />
+    <Text Include="trivial.txt" />
+    <Text Include="leicht.txt" />
+    <Text Include="mittelleicht.txt" />
+    <Text Include="mittel.txt" />
+    <Text Include="schwer.txt" />
   </ItemGroup>
 </Project>
