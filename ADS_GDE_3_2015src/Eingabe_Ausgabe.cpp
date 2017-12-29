@@ -204,7 +204,6 @@ void	write_data(vector<field_stack>& feldw)
 			}
 			output(karten, cc);
 
-			//printf("%s\n", karten);
 			if ((zz + 1) < uu)
 			{
 				karten = ",";
@@ -246,16 +245,17 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	int vaul;
 	int feldw;
 	int reihew;
-	int stzi;
-	char cfeldw[5];
+	//int stzi;
+	char cfeldw[5]; // Variabel zur Umwandlung von einem Interger in einen Char benötigt
 	//char* cfelwst;
-	string Text;
+	string Text; // Zwischenspeicher um den Text an printout dran zu hängen
 	char logname[100] = "logfile.txt";
-	string printout;
+	string printout; // Hier wird der kommpelte Text zur Ausgabe gesammelt
 	char* printarr;
 	colo = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour();
 	vaul = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value();
 	printout = "Karte: ";
+	// Text aus gabe der Kartenfarbe
 	switch (feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour()) // Farbe der Karte
 	{
 	case(1):
@@ -276,7 +276,7 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 
 	}
 	printout = printout + Text;
-	
+	// Umwandlung des Wertes in Text z. B. eine 1 wird zu "ASS " dient rein zur Bessern Lesbarkeit in der Datei
 	switch (feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value()) //Wert der Karte
 	{
 	case(0):
@@ -339,19 +339,34 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	printout = printout + Text;
 	Text = "\t Startreihe ";
 	printout = printout + Text;
-	Text = itoa(wind.first_click_card, cfeldw, 10); // Reihe
+	if (wind.first_click_card < 53) //Wenn noch keine Karte auf dem Stapel liegt
+	{
+		Text = itoa(wind.first_click_card, cfeldw, 10); // Reihe
+	}
+	else
+	{
+		Text = "0"; // Da wenn derr Stapel lehr ist 53 als Wert übergeben wird
+	}
 	printout = printout + Text;
 	Text = "\t -> Nach: ";
 	printout = printout + Text;
-	Text = " Zielstapel ";
+	Text = " Zielstapel  ";
 	printout = printout + Text;
 	Text = itoa(wind.second_click_stack, cfeldw, 10); // Stapel
 	printout = printout + Text;
 	Text = "\t Zielreihe ";
 	printout = printout + Text;
-	Text = itoa((wind.second_click_card+1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+	if ((wind.second_click_card + 1) < 53) //Wenn noch keine Karte auf dem Stapel liegt
+	{
+		Text = itoa((wind.second_click_card+1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+	}
+	else
+	{
+		Text = "0"; // Da wenn derr Stapel lehr ist 53 als Wert übergeben wird
+	}
+	
 	printout = printout + Text;
 	Text = "\n"; // Neue Zeile
 	printout = printout + Text;
-	output(const_cast<char*>(printout.c_str()), logname);
+	output(const_cast<char*>(printout.c_str()), logname);// Ausgabe in die Datei
 }
