@@ -326,6 +326,7 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 
 	if (select.first_click_stack == 11 || select.first_click_stack < 4 || select.second_click_stack < 4)
 	{
+		write_log_data(field_stack, select);
 		jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 		field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
@@ -333,20 +334,21 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 		
 		cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
 		cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
-		//write_log_data(field_stack, select.first_click_stack * 100 + select.first_click_card, select.second_click_stack * 100 + select.second_click_card);
+		
 	}
 	else
 	{
 		while (field_stack[select.first_click_stack].field.size()	>	select.first_click_card)
 		{
+			write_log_data(field_stack, select);
 			jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 			field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
 			field_stack[select.second_click_stack].field.push_back(jojo);
-
+			
 			cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
 			cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
-			//write_log_data(field_stack,select.first_click_stack*100+select.first_click_card, select.second_click_stack*100+select.second_click_card +1);
+			
 		}
 	}
 }
