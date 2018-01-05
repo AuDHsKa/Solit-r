@@ -40,68 +40,24 @@ public:
 	suit	get_card_colour();
 	val		get_card_value();
 	bool	is_card_hidden();
-	//Card(suit col, val val, bool hide){
-	//	set_card_color(col);
-	//	set_card_value(val);
-	//	hide_card();
-	//};
 };
-
-//Card(suit cool, val vaal, bool hide)
-//{
-//	Card::set_card_color(col);
-//	Card::set_card_value(val);
-//	Card::hide_card();
-//}
-
-
 
 
 class	field_stack
 {
 private:
 	size_t		count;							// the number of cards which are allowed to stay at this stack
-	size_t		number_of_cards;				// the number of cards which are actually on this stack
 	size_t		cards_hidden;
-	size_t		cards_open;
 
 public:
 	vector<Card*>	field;
 	void	set_stack_count(size_t c);
-	void	set_stack_NOF(size_t nof);
-	void	raise_cards();
+	void	set_cards_hidden(size_t c);
+	void	raise_hidden_cards();
+	void	reduce_hidden_cards();
 	size_t	get_stack_count();
-	size_t	get_stack_NOF();
 	size_t	get_cards_hidden();
-	size_t	get_cards_open();
-
-
-
-	//field_stack(size_t co)
-	//{
-	//	field_stack::set_stack_count(co);
-	//};
-	//field_stack();
-	//~field_stack();
 };
-
-//class	field_stack
-//{
-//private:
-//	int		count;							// the number of cards which are allowed to stay at this stack
-//	int		number_of_cards;				// the number of cards which are actually on this stack
-//	//int		cards_hidden;					
-//	//int		cards_open;
-//	deque<Card>	*list;
-//
-//public:
-//	void	set_stack_count(int c);
-//	void	set_stack_NOF(int nof);
-//
-//	void	insert_card_end(Card* li);
-//	void	remove_card_end();
-//	Card	get_card();
-//};
 
 void	initialize_cards(vector<Card>&	ca);
 

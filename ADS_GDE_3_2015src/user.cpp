@@ -11,11 +11,11 @@
 #include "graphic.h"
 
 #ifndef Spielfunktionen.h
-	#include "Spielfunktionen.h"
+#include "Spielfunktionen.h"
 #endif
 
 #ifndef __Klassen__
-	#include "Klassen.h"
+#include "Klassen.h"
 #endif
 
 #ifndef __k7scan2__
@@ -30,6 +30,10 @@
 #include	"Eingabe_Ausgabe.h"
 #endif // !Eingabe_Ausgabe.h
 
+#ifndef __window__
+#include "window.h"
+#endif
+
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
 #endif
@@ -39,14 +43,15 @@ using namespace std;
 void user_main()
 {
 	//fenster anlegen
-	int windowswide = 700, windowsheight = 600;
-	int x = windowswide;	//mauszeiger startposition
-	int y = windowsheight;	//mauszeiger startposition
-	set_windowpos(0, 0, windowswide, windowsheight);	//windowsfenster öffnen
-	set_drawarea(windowswide, windowsheight);		// Setzen des Zeichenbereiches arbeitsfeld
+	window win;
+	win.wide = 700;
+	win.height = 600;
 
-	int mclick[2] = { 13 , 100 };	//mclickstack , mclickcard
-	int mclick_first[2] = { 13 , 100 };	//erster maus klick mclickstack , mclickcard
+	set_windowpos(0, 0, win.wide, win.height);	//windowsfenster öffnen
+	set_drawarea(win.wide, win.height);		// Setzen des Zeichenbereiches arbeitsfeld
+
+	win.x_mouse = 0;
+	win.y_mouse = 0;
 
 	//karten anlegen
 	const	size_t	length = 52;
@@ -54,21 +59,17 @@ void user_main()
 
 	vector<field_stack> field_stack(12);
 
-
 	for (size_t i = 4; i < 11; i++)
 	{
 		field_stack[i].set_stack_count(i - 3);
-		field_stack[i].set_stack_NOF(0);
 		cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 	}
 
-	// set the playing stacks values
 	field_stack[11].set_stack_count(24);
-	field_stack[11].set_stack_NOF(0);
 
 	initialize_cards(cards);
-
-	//read_data(cards, target_stack, field_stack);
+	get_arr(cards);
+	//read_data(field_stack);
 
 	for (size_t yy = 0; yy < 4; yy++)
 	{
@@ -78,76 +79,40 @@ void user_main()
 		}
 	}
 
-	cout << "the size of target stack 1 is:" << field_stack[0].field.size() << "\n";
-	cout << "the size of target stack 2 is:" << field_stack[1].field.size() << "\n";
-	cout << "the size of target stack 3 is:" << field_stack[2].field.size() << "\n";
-	cout << "the size of target stack 4 is:" << field_stack[3].field.size() << "\n";
-
 	austeilen(field_stack);
 
-	//write_data(cards, target_stack, field_stack);
+	newwindow(win);
 
-	for (size_t i = 4; i < 11; i++)
-	{
-		for (size_t ii = 0; ii < field_stack[i].field.size(); ii++)
-		{
-				cout << "the card number: " << (ii + 1) << "of field number:" << (i -3) << " colour is " << field_stack[i].field.at(ii)->get_card_colour() << "\n";
-				cout << "the card number: " << (ii + 1) << "of field number:" << (i -3) << " value is " << field_stack[i].field.at(ii)->get_card_value() << "\n";
-		}
-	}
-
-	
-	for (size_t yy = 0; yy < field_stack[11].field.size(); yy++)
-	{
-		cout << "the card number: " << (yy + 1) << "of field number:" << 11 << " colour is " << field_stack[11].field.at(yy)->get_card_colour() << "\n";
-		cout << "the card number: " << (yy + 1) << "of field number:" << 11 << " value is " << field_stack[11].field.at(yy)->get_card_value() << "\n";
-	}
-
-		cout << "the size of target stack 1 is:" << field_stack[0].field.size() << "\n";
-		cout << "the size of target stack 2 is:" << field_stack[1].field.size() << "\n";
-		cout << "the size of target stack 3 is:" << field_stack[2].field.size() << "\n";
-		cout << "the size of target stack 4 is:" << field_stack[3].field.size() << "\n";
+	win.first_click_card = 100;
+	win.first_click_stack = 13;
+	win.second_click_card = 100;
+	win.second_click_stack = 13;
 
 
-		cout << "the size of field stack 5 is:" << field_stack[4].field.size() << "\n";
-		cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
-		cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
-		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
-		cout << "the size of field stack 9 is:" << field_stack[8].field.size() << "\n";
-		cout << "the size of field stack 10 is:" << field_stack[9].field.size() << "\n";
-		cout << "the size of field stack 11 is:" << field_stack[10].field.size() << "\n";
-		cout << "the size of field stack 12 is:" << field_stack[11].field.size() << "\n";
-		cout << "the size of field stack 12 is:" << field_stack[11].get_stack_NOF() << "\n";
 
 	while (1)
 	{
-		mclick[0] = 0;//stack
-		mclick[1] = 100;// card
+		win.second_click_card = 100;
+		win.second_click_stack = 13;
 
-		fieldclick(x, y, mclick, field_stack, windowswide, windowsheight);
+		button(win, field_stack, cards);
+
+		click_window(field_stack, win, cards);
+		window_move(field_stack, win);
+		click_window(field_stack, win, cards);
+
+		//win.test++;
+
+		
+
 		updatescr();
-		cout << mclick[0] << "\n" << mclick[1] <<"\n";
 
-		move(mclick, mclick_first, field_stack);
-
-		take_card_from_field_to_field(field_stack);
-
-		take_card_from_deck_to_field(field_stack);
-
-		cout << "the size of field stack 5 is:" << field_stack[4].field.size() << "\n";
-		cout << "the size of field stack 6 is:" << field_stack[5].field.size() << "\n";
-		cout << "the size of field stack 7 is:" << field_stack[6].field.size() << "\n";
-		cout << "the size of field stack 8 is:" << field_stack[7].field.size() << "\n";
-		cout << "the size of field stack 9 is:" << field_stack[8].field.size() << "\n";
-		cout << "the size of field stack 10 is:" << field_stack[9].field.size() << "\n";
-		cout << "the size of field stack 11 is:" << field_stack[10].field.size() << "\n";
-		cout << "the size of field stack 12 is:" << field_stack[11].field.size() << "\n";
-
-
-		while (!mouseclick(&x, &y) == 1) { }
+		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 
 		if (StopProcess())break;
+		
 
+		
 	}
 
 
