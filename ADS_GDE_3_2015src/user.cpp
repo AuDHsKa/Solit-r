@@ -38,7 +38,16 @@
 using namespace std;
 #endif
 
-//#define Auswerten
+void	gewonnen()
+{
+	cout << "*************************************************************\n";
+	cout << "*************************************************************\n";
+	cout << "				\n Herzlichen Glueckwunsch!\n";
+	cout << "				\n Sie haben das Spiel gewonnen!\n";
+	cout << "*************************************************************\n";
+	cout << "*************************************************************\n";
+}
+
 
 void user_main()
 {
@@ -60,32 +69,25 @@ void user_main()
 
 	vector<field_stack> field_stack(12);
 
-	for (size_t i = 4; i < 11; i++)
-	{
-		field_stack[i].set_stack_count(i - 3);
-		//cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
-	}
+	//for (size_t i = 4; i < 11; i++)
+	//{
+	//	field_stack[i].set_stack_count(i - 3);
+	//}
 
-	field_stack[11].set_stack_count(24);
+	//field_stack[11].set_stack_count(24);
 
+	initialize_field(field_stack);
 	initialize_cards(cards);
+	initialize_target(field_stack, cards);
+
 	get_arr(cards);
+
 	//read_data(field_stack);
 
-	//Achtung auskommentiert für alternatives Austeilen
+	//copy_cards(cards, copycards);
+	mein_austeilen(field_stack);
 
-	for (size_t yy = 0; yy < 4; yy++)
-	{
-		for (size_t ii = 0; ii < 13; ii++)
-		{
-			field_stack[yy].field.push_back(&cards[13 * yy + ii]);
-		}
-	}
-
-	copy_cards(cards, copycards);
-	//mein_austeilen(field_stack, copycards);
-
-	austeilen(field_stack);
+	//austeilen(field_stack);
 
 	newwindow(win);
 
@@ -95,21 +97,25 @@ void user_main()
 	win.second_click_stack = 13;
 
 #ifdef Auswerten
-	size_t	n = 10;
-	size_t	gewonnen = 0;
+	//size_t	n = 10;
+	//size_t	gewonnen = 0;
 
-	while (n)
-	{
-		gewonnen += solvealgo(field_stack, win);
-		clear_field(field_stack);
-		copy_cards(cards, copycards);
-		mein_austeilen(field_stack, copycards);
-		n--;
-	}
+	//while (n)
+	//{
+	//	gewonnen += solvealgo(field_stack, win);
+	//	//delete_data(field_stack);
+	//	//clear_field(field_stack);
+	//	//copy_cards(cards, copycards);
+	//	//mein_austeilen(field_stack, copycards);
+	//	austeilen(field_stack, cards);
+	//	n--;
+	//}
 
-	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
-
+	//cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
+	statistik(field_stack, win, cards);
 #endif // !Auswerten
+
+
 
 	while (1)
 	{
@@ -124,9 +130,16 @@ void user_main()
 
 		//win.test++;
 
-		
-
 		updatescr();
+
+		if ((field_stack[0].field.size() == 13) &&
+			(field_stack[1].field.size() == 13) &&
+			(field_stack[2].field.size() == 13) &&
+			(field_stack[3].field.size() == 13))
+		{
+			gewonnen();
+		}
+
 
 		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 

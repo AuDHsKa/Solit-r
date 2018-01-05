@@ -12,7 +12,7 @@
 
 void	copy_cards(vector<Card>& origin, vector<Card*>& copy);
 
-void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten);
+void	mein_austeilen(vector<field_stack>& ziel);
 
 void	austeilen(vector<field_stack>& ziel);
 
@@ -24,9 +24,13 @@ void	move_cards(vector<field_stack>& ziel, window& win);
 
 size_t	solvealgo(vector<field_stack>&	f1, window& win);
 
-void	statistik(vector<field_stack>&	field_stack, window& win);
+void	statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards);
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack);
 
 void	clear_field(vector<field_stack>&	field_stack);
+
+void	initialize_field(vector<field_stack>&	field_stack);
+
+void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards);
 

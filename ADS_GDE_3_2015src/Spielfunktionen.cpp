@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "math.h"
+#include <time.h>
 
 #ifndef __Klassen__
 #include "Klassen.h"
@@ -35,10 +36,10 @@ void	copy_cards(vector<Card>& origin, vector<Card*>& copy)
 	}
 }
 
-void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten)
+void	mein_austeilen(vector<field_stack>& ziel)
 {
 	size_t	mini = 0;
-	size_t	maxi = 51;
+	size_t	maxi = 13;
 	size_t	min = 0;
 	size_t	max = 7;
 	size_t	hoch = 0;
@@ -50,28 +51,56 @@ void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten)
 	// time(NULL) und "time.h" eingefügt, füe immer andere Zufallszahl
 	srand(time(NULL));
 
-	while (Karten.size())
+	//while (Karten.size())
+	//{
+	//	new_card = min + rand() % (maxi - mini + 1);
+	//	hoch = min + rand() % (max - min + 1);
+
+	//	size = Karten.size();
+
+	//	// holt sich die ausgewälte zufällige Referenz 
+	//	jojo = Karten.at(new_card % size);
+
+	//	// löscht die ausgewälte zufällige Referenz
+	//	Karten.erase(Karten.begin() + (new_card % size));
+
+	//	// ueberprüft ob der Feldstapel "voll" ist
+	//	while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+	//	{
+	//		hoch++;
+	//	}
+
+	//	// setzt die ausgewählte Karte auf den Feldstapel
+	//	ziel[(hoch % 8) + 4].field.push_back(jojo);
+	//}
+
+	//// take every card of every stack on the target field 
+	//for (size_t i = 0; i < 13; i++)
+	//{
+	//	// go for every stack on the target field
+	//	for (size_t ii = 0; ii < 4; ii++)
+	//	{
+	while (ziel[0].field.size() || ziel[1].field.size() || ziel[2].field.size() || ziel[3].field.size())
 	{
-		new_card = min + rand() % (maxi - mini + 1);
-		hoch = min + rand() % (max - min + 1);
-
-		size = Karten.size();
-
-		// holt sich die ausgewälte zufällige Referenz 
-		jojo = Karten.at(new_card % size);
-
-		// löscht die ausgewälte zufällige Referenz
-		Karten.erase(Karten.begin() + (new_card % size));
-
-		// ueberprüft ob der Feldstapel "voll" ist
-		while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+		for (size_t ii = 0; ii < 4; ii++)
 		{
-			hoch++;
-		}
+			maxi = ziel[ii].field.size() - 1;
+			new_card = min + rand() % (maxi - mini + 1);
+			hoch = min + rand() % (max - min + 1);
 
-		// setzt die ausgewählte Karte auf den Feldstapel
-		ziel[(hoch % 8) + 4].field.push_back(jojo);
+			jojo = ziel[ii].field.at(new_card);
+			ziel[ii].field.erase((ziel[ii].field.begin() + new_card));
+
+			while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+			{
+				hoch++;
+			}
+
+			// set the card from target stack on the (hoch) field stack
+			ziel[(hoch % 8) + 4].field.push_back(jojo);
+		}
 	}
+
 
 	//Versteckt die Karten beim austeilen
 
@@ -86,6 +115,7 @@ void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten)
 
 void	austeilen(vector<field_stack>& ziel)
 {
+	size_t	pp = 0;
 	size_t	min = 0;
 	size_t	max = 7;
 	size_t	hoch = 0;
@@ -93,7 +123,7 @@ void	austeilen(vector<field_stack>& ziel)
 	Card*	jojo;
 
 	// eingefügt 
-	srand(time_t(NULL));
+	srand(time(NULL));
 
 	// take every card of every stack on the target field 
 	for (size_t i = 0; i < 13; i++)
@@ -101,11 +131,18 @@ void	austeilen(vector<field_stack>& ziel)
 		// go for every stack on the target field
 		for (size_t ii = 0; ii < 4; ii++)
 		{
-			hoch = min + rand() % (max - min + 1);
-
 			jojo = ziel[ii].field.back();
 			ziel[ii].field.pop_back();
 
+			if (pp == 52)
+			{	
+				pp = 0;
+				hoch = 7; 
+			}
+			else
+			{
+				hoch = min + rand() % (max - min + 1);
+			}
 
 			while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
 			{
@@ -114,6 +151,7 @@ void	austeilen(vector<field_stack>& ziel)
 
 			// set the card from target stack on the (hoch) field stack
 			ziel[(hoch % 8) + 4].field.push_back(jojo);
+			pp++;
 		}
 
 	}
@@ -326,27 +364,25 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 
 	if (select.first_click_stack == 11 || select.first_click_stack < 4 || select.second_click_stack < 4)
 	{
+#ifndef Auswerten
+		write_log_data(field_stack, select);
+#endif
 		jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 		field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
 		field_stack[select.second_click_stack].field.push_back(jojo);
-		
-		cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
-		cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
-		//write_log_data(field_stack, select.first_click_stack * 100 + select.first_click_card, select.second_click_stack * 100 + select.second_click_card);
 	}
 	else
 	{
 		while (field_stack[select.first_click_stack].field.size()	>	select.first_click_card)
 		{
+#ifndef Auswerten
+			write_log_data(field_stack, select);
+#endif
 			jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 			field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
 			field_stack[select.second_click_stack].field.push_back(jojo);
-
-			cout << "von stack " << select.first_click_stack << "  Karte " << select.first_click_card << "\n";
-			cout << "zu stack " << select.second_click_stack << "  Karte " << select.second_click_card << "\n\n";
-			//write_log_data(field_stack,select.first_click_stack*100+select.first_click_card, select.second_click_stack*100+select.second_click_card +1);
 		}
 	}
 }
@@ -612,48 +648,40 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 		loop_deck_target = ki_deck_target(field_stack, win);
 	}
 
-	cout << "\n Herzlichen Glueckwunsch!\n";
 
-	if (field_stack[0].field.empty() || field_stack[1].field.empty() || field_stack[2].field.empty() || field_stack[3].field.empty())
+	if ((field_stack[0].field.size() == 13) &&
+		(field_stack[1].field.size() == 13) &&
+		(field_stack[2].field.size() == 13) &&
+		(field_stack[3].field.size() == 13))
 	{
-		return 0;
+		return 1;
 	}
 	else
 	{
-		if ((field_stack[0].field.size() == 13) &&
-			(field_stack[1].field.size() == 13) &&
-			(field_stack[2].field.size() == 13) &&
-			(field_stack[3].field.size() == 13))
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
+		return 0;
 	}
-
 }
 
 
-void	gewonnen()
-{
-	cout << "***********************************************************\n";
-	cout << "				\n Herzlichen Glückwunsch!\n";
-	cout << "				\n Sie haben das Spiel gewonnen!\n";
-	cout << "*************************************************************";
-}
+//void	gewonnen()
+//{
+//	cout << "***********************************************************\n";
+//	cout << "				\n Herzlichen Glückwunsch!\n";
+//	cout << "				\n Sie haben das Spiel gewonnen!\n";
+//	cout << "*************************************************************";
+//}
 
-void statistik(vector<field_stack>&	field_stack, window& win)
+void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
 {
-	size_t	n = 10;
+	size_t	n = 100;
 	size_t	gewonnen = 0;
 
 	while (n)
 	{
-
 		gewonnen += solvealgo(field_stack, win);
-		austeilen(field_stack);
+		delete_data(field_stack);
+		initialize_target(field_stack, cards);
+		mein_austeilen(field_stack);
 		n--;
 	}
 
@@ -682,6 +710,27 @@ void	clear_field(vector<field_stack>&	field_stack)
 		if (!(field_stack.at(yy).field.empty()))
 		{
 			field_stack.at(yy).field.erase(field_stack.at(yy).field.begin(), (field_stack.at(yy).field.begin() + field_stack.at(yy).field.size()));
+		}
+	}
+}
+
+void	initialize_field(vector<field_stack>&	field_stack)
+{
+	for (size_t i = 4; i < 11; i++)
+	{
+		field_stack[i].set_stack_count(i - 3);
+	}
+
+	field_stack[11].set_stack_count(24);
+}
+
+void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards)
+{
+	for (size_t yy = 0; yy < 4; yy++)
+	{
+		for (size_t ii = 0; ii < 13; ii++)
+		{
+			field_stack[yy].field.push_back(&cards[13 * yy + ii]);
 		}
 	}
 }

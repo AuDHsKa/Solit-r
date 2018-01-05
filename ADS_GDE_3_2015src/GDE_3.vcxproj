@@ -184,7 +184,12 @@
     <Text Include="2017121217448outdaten.txt" />
     <Text Include="daten.txt" />
     <Text Include="daten2.txt" />
+    <Text Include="leicht.txt" />
+    <Text Include="mittel.txt" />
+    <Text Include="mittelleicht.txt" />
     <Text Include="Readme2.txt" />
+    <Text Include="schwer.txt" />
+    <Text Include="unloesbar.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
