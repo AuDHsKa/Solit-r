@@ -615,6 +615,7 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 	}
 
 	cout << "\n Herzlichen Glueckwunsch!\n";
+	output("\n!!!Herzlichen Glückwunsch!!!\n", "logfile.txt");
 
 	if (field_stack[0].field.empty() || field_stack[1].field.empty() || field_stack[2].field.empty() || field_stack[3].field.empty())
 	{
