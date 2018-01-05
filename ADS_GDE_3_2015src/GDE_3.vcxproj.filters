@@ -170,5 +170,23 @@
       <Filter>Ressourcendateien</Filter>
     </Text>
     <Text Include="2017121217448outdaten.txt" />
+    <Text Include="trivial.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="leicht.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="mittelleicht.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="mittel.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="schwer.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="unloesbar.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
   </ItemGroup>
 </Project>
