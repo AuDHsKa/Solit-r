@@ -38,7 +38,7 @@
 using namespace std;
 #endif
 
-
+//#define Auswerten
 
 void user_main()
 {
@@ -56,13 +56,14 @@ void user_main()
 	//karten anlegen
 	const	size_t	length = 52;
 	vector<Card>	cards(length);
+	vector<Card*>	copycards(length);
 
 	vector<field_stack> field_stack(12);
 
 	for (size_t i = 4; i < 11; i++)
 	{
 		field_stack[i].set_stack_count(i - 3);
-		cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
+		//cout << "the number of cards which are allowed to stay at stack:" << i << " is:" << field_stack[i].get_stack_count() << "\n";
 	}
 
 	field_stack[11].set_stack_count(24);
@@ -71,6 +72,8 @@ void user_main()
 	get_arr(cards);
 	//read_data(field_stack);
 
+	//Achtung auskommentiert für alternatives Austeilen
+
 	for (size_t yy = 0; yy < 4; yy++)
 	{
 		for (size_t ii = 0; ii < 13; ii++)
@@ -78,6 +81,9 @@ void user_main()
 			field_stack[yy].field.push_back(&cards[13 * yy + ii]);
 		}
 	}
+
+	copy_cards(cards, copycards);
+	//mein_austeilen(field_stack, copycards);
 
 	austeilen(field_stack);
 
@@ -88,7 +94,22 @@ void user_main()
 	win.second_click_card = 100;
 	win.second_click_stack = 13;
 
+#ifdef Auswerten
+	size_t	n = 10;
+	size_t	gewonnen = 0;
 
+	while (n)
+	{
+		gewonnen += solvealgo(field_stack, win);
+		clear_field(field_stack);
+		copy_cards(cards, copycards);
+		mein_austeilen(field_stack, copycards);
+		n--;
+	}
+
+	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
+
+#endif // !Auswerten
 
 	while (1)
 	{

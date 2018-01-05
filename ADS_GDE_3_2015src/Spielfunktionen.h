@@ -28,3 +28,5 @@ void	statistik(vector<field_stack>&	field_stack, window& win);
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack);
 
+void	clear_field(vector<field_stack>&	field_stack);
+

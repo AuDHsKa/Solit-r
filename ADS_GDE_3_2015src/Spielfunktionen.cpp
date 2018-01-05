@@ -674,3 +674,14 @@ size_t	look_for_game_won(vector<field_stack>&	field_stack)
 		return 0;
 	}
 }
+
+void	clear_field(vector<field_stack>&	field_stack)
+{
+	for (size_t yy = 0; yy < 12; yy++)
+	{
+		if (!(field_stack.at(yy).field.empty()))
+		{
+			field_stack.at(yy).field.erase(field_stack.at(yy).field.begin(), (field_stack.at(yy).field.begin() + field_stack.at(yy).field.size()));
+		}
+	}
+}
