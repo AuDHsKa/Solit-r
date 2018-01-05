@@ -10,6 +10,10 @@
 #include "window.h"
 #endif
 
+void	copy_cards(vector<Card>& origin, vector<Card*>& copy);
+
+void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten);
+
 void	austeilen(vector<field_stack>& ziel);
 
 void	playing_rules(vector<field_stack>& ziel, window& win);
@@ -18,9 +22,9 @@ void window_move(vector<field_stack>& field_stack, window& win);
 
 void	move_cards(vector<field_stack>& ziel, window& win);
 
-void	take_card_from_field_to_field(vector<field_stack>&	f1);
+size_t	solvealgo(vector<field_stack>&	f1, window& win);
 
-void	take_card_from_deck_to_field(vector<field_stack>&	f1);
+void	statistik(vector<field_stack>&	field_stack, window& win);
 
-void	solvealgo ( vector<field_stack>&	f1, window& win);
+size_t	look_for_game_won(vector<field_stack>&	field_stack);
 

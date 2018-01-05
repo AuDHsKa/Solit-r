@@ -26,6 +26,64 @@
 #include "Eingabe_Ausgabe.h"
 #endif
 
+void	copy_cards(vector<Card>& origin, vector<Card*>& copy)
+{
+	for (size_t i = 0; i < 52; i++)
+	{
+		// schreibt in copy die Referenz der Karten
+		copy.at(i) = &origin.at(i);
+	}
+}
+
+void	mein_austeilen(vector<field_stack>& ziel, vector<Card*> Karten)
+{
+	size_t	mini = 0;
+	size_t	maxi = 51;
+	size_t	min = 0;
+	size_t	max = 7;
+	size_t	hoch = 0;
+	size_t	new_card = 0;
+	size_t	size = 0;
+	size_t	iii = 0;
+	Card*	jojo;
+
+	// time(NULL) und "time.h" eingefügt, füe immer andere Zufallszahl
+	srand(time(NULL));
+
+	while (Karten.size())
+	{
+		new_card = min + rand() % (maxi - mini + 1);
+		hoch = min + rand() % (max - min + 1);
+
+		size = Karten.size();
+
+		// holt sich die ausgewälte zufällige Referenz 
+		jojo = Karten.at(new_card % size);
+
+		// löscht die ausgewälte zufällige Referenz
+		Karten.erase(Karten.begin() + (new_card % size));
+
+		// ueberprüft ob der Feldstapel "voll" ist
+		while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+		{
+			hoch++;
+		}
+
+		// setzt die ausgewählte Karte auf den Feldstapel
+		ziel[(hoch % 8) + 4].field.push_back(jojo);
+	}
+
+	//Versteckt die Karten beim austeilen
+
+	for (size_t i = 4; i < 12; i++)
+	{
+		for (size_t ii = 0; ii < (ziel[i].field.size() - 1); ii++)
+		{
+			ziel[i].field[ii]->hide_card();
+		}
+	}
+}
+
 void	austeilen(vector<field_stack>& ziel)
 {
 	size_t	min = 0;
@@ -120,7 +178,6 @@ void	window_move(vector<field_stack>& field_stack, window& win)
 		win.first_click_card = 100;
 		win.x_mouse = 0;
 		win.y_mouse = 0;
-
 	}
 
 }
@@ -294,246 +351,6 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 	}
 }
 
-
-// Marcels little KI 
-
-void	take_card_from_field_to_field(vector<field_stack>&	f1)
-{
-	Card*	jojo;
-
-	for (size_t i = 4; i < (f1.size() - 1); i++)
-	{
-		for (size_t y = 4; y < (f1.size() - 1); y++)
-		{
-			if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
-				(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
-				(f1[i].field.back()->get_card_value() == (f1[y].field.back()->get_card_value() - 1)))
-			{
-				// is the accessed card black?
-				if (f1[i].field.back()->get_card_colour() % 2)
-				{
-
-					if (f1[y].field.back()->get_card_colour() % 2)
-					{
-						//	accessed card is black, no turn possible
-					}
-					else
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[i].field.back();
-						// clear the top card of the stack 
-						f1[i].field.pop_back();
-
-						f1[y].field.push_back(jojo);
-
-						size_t s = f1[i].field.size(); // nächste karte umdrehen
-						if (s)
-						{
-							f1[i].field[s - 1]->undiscover_card();
-
-						}
-					}
-				}
-				else
-				{
-					//	accessed card is black 
-					if (f1[y].field.back()->get_card_colour() % 2)
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[i].field.back();
-						// clear the top card of the stack 
-						f1[i].field.pop_back();
-
-						f1[y].field.push_back(jojo);
-
-						size_t s = f1[i].field.size(); // nächste karte umdrehen
-						if (s)
-						{
-							f1[i].field[s - 1]->undiscover_card();
-						}
-					}
-					else
-					{
-						//	accessed card is black, no turn possible
-					}
-				}
-			}
-
-			if ((f1[i].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
-				(f1[y].field.empty() == false) &&	// fängt Zgriff auf leeres feld ab
-				(f1[y].field.back()->get_card_value() == (f1[i].field.back()->get_card_value() - 1)))
-			{
-				// is the accessed card black?
-				if (f1[y].field.back()->get_card_colour() % 2)
-				{
-
-					if (f1[i].field.back()->get_card_colour() % 2)
-					{
-						//	accessed card is black
-						break;
-					}
-					else
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[y].field.back();
-						// clear the top card of the stack 
-						f1[y].field.pop_back();
-
-						f1[i].field.push_back(jojo);
-
-
-						size_t s = f1[y].field.size(); // nächste karte umdrehen
-						if (s)
-						{
-							f1[y].field[s - 1]->undiscover_card();
-						}
-					}
-				}
-				else
-				{
-					//	accessed card is black 
-					if (f1[i].field.back()->get_card_colour() % 2)
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[y].field.back();
-						// clear the top card of the stack 
-						f1[y].field.pop_back();
-
-						f1[i].field.push_back(jojo);
-
-						size_t s = f1[y].field.size(); // nächste karte umdrehen
-						if (s)
-						{
-							f1[y].field[s - 1]->undiscover_card();
-						}
-					}
-					else
-					{
-						//	accessed card is black, no turn possible
-					}
-				}
-			}
-		}
-	}
-}
-
-
-
-
-void	take_card_from_deck_to_field(vector<field_stack>&	f1)
-{
-	Card*	jojo;
-
-	// hole karten vom deck und lege sie auf das feld; falls es die spielregeln erlauben
-
-	for (size_t ii = 0; ii < f1[11].field.size(); ii++)
-	{
-		for (size_t yy = 4; yy < (f1.size() - 1); yy++)
-		{
-			if ((f1[11].field.empty() == false) &&
-				(f1[yy].field.empty() == false) &&
-				(f1[11].field.at(ii)->get_card_value() == (f1[yy].field.back()->get_card_value() - 1)))
-			{
-				// is the accessed card black?
-				if (f1[11].field.at(ii)->get_card_colour() == 1 || f1[11].field.at(ii)->get_card_colour() == 3)
-				{
-					if (f1[yy].field.back()->get_card_colour() % 2)
-					{
-						//	accessed card is black, no turn possible
-					}
-					else
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[11].field.at(ii);
-
-						// ueberpruefe ob die Karte verdeckt ist
-						if (jojo->is_card_hidden() == true)
-						{
-							// falls ja, drehe sie um 
-							jojo->undiscover_card();
-						}
-
-						// clear the top card of the stack 
-						f1[11].field.erase(f1[11].field.begin() + ii);
-
-						f1[yy].field.push_back(jojo);
-
-						//size_t s = f1[y].field.size(); // nächste karte umdrehen
-						//if (s)
-						//{
-						//	f1[y].field[s - 1]->undiscover_card();
-						//}
-					}
-
-				}
-				else if (f1[11].field.at(ii)->get_card_colour() == 0 || f1[11].field.at(ii)->get_card_colour() == 2)
-				{
-					//	accessed card is black 
-					if (f1[yy].field.back()->get_card_colour() % 2)
-					{
-						//switch_card
-
-						// get the top card of the actual stack 
-						jojo = f1[11].field.at(ii);
-
-						// ueberpruefe ob die Karte verdeckt ist
-						if (jojo->is_card_hidden() == true)
-						{
-							// falls ja, drehe sie um 
-							jojo->undiscover_card();
-						}
-
-						// clear the top card of the stack 
-						f1[11].field.erase(f1[11].field.begin() + ii);
-
-						f1[yy].field.push_back(jojo);
-
-						//size_t s = f1[y].field.size(); // nächste karte umdrehen
-						//if (s)
-						//{
-						//	f1[y].field[s - 1]->undiscover_card();
-						//}
-					}
-					else
-					{
-						//	accessed card is black, no turn possible
-					}
-				}
-
-			}
-
-			if ((f1[yy].field.empty() == true) &&
-				(f1[11].field.at(ii)->get_card_value() == 13))
-			{
-				// get the top card of the actual stack 
-				jojo = f1[11].field.at(ii);
-
-				// ueberpruefe ob die Karte verdeckt ist
-				if (jojo->is_card_hidden() == true)
-				{
-					// falls ja, drehe sie um 
-					jojo->undiscover_card();
-				}
-
-				// clear the top card of the stack 
-				f1[11].field.erase(f1[11].field.begin() + ii);
-
-				f1[yy].field.push_back(jojo);
-
-			}
-		}
-	}
-}
 
 //sven big ki
 int ki_field_field(vector<field_stack>&	field_stack, window& win)
@@ -742,7 +559,7 @@ int ki_deck_target(vector<field_stack>&	field_stack, window& win)
 }
 
 
-void solvealgo(vector<field_stack>&	field_stack, window& win)
+size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 {
 	int loop_field = 1;
 	int loop_deck = 0;
@@ -793,10 +610,67 @@ void solvealgo(vector<field_stack>&	field_stack, window& win)
 
 		loop_deck_target = 1;
 		loop_deck_target = ki_deck_target(field_stack, win);
-		
-
 	}
 
+	cout << "\n Herzlichen Glueckwunsch!\n";
+
+	if (field_stack[0].field.empty() || field_stack[1].field.empty() || field_stack[2].field.empty() || field_stack[3].field.empty())
+	{
+		return 0;
+	}
+	else
+	{
+		if ((field_stack[0].field.size() == 13) &&
+			(field_stack[1].field.size() == 13) &&
+			(field_stack[2].field.size() == 13) &&
+			(field_stack[3].field.size() == 13))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
 }
 
+
+void	gewonnen()
+{
+	cout << "***********************************************************\n";
+	cout << "				\n Herzlichen Glückwunsch!\n";
+	cout << "				\n Sie haben das Spiel gewonnen!\n";
+	cout << "*************************************************************";
+}
+
+void statistik(vector<field_stack>&	field_stack, window& win)
+{
+	size_t	n = 10;
+	size_t	gewonnen = 0;
+
+	while (n)
+	{
+
+		gewonnen += solvealgo(field_stack, win);
+		austeilen(field_stack);
+		n--;
+	}
+
+	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
+}
+
+size_t	look_for_game_won(vector<field_stack>&	field_stack)
+{
+	if ((field_stack[0].field.size() == 13) &&
+		(field_stack[1].field.size() == 13) &&
+		(field_stack[2].field.size() == 13) &&
+		(field_stack[3].field.size() == 13))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
