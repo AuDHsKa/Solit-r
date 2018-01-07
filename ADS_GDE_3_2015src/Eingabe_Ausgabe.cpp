@@ -223,12 +223,12 @@ void	delete_data(vector<field_stack>& felde)
 	int sz = 0;
 	for (int del = 0; del < 12; del++)
 	{
-		sz = (felde[del].field.size());
+		sz = (felde.at(del).field.size());
 
 		while (sz > 0)
 		{
-			felde[del].field.pop_back();
-			sz = (felde[del].field.size());
+			felde.at(del).field.pop_back();
+			sz = (felde.at(del).field.size());
 		}
 	}
 	;

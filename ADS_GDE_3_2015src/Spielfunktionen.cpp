@@ -45,7 +45,7 @@ void	mein_austeilen(vector<field_stack>& ziel)
 	size_t	hoch = 0;
 	size_t	new_card = 0;
 	size_t	size = 0;
-	size_t	iii = 0;
+	size_t	ii = 0;
 	Card*	jojo;
 
 	// time(NULL) und "time.h" eingefügt, füe immer andere Zufallszahl
@@ -80,24 +80,36 @@ void	mein_austeilen(vector<field_stack>& ziel)
 	//	// go for every stack on the target field
 	//	for (size_t ii = 0; ii < 4; ii++)
 	//	{
-	while (ziel[0].field.size() || ziel[1].field.size() || ziel[2].field.size() || ziel[3].field.size())
+	while (ziel.at(0).field.size() || ziel.at(1).field.size() || ziel.at(2).field.size() || ziel.at(3).field.size())
 	{
-		for (size_t ii = 0; ii < 4; ii++)
+		if (ii < 4)
 		{
-			maxi = ziel[ii].field.size() - 1;
-			new_card = min + rand() % (maxi - mini + 1);
-			hoch = min + rand() % (max - min + 1);
-
-			jojo = ziel[ii].field.at(new_card);
-			ziel[ii].field.erase((ziel[ii].field.begin() + new_card));
-
-			while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+			if (ziel.at(ii).field.size())
 			{
-				hoch++;
-			}
+				maxi = ziel.at(ii).field.size() - 1;
+				new_card = min + rand() % (maxi - mini + 1);
+				hoch = min + rand() % (max - min + 1);
 
-			// set the card from target stack on the (hoch) field stack
-			ziel[(hoch % 8) + 4].field.push_back(jojo);
+				jojo = ziel.at(ii).field.at(new_card);
+				ziel.at(ii).field.erase((ziel.at(ii).field.begin() + new_card));
+
+				while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
+				{
+					hoch++;
+				}
+
+				// set the card from target stack on the (hoch) field stack
+				ziel.at((hoch % 8) + 4).field.push_back(jojo);
+				ii++;
+			}
+			else
+			{
+				ii++;
+			}
+		}
+		else
+		{
+			ii = 0;
 		}
 	}
 
@@ -106,9 +118,9 @@ void	mein_austeilen(vector<field_stack>& ziel)
 
 	for (size_t i = 4; i < 12; i++)
 	{
-		for (size_t ii = 0; ii < (ziel[i].field.size() - 1); ii++)
+		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
 		{
-			ziel[i].field[ii]->hide_card();
+			ziel.at(i).field.at(ii)->hide_card();
 		}
 	}
 }
@@ -131,10 +143,10 @@ void	austeilen(vector<field_stack>& ziel)
 		// go for every stack on the target field
 		for (size_t ii = 0; ii < 4; ii++)
 		{
-			jojo = ziel[ii].field.back();
-			ziel[ii].field.pop_back();
+			jojo = ziel.at(ii).field.back();
+			ziel.at(ii).field.pop_back();
 
-			if (pp == 52)
+			if (pp == 53)
 			{	
 				pp = 0;
 				hoch = 7; 
@@ -144,13 +156,13 @@ void	austeilen(vector<field_stack>& ziel)
 				hoch = min + rand() % (max - min + 1);
 			}
 
-			while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
+			while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
 			{
 				hoch++;
 			}
 
 			// set the card from target stack on the (hoch) field stack
-			ziel[(hoch % 8) + 4].field.push_back(jojo);
+			ziel.at((hoch % 8) + 4).field.push_back(jojo);
 			pp++;
 		}
 
@@ -158,9 +170,9 @@ void	austeilen(vector<field_stack>& ziel)
 
 	for (size_t i = 4; i < 12; i++)
 	{
-		for (size_t ii = 0; ii < (ziel[i].field.size() - 1); ii++)
+		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
 		{
-			ziel[i].field[ii]->hide_card();
+			ziel.at(i).field.at(ii)->hide_card();
 		}
 	}
 }
@@ -649,10 +661,10 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 	}
 
 
-	if ((field_stack[0].field.size() == 13) &&
-		(field_stack[1].field.size() == 13) &&
-		(field_stack[2].field.size() == 13) &&
-		(field_stack[3].field.size() == 13))
+	if ((field_stack.at(0).field.size() == 13) &&
+		(field_stack.at(1).field.size() == 13) &&
+		(field_stack.at(2).field.size() == 13) &&
+		(field_stack.at(3).field.size() == 13))
 	{
 		return 1;
 	}
@@ -663,21 +675,27 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 }
 
 
-//void	gewonnen()
-//{
-//	cout << "***********************************************************\n";
-//	cout << "				\n Herzlichen Glückwunsch!\n";
-//	cout << "				\n Sie haben das Spiel gewonnen!\n";
-//	cout << "*************************************************************";
-//}
+void	gewonnen()
+{
+	cout << "*************************************************************\n";
+	cout << "*************************************************************\n";
+	cout << "				\n Herzlichen Glueckwunsch!\n";
+	cout << "				\n Sie haben das Spiel gewonnen!\n";
+	cout << "*************************************************************\n";
+	cout << "*************************************************************\n";
+}
 
 void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
 {
-	size_t	n = 100;
+	size_t	n = 0;
 	size_t	gewonnen = 0;
+
+	cout << "Statistik. Wie viele Versuche moechten sie Durchlaufen?\n(Bitte die Anzahl eingeben)\n";
+	cin >> n ;
 
 	while (n)
 	{
+		set_win_clicks(win);
 		gewonnen += solvealgo(field_stack, win);
 		delete_data(field_stack);
 		initialize_target(field_stack, cards);
@@ -685,7 +703,7 @@ void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& card
 		n--;
 	}
 
-	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
+	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!\n";
 }
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack)
@@ -718,10 +736,10 @@ void	initialize_field(vector<field_stack>&	field_stack)
 {
 	for (size_t i = 4; i < 11; i++)
 	{
-		field_stack[i].set_stack_count(i - 3);
+		field_stack.at(i).set_stack_count(i - 3);
 	}
 
-	field_stack[11].set_stack_count(24);
+	field_stack.at(11).set_stack_count(24);
 }
 
 void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards)
@@ -730,7 +748,16 @@ void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards)
 	{
 		for (size_t ii = 0; ii < 13; ii++)
 		{
-			field_stack[yy].field.push_back(&cards[13 * yy + ii]);
+			field_stack.at(yy).field.push_back(&cards.at(13 * yy + ii));
+			field_stack.at(yy).field.at(ii)->undiscover_card();
 		}
 	}
+}
+
+void	set_win_clicks(window& win)
+{
+	win.first_click_card = 100;
+	win.first_click_stack = 13;
+	win.second_click_card = 100;
+	win.second_click_stack = 13;
 }

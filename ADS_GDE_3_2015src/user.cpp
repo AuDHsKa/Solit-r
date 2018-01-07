@@ -38,17 +38,6 @@
 using namespace std;
 #endif
 
-void	gewonnen()
-{
-	cout << "*************************************************************\n";
-	cout << "*************************************************************\n";
-	cout << "				\n Herzlichen Glueckwunsch!\n";
-	cout << "				\n Sie haben das Spiel gewonnen!\n";
-	cout << "*************************************************************\n";
-	cout << "*************************************************************\n";
-}
-
-
 void user_main()
 {
 	//fenster anlegen
@@ -85,33 +74,13 @@ void user_main()
 	//read_data(field_stack);
 
 	//copy_cards(cards, copycards);
-	mein_austeilen(field_stack);
+	austeilen(field_stack);
 
 	//austeilen(field_stack);
 
 	newwindow(win);
 
-	win.first_click_card = 100;
-	win.first_click_stack = 13;
-	win.second_click_card = 100;
-	win.second_click_stack = 13;
-
 #ifdef Auswerten
-	//size_t	n = 10;
-	//size_t	gewonnen = 0;
-
-	//while (n)
-	//{
-	//	gewonnen += solvealgo(field_stack, win);
-	//	//delete_data(field_stack);
-	//	//clear_field(field_stack);
-	//	//copy_cards(cards, copycards);
-	//	//mein_austeilen(field_stack, copycards);
-	//	austeilen(field_stack, cards);
-	//	n--;
-	//}
-
-	//cout << "Es wurden:" << gewonnen << "Spiele gewonnen!";
 	statistik(field_stack, win, cards);
 #endif // !Auswerten
 

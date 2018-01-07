@@ -3,7 +3,7 @@
 #include <vector>
 
 #define		__Klassen__
-#define Auswerten
+//#define Auswerten
 
 using namespace std;
 

@@ -28,9 +28,13 @@ void	statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& card
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack);
 
+void	gewonnen();
+
 void	clear_field(vector<field_stack>&	field_stack);
 
 void	initialize_field(vector<field_stack>&	field_stack);
 
 void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards);
+
+void	set_win_clicks(window& win);
 

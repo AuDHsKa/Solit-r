@@ -387,7 +387,6 @@ void solve(window& win, vector<field_stack>&  field_stack)
 		cout << "######################################\n\n";
 		output("Lösen augefürt\n", "logfile.txt");
 		solvealgo(field_stack, win);
-		output("Lösen augefürt\n", "logfile.txt");
 		//take_card_from_field_to_field(field_stack);
 
 		//take_card_from_deck_to_field(field_stack);
