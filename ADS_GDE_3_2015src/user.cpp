@@ -58,13 +58,6 @@ void user_main()
 
 	vector<field_stack> field_stack(12);
 
-	//for (size_t i = 4; i < 11; i++)
-	//{
-	//	field_stack[i].set_stack_count(i - 3);
-	//}
-
-	//field_stack[11].set_stack_count(24);
-
 	initialize_field(field_stack);
 	initialize_cards(cards);
 	initialize_target(field_stack, cards);
@@ -73,10 +66,7 @@ void user_main()
 
 	//read_data(field_stack);
 
-	//copy_cards(cards, copycards);
 	austeilen(field_stack);
-
-	//austeilen(field_stack);
 
 	newwindow(win);
 
@@ -84,40 +74,24 @@ void user_main()
 	statistik(field_stack, win, cards);
 #endif // !Auswerten
 
-
-
 	while (1)
 	{
 		win.second_click_card = 100;
 		win.second_click_stack = 13;
 
 		button(win, field_stack, cards);
-
 		click_window(field_stack, win, cards);
 		window_move(field_stack, win);
 		click_window(field_stack, win, cards);
-
 		//win.test++;
-
 		updatescr();
 
-		if ((field_stack[0].field.size() == 13) &&
-			(field_stack[1].field.size() == 13) &&
-			(field_stack[2].field.size() == 13) &&
-			(field_stack[3].field.size() == 13))
+		if (look_for_game_won(field_stack))
 		{
 			gewonnen();
 		}
 
-
 		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
-
-		if (StopProcess())break;
-		
-
-		
+		if (StopProcess())break;				
 	}
-
-
-
 }

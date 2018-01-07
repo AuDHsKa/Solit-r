@@ -143,7 +143,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 			{
 				if ((bx < x) && (x < hx) && (by < y) && (y < (by + abstand))) // auswahl der karte in mitten eines stapels
 				{
-					cout << "######################################\n";
+					cout << "\n######################################\n";
 					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i + 1) << " ausgewaehlt\n";
 					cout << "######################################\n\n";
 					mclickcard = i;
@@ -154,7 +154,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 			{
 				if ((bx < x) && (x < hx) && (by < y) && (y < hy)) // auswahl der letzten karte eines stapels
 				{
-					cout << "######################################\n";
+					cout << "\n######################################\n";
 					cout << "Mausklick auf F" << feld << "\n" << "Karte " << (i + 1) << " ausgewaehlt\n";
 					cout << "######################################\n\n";
 					mclickcard = i;
@@ -169,7 +169,7 @@ int w_field(int x, int y, vector<field_stack>& f1, int feld)
 	{
 		if ((bx < x) && (x < hx) && (by < y) && (y < hy))
 		{
-			cout << "######################################\n";
+			cout << "\n######################################\n";
 			cout << "Mausklick auf F" << feld << "\n" << "Karte " << "0 ausgewaehlt\n";
 			cout << "######################################\n\n";
 			mclickcard = 53;
@@ -248,7 +248,7 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 		hx = 80;
 		if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
 		{
-			cout << "######################################\n";
+			cout << "\n######################################\n";
 			cout << "Mausklick auf DECK\n";
 			cout << "######################################\n\n";
 			mclickcard = 53;
@@ -265,7 +265,7 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 		hx = 180;
 		if (((bx < x) && (x < hx) && (by < y) && (y < hy)))
 		{
-			cout << "######################################\n";
+			cout << "\n######################################\n";
 			cout << "Mausklick auf DECK\n";
 			cout << "######################################\n\n";
 			mclickcard = number_of_unhidden_cards;
@@ -293,7 +293,7 @@ void save(window& win, vector<field_stack>&  field_stack)
 		(win.y_mouse > apy) && (win.y_mouse < epy))
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Save"));
-		cout << "######################################\n";
+		cout << "\n######################################\n";
 		cout << "Datei gespeichert\n";
 		cout << "######################################\n\n";
 		output("Datei gespeichert\n", "logfile.txt");
@@ -316,7 +316,7 @@ void load(window& win, vector<field_stack>&  field_stack)
 		(win.y_mouse > apy) && (win.y_mouse < epy))
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Load"));
-		cout << "######################################\n";
+		cout << "\n######################################\n";
 		cout << "Datei geladen\n";
 		cout << "######################################\n\n";
 		delete_data(field_stack);
@@ -341,24 +341,13 @@ void restart(window& win, vector<field_stack>&  field_stack, vector<Card>& cards
 		(win.y_mouse> apy) && (win.y_mouse < epy))
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Restart"));
-		cout << "######################################\n";
+		cout << "\n######################################\n";
 		cout << "Neustart\n";
 		cout << "######################################\n\n";
 
 		delete_data(field_stack);
-		initialize_cards(cards);
-		for (size_t i = 4; i < 11; i++)
-		{
-			field_stack[i].set_stack_count(i - 3);
-		}
-		field_stack[11].set_stack_count(24);
-		for (size_t yy = 0; yy < 4; yy++)
-		{
-			for (size_t ii = 0; ii < 13; ii++)
-			{
-				field_stack[yy].field.push_back(&cards[13 * yy + ii]);
-			}
-		}
+		initialize_field(field_stack);
+		initialize_target(field_stack, cards);
 		austeilen(field_stack);
 		output("Restart augefürt\n", "logfile.txt");
 	}
@@ -382,20 +371,46 @@ void solve(window& win, vector<field_stack>&  field_stack)
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Lösen"));
 
-		cout << "######################################\n";
+		cout << "\n######################################\n";
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
 		output("Lösen augefürt\n", "logfile.txt");
 		solvealgo(field_stack, win);
-		//take_card_from_field_to_field(field_stack);
-
-		//take_card_from_deck_to_field(field_stack);
 	}
 	else
 	{
 		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Lösen"));
 	}
 }
+
+#ifndef Ausweten
+
+	void statistik_button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)
+	{
+
+		int apx = 255;//anfangspunkt x
+		int apy = win.height - 40; //anfangpunkt y
+		int epx = 370;//anfangspunkt x
+		int epy = win.height - 5; //anfangpunkt y
+
+
+
+		if ((win.x_mouse > apx) && (win.x_mouse < epx) &&
+			(win.y_mouse > apy) && (win.y_mouse < epy))
+		{
+			textbox(apx, apy, epx, epy, 18, BLUE, YELLOW, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Statistik"));
+
+			cout << "\n######################################\n";
+			cout << "Statistik auswerten\n";
+			cout << "######################################\n\n";
+			statistik(field_stack, win, cards);
+		}
+		else
+		{
+			textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Statistik"));
+		}
+	}
+#endif // !Ausweten
 
 //new green window
 void newwindow(window& win)
@@ -412,9 +427,13 @@ int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards) 
 {
 	load(win, field_stack);
 	save(win, field_stack);
+
+#ifndef Auswerten
+	statistik_button(win, field_stack, cards);
+#endif // Auswerten
+
 	restart(win, field_stack, cards);
 	solve(win,  field_stack);
-
 	return 0;
 }
 

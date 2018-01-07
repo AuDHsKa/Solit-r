@@ -12,7 +12,7 @@
 
 void	copy_cards(vector<Card>& origin, vector<Card*>& copy);
 
-void	mein_austeilen(vector<field_stack>& ziel);
+void	zuf_austeilen(vector<field_stack>& ziel);
 
 void	austeilen(vector<field_stack>& ziel);
 

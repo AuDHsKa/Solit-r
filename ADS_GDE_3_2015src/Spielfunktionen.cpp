@@ -677,11 +677,11 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 
 void	gewonnen()
 {
-	cout << "*************************************************************\n";
+	cout << "\n*************************************************************\n";
 	cout << "*************************************************************\n";
 	cout << "				\n Herzlichen Glueckwunsch!\n";
 	cout << "				\n Sie haben das Spiel gewonnen!\n";
-	cout << "*************************************************************\n";
+	cout << "\n*************************************************************\n";
 	cout << "*************************************************************\n";
 }
 
@@ -699,7 +699,12 @@ void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& card
 		gewonnen += solvealgo(field_stack, win);
 		delete_data(field_stack);
 		initialize_target(field_stack, cards);
-		mein_austeilen(field_stack);
+#ifdef mydistri
+		austeilen(field_stack);
+#endif // mydistri
+#ifdef zufall
+		zuf_austeilen(field_stack);
+#endif // !mydistri
 		n--;
 	}
 

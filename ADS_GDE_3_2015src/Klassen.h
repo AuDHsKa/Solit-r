@@ -4,6 +4,8 @@
 
 #define		__Klassen__
 //#define Auswerten
+#define mydistri
+//#define zufall
 
 using namespace std;
 
