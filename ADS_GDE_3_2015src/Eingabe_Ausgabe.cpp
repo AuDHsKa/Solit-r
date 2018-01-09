@@ -24,7 +24,7 @@ void get_arr(vector<Card>& arrl)
 	arr = arrl;
 }
 
-void	read_data(vector<field_stack>& feld)
+void	read_data(vector<field_stack>& feld, vector<Card>& arrl)
 /*	Von k7scan2 übernommenes "Main" zum Aufruf der einzulesenden Datei
 und zur Ausfürhrung von k7scan2
 */
@@ -32,19 +32,24 @@ und zur Ausfürhrung von k7scan2
 	FILE *inf;
 	char fistr[100] = "";
 	printf("Enter filename:\n");
-	gets_s(fistr);
+	cin>>fistr;
 
-	if (strlen(fistr) == 0) strcpy(fistr, "in1.txt");
-	inf = fopen(fistr, "r");
-	if (inf == NULL) {
+	if (strlen(fistr) == 0) 
+	{
+		strcpy_s(fistr, "daten.txt");
+	}
+	if (fopen_s(&inf,fistr, "r") == NULL) 
+	{
 		printf("Cannot open input file %s\n", fistr);
 	}
 	else
 	{
+		output(fistr, "logfile.txt");
+		output("\n", "logfile.txt");
 		CParser obj;
 		obj.InitParse(inf, stderr, stdout);
 		//	obj.pr_tokentable();
-		obj.yyparse(arr, feld);
+		obj.yyparse(arrl, feld);
 
 	}
 
@@ -53,38 +58,26 @@ und zur Ausfürhrung von k7scan2
 
 char*	zeit()
 {
-	int jetzt;
-	int YY;
-	int MM;
-	int TT;
-	int hh;
-	int mm;
-	int se;
 	char ccw[100];
 	char ddw[100];
-	char* cct;
-	char* dd;
+	char cct;
+	char dd;
+	struct tm uhr;
 	time_t sekunden = time(NULL);
-	tm *uhr = localtime(&sekunden);
-	se = uhr->tm_sec;
-	mm = uhr->tm_min;
-	hh = uhr->tm_hour;
-	TT = uhr->tm_mday;
-	MM = uhr->tm_mon;
-	YY = uhr->tm_year;
-	cct = itoa((YY + 1900), ccw, 10);
-	dd = itoa((MM + 1), ddw, 10);
-	strcat(cct, dd);
-	dd = itoa(TT, ddw, 10);
-	strcat(cct, dd);
-	dd = itoa(hh, ddw, 10);
-	strcat(cct, dd);
-	dd = itoa(mm, ddw, 10);
-	strcat(cct, dd);
-	dd = itoa(se, ddw, 10);
-	strcat(cct, dd);
-	jetzt = atoi(cct);
-	return cct;
+	localtime_s( &uhr ,&sekunden);
+	cct = _itoa_s((uhr.tm_year + 1900), ccw, 10);
+	dd = _itoa_s((uhr.tm_mon + 1), ddw, 10);
+	strcat(ccw, ddw);
+	dd = _itoa_s(uhr.tm_mday, ddw, 10);
+	strcat(ccw, ddw);
+	dd = _itoa_s(uhr.tm_hour, ddw, 10);
+	strcat(ccw, ddw);
+	dd = _itoa_s(uhr.tm_min, ddw, 10);
+	strcat(ccw, ddw);
+	dd = _itoa_s(uhr.tm_sec, ddw, 10);
+	strcat(ccw, ddw);
+	
+	return ccw;
 }
 
 void	output(char *Ausgabetext, char* dateiname)
@@ -109,32 +102,33 @@ keine Datei vorhanden ist wird sie Erzeugt.
 
 void	write_data(vector<field_stack>& feldw)
 {
-	stack<Card*> helpstack;
-	int uu = 0;
-	int nn = 0;
+	//stack<Card*> helpstack;
+	int Felstapelgroesse = 0;
+	int Feldstapelnummer = 0;
 	int  coll;
 	int  wall = 0;
 	bool hidd;
 	int  hidden;
 	char  karte[20];
 	char*  karten;
-	char cc[100] = "";
-	char* ccst;
-	int cci;
+	char Datanamen[100] = "";
+	char* Datazeitstempel;
+
 	char* leer;
 	int len;
-	char ausgabedatennam[100] = "outdaten.txt";
-	//char namen[200];
-	ccst = zeit();
-	//ccst = itoa(cci, cc, 10);
-	strcat(ccst, ausgabedatennam);
-	strcat(cc, ccst);
+	char ausgabedatennam[100] = "outdaten.txt";// Grundnamen der Ausgabedatei
+	
+	Datazeitstempel = zeit();// Suchen der Aktuellenzeit und Rückgabe zur Dateinamen Erstellung
+	
+	strcat(Datazeitstempel, ausgabedatennam);
+	strcat(Datanamen, Datazeitstempel);
 
 
-	for (nn = 0; nn < 12; nn++)
+	for (Feldstapelnummer = 0; Feldstapelnummer < 12; Feldstapelnummer++)
 	{
-		uu = feldw[nn].field.size();
-		switch (nn)
+		Felstapelgroesse = feldw[Feldstapelnummer].field.size();
+		//Namen der Stapel in der Datei
+		switch (Feldstapelnummer)
 		{
 		case(0) :
 			karten = "Spades:";
@@ -176,16 +170,16 @@ void	write_data(vector<field_stack>& feldw)
 			break;
 		}
 
-		output(karten, cc);
-		for (int zz = 0; zz < uu; zz++)
+		output(karten, Datanamen);
+		for (int zz = 0; zz < Felstapelgroesse; zz++)
 		{
 
 
 
 
-			coll = feldw[nn].field[zz]->get_card_colour();
-			wall = feldw[nn].field[zz]->get_card_value();
-			hidd = feldw[nn].field[zz]->is_card_hidden();
+			coll = feldw[Feldstapelnummer].field[zz]->get_card_colour();
+			wall = feldw[Feldstapelnummer].field[zz]->get_card_value();
+			hidd = feldw[Feldstapelnummer].field[zz]->is_card_hidden();
 			if (hidd == true)
 			{
 				hidden = 1;
@@ -194,25 +188,25 @@ void	write_data(vector<field_stack>& feldw)
 			{
 				hidden = 0;
 			}
-			karten = itoa((coll * 1000 + wall * 10 + hidden), karte, 10);
+			karten = _itoa((coll * 1000 + wall * 10 + hidden), karte, 10);
 			len = strlen(karten);
 			while (len< 4)
 			{
 				leer = "0";
-				output(leer, cc);
+				output(leer, Datanamen);
 				len++;
 			}
-			output(karten, cc);
+			output(karten, Datanamen);
 
-			if ((zz + 1) < uu)
+			if ((zz + 1) < Felstapelgroesse)
 			{
-				karten = ",";
-				output(karten, cc);
+				karten = ",";//Ternung der Karten durch Komma in der Datei
+				output(karten, Datanamen);
 			}
 
 		}
-		karten = ";\n";
-		output(karten, cc);
+		karten = ";\n"; //Zeilen ende in der Datei
+		output(karten, Datanamen);
 	}
 
 }
@@ -243,15 +237,15 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	*/
 	int colo;
 	int vaul;
-	int feldw;
-	int reihew;
+	//int feldw;
+	//int reihew;
 	//int stzi;
 	char cfeldw[5]; // Variabel zur Umwandlung von einem Interger in einen Char benötigt
 	//char* cfelwst;
 	string Text; // Zwischenspeicher um den Text an printout dran zu hängen
 	char logname[100] = "logfile.txt";
 	string printout; // Hier wird der kommpelte Text zur Ausgabe gesammelt
-	char* printarr;
+	//char* printarr;
 	colo = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour();
 	vaul = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value();
 	printout = "Karte: ";
@@ -335,13 +329,13 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	}
 	Text = "\tVon: Startstapel ";
 	printout = printout + Text;
-	Text = itoa(wind.first_click_stack, cfeldw, 10); //Stapel
+	Text = _itoa(wind.first_click_stack, cfeldw, 10); //Stapel
 	printout = printout + Text;
 	Text = "\t Startreihe ";
 	printout = printout + Text;
 	if (wind.first_click_card < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = itoa(wind.first_click_card, cfeldw, 10); // Reihe
+		Text = _itoa(wind.first_click_card, cfeldw, 10); // Reihe
 	}
 	else
 	{
@@ -352,13 +346,13 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	printout = printout + Text;
 	Text = " Zielstapel  ";
 	printout = printout + Text;
-	Text = itoa(wind.second_click_stack, cfeldw, 10); // Stapel
+	Text = _itoa(wind.second_click_stack, cfeldw, 10); // Stapel
 	printout = printout + Text;
 	Text = "\t Zielreihe ";
 	printout = printout + Text;
 	if ((wind.second_click_card + 1) < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = itoa((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+		Text = _itoa((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
 	}
 	else
 	{

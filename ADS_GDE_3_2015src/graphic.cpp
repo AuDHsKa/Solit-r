@@ -304,7 +304,7 @@ void save(window& win, vector<field_stack>&  field_stack)
 		textbox(apx, apy, epx, epy, 18, BLUE, GREY, GREY, SINGLE_LINE | VCENTER_ALIGN | CENTER_ALIGN, ("Save"));
 	}
 }
-void load(window& win, vector<field_stack>&  field_stack)
+void load(window& win, vector<field_stack>&  field_stack, vector<Card>& arrl)
 {
 
 	int apx = win.wide - 245;//anfangspunkt x
@@ -320,7 +320,7 @@ void load(window& win, vector<field_stack>&  field_stack)
 		cout << "Datei geladen\n";
 		cout << "######################################\n\n";
 		delete_data(field_stack);
-		read_data(field_stack);
+		read_data(field_stack, arrl);
 		output("Datei geladen und augefürt\n", "logfile.txt");
 	}
 	else
@@ -425,7 +425,7 @@ void newwindow_cards(window& win)
 //load button
 int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)  // maus x, maus y, windowsweite, windowshöhe
 {
-	load(win, field_stack);
+	load(win, field_stack,cards);
 	save(win, field_stack);
 
 #ifndef Auswerten

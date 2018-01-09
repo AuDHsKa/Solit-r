@@ -11,7 +11,7 @@
 
 void	get_arr(vector<Card>& arrl);
 
-void	read_data(vector<field_stack>& feld);
+void	read_data(vector<field_stack>& feld, vector<Card>& arrl);
 
 void	write_data(vector<field_stack>& feldW);
 

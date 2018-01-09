@@ -683,6 +683,7 @@ void	gewonnen()
 	cout << "				\n Sie haben das Spiel gewonnen!\n";
 	cout << "\n*************************************************************\n";
 	cout << "*************************************************************\n";
+	output("Das Spiel wurde gewonnen\n", "logfile.txt");
 }
 
 void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
@@ -708,7 +709,7 @@ void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& card
 		n--;
 	}
 
-	cout << "Es wurden:" << gewonnen << "Spiele gewonnen!\n";
+	cout << "Es wurden: " << gewonnen << " Spiele gewonnen!\n";
 }
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack)
