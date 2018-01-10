@@ -177,34 +177,38 @@ void	austeilen(vector<field_stack>& ziel)
 	}
 }
 
+/****************window_move*****************************************/
+/*if the turn (Spielzug) possile, Yes = move card	no= no change	*/
 void	window_move(vector<field_stack>& field_stack, window& win)
 {
-	if ((win.second_click_stack == 13) || (win.first_click_card == 53))
+	//click on a field_stack or target_stack or open deck
+	if ((win.second_click_stack == 13) || (win.first_click_card == 53)) // click on no stack
 	{
-		win.first_click_stack = 13;
-		win.first_click_card = 100;
+		win.first_click_stack = 13; // clear click on first card 
+		win.first_click_card = 100; // clear click on first card 
 	}
 	else
 	{
-		if ((win.first_click_stack == 13) || (win.first_click_stack == win.second_click_stack))
+		if ((win.first_click_stack == 13) || (win.first_click_stack == win.second_click_stack)) //click on the same stack
 		{
-			win.first_click_stack = win.second_click_stack;
-			win.first_click_card = win.second_click_card;
+			win.first_click_stack = win.second_click_stack; // choose the new stack at first stack
+			win.first_click_card = win.second_click_card;   // choose the new card at first card
 		}
 		else
 		{
-			if (win.second_click_stack < 53)
+			if (win.second_click_stack < 53) // mouseclick is not the hidden deck
 			{
-				playing_rules(field_stack, win);
+				playing_rules(field_stack, win); // look for possilble move
 			}
 		}
 	}
 
+	// mouseclick on  hidden deck_stack
 	if (win.second_click_stack == 11 && win.second_click_card == 53) //mausklick auf verdecktes deck
 	{
 		int c = 0;
 
-		for (size_t i = 0; i < field_stack[11].field.size(); i++)
+		for (size_t i = 0; i < field_stack[11].field.size(); i++) // count number of hidden cards
 		{
 			if ((field_stack[11].field[i]->is_card_hidden()) == 1)
 			{
@@ -212,7 +216,7 @@ void	window_move(vector<field_stack>& field_stack, window& win)
 			}
 		}
 
-		if (c == 0)
+		if (c == 0) // if no card is hidden, then hide all cards on deck.
 		{
 			for (size_t i = 0; i < (field_stack[11].field.size()); i++)
 			{
@@ -224,14 +228,16 @@ void	window_move(vector<field_stack>& field_stack, window& win)
 			field_stack[11].field[c - 1]->undiscover_card();
 		}
 
-		win.first_click_stack = 13; //rücksetzen des ersen clicks
-		win.first_click_card = 100;
-		win.x_mouse = 0;
-		win.y_mouse = 0;
+		win.first_click_stack = 13; //reset of the first click
+		win.first_click_card = 100; //reset of the first click
+		win.x_mouse = 0; //reset of the aktuel mouseclick
+		win.y_mouse = 0; //reset of the aktuel mouseclick
 	}
 
 }
 
+/****************same_colour*****************************************/
+/*have the cards the same colour									*/
 bool	same_colour(vector<field_stack>& field_stack, window& win)
 {
 	bool same_col = false;
@@ -239,6 +245,8 @@ bool	same_colour(vector<field_stack>& field_stack, window& win)
 	return same_col;
 }
 
+/******************field_empty***************************************/
+/*is there any card on the stack									*/
 bool	field_empty(vector<field_stack>& field_stack, int empty_field) 
 {
 	bool empty = false;
@@ -255,6 +263,8 @@ bool	field_empty(vector<field_stack>& field_stack, int empty_field)
 	return empty;
 }
 
+/******************undiscover***************************************/
+/*undiscover choosing card										   */
 void	undiscover(vector<field_stack>& field_stack, window& win)
 {
 	if (win.first_click_stack < 11)
@@ -266,29 +276,30 @@ void	undiscover(vector<field_stack>& field_stack, window& win)
 	}
 }
 
+/******************target_rules*************************************/
+/*look for a possible move on target							 ????????????????????????  */
 void	target_rules(vector<field_stack>& field_stack, window& win)
 {
 	bool first_stack_empty = field_empty(field_stack, win.first_click_stack);
 	bool second_stack_empty = field_empty(field_stack, win.second_click_stack);
 
-	if (first_stack_empty)
+	if (first_stack_empty) // no card on field to move
 	{
 		return;
 	}
 
-	if (second_stack_empty)
+	if (second_stack_empty) // only the Ass can be move at target when field is empty
 	{
-		if(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1)
+		if(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1) 
 		{
 		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
 		move_cards(field_stack, win);
 		undiscover(field_stack, win);
 
-		win.first_click_stack = 13; //rücksetzen des ersen clicks
-		win.first_click_card = 100;
-
-		win.x_mouse = 0;
-		win.y_mouse = 0;
+		win.first_click_stack = 13; //reset of the first click
+		win.first_click_card = 100; //reset of the first click
+		win.x_mouse = 0; //reset of the aktuel mouseclick
+		win.y_mouse = 0; //reset of the aktuel mouseclick
 		}
 	}
 	else
@@ -301,11 +312,10 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 				move_cards(field_stack, win);
 				undiscover(field_stack, win);
 
-				win.first_click_stack = 13; //rücksetzen des ersen clicks
-				win.first_click_card = 100;
-
-				win.x_mouse = 0;
-				win.y_mouse = 0;
+				win.first_click_stack = 13; //reset of the first click
+				win.first_click_card = 100; //reset of the first click
+				win.x_mouse = 0; //reset of the aktuel mouseclick
+				win.y_mouse = 0; //reset of the aktuel mouseclick
 			}
 	}
 }
@@ -328,11 +338,10 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 			move_cards(field_stack, win);
 			undiscover(field_stack, win);
 
-			win.first_click_stack = 13; //rücksetzen des ersen clicks
-			win.first_click_card = 100;
-
-			win.x_mouse = 0;
-			win.y_mouse = 0;
+			win.first_click_stack = 13; //reset of the first click
+			win.first_click_card = 100; //reset of the first click
+			win.x_mouse = 0; //reset of the aktuel mouseclick
+			win.y_mouse = 0; //reset of the aktuel mouseclick
 		}
 	}
 	else
@@ -346,11 +355,10 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 			move_cards(field_stack, win);
 			undiscover(field_stack, win);
 
-			win.first_click_stack = 13; //rücksetzen des ersen clicks
-			win.first_click_card = 100;
-
-			win.x_mouse = 0;
-			win.y_mouse = 0;
+			win.first_click_stack = 13; //reset of the first click
+			win.first_click_card = 100; //reset of the first click
+			win.x_mouse = 0; //reset of the aktuel mouseclick
+			win.y_mouse = 0; //reset of the aktuel mouseclick
 		}
 	}
 
