@@ -76,14 +76,14 @@ void user_main()
 
 	while (1)
 	{
-		win.second_click_card = 100;
-		win.second_click_stack = 13;
+		//win.second_click_card = 100; //reset second mouseclick
+		//win.second_click_stack = 13; //reset second mouseclick
 
-		button(win, field_stack, cards);
-		click_window(field_stack, win, cards);
-		window_move(field_stack, win);
-		click_window(field_stack, win, cards);
-		//win.test++;
+		button(win, field_stack, cards); // sourch for a click on buttons
+		click_window(field_stack, win); // sourch for a click on stacks
+		window_move(field_stack, win); // look for a turn (spielzug)
+		click_window(field_stack, win); // draw the window after a move
+
 		updatescr();
 
 		if (look_for_game_won(field_stack))
