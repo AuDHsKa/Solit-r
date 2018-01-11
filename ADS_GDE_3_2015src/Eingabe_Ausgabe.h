@@ -5,12 +5,6 @@
 #endif // !k7scan2.h
 #define		__einaus__
 
-#ifndef __window__
-#include "window.h"
-#endif
-
-void	get_arr(vector<Card>& arrl);
-
 void	read_data(vector<field_stack>& feld, vector<Card>& arrl);
 
 void	write_data(vector<field_stack>& feldW);

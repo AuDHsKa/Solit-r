@@ -6,11 +6,8 @@
 #include <stack>
 #endif
 
-#ifndef __window__
-#include "window.h"
-#endif
 
-void click_window(vector<field_stack>& field_stack, window& win, vector<Card>& cards);//ruft alle funktionen auf
+void click_window(vector<field_stack>& field_stack, window& win);//ruft alle funktionen auf
 
 void newwindow_cards(window& win);
 

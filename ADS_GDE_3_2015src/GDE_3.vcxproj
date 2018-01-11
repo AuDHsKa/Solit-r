@@ -124,6 +124,7 @@
     <ClCompile Include="GDE_3Doc.cpp" />
     <ClCompile Include="GDE_3View.cpp" />
     <ClCompile Include="graphic.cpp" />
+    <ClCompile Include="Init_Spielfeld.cpp" />
     <ClCompile Include="k7scan2.cpp" />
     <ClCompile Include="Klassen.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -137,7 +138,6 @@
     <ClCompile Include="Graphics\Graphicfunctions.cpp" />
     <ClCompile Include="Graphics\Shape.cpp" />
     <ClCompile Include="Console\Console.cpp" />
-    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data_file.h" />
@@ -146,6 +146,7 @@
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />
     <ClInclude Include="graphic.h" />
+    <ClInclude Include="Init_Spielfeld.h" />
     <ClInclude Include="k7scan2.h" />
     <ClInclude Include="Klassen.h" />
     <ClInclude Include="MainFrm.h" />
@@ -160,7 +161,6 @@
     <ClInclude Include="Graphics\PointerArray.h" />
     <ClInclude Include="Graphics\Shape.h" />
     <ClInclude Include="Console\Console.h" />
-    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

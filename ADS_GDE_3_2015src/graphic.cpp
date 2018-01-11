@@ -18,10 +18,6 @@
 #include <stack>
 #endif
 
-#ifndef __window__
-#include "window.h"
-#endif
-
 #ifndef __einaus__
 #include "Eingabe_Ausgabe.h"
 #endif
@@ -217,7 +213,7 @@ int w_deck(int x, int y, vector<field_stack>& deck)
 	bool deckleer = true; //true no card on deck is hidden
 	bool aktiv = false;   //aktiv false f+r spätere abfrage
 	int mclickcard = 100; //number of card that is choose, counts from 0. (100 no card is choose)
-						  
+
 
 	//draw cards on deck_stack and look for a mouseclick
 	if (posnumber) //are cards on deck
@@ -316,7 +312,7 @@ void save(window& win, vector<field_stack>&  field_stack)
 		cout << "Datei gespeichert\n";
 		cout << "######################################\n\n";
 		updatescr();
-		output("Datei gespeichert\n", "logfile.txt");
+		output("\n\n#################################\n\nDatei gespeichert\n\n#################################\n\n", "logfile.txt");
 		write_data(field_stack); // save game
 	}
 	else
@@ -348,7 +344,7 @@ void load(window& win, vector<field_stack>&  field_stack, vector<Card>& arrl)
 		updatescr();
 		delete_data(field_stack); // delete last game
 		read_data(field_stack, arrl); //load a game
-		output("Datei geladen und augefürt\n", "logfile.txt");
+		output("\n\n#################################\n\nDatei geladen und ausgeführt\n\n#################################\n\n", "logfile.txt");
 	}
 	else
 	{
@@ -382,7 +378,7 @@ void restart(window& win, vector<field_stack>&  field_stack, vector<Card>& cards
 		initialize_field(field_stack);
 		initialize_target(field_stack, cards);
 		austeilen(field_stack);
-		output("Restart augefürt\n", "logfile.txt");
+		output("\n\n#################################\n\nRestart ausgeführt\n\n#################################\n\n", "logfile.txt");
 	}
 	else
 	{
@@ -413,7 +409,7 @@ void solve(window& win, vector<field_stack>&  field_stack)
 		cout << "\n######################################\n";
 		cout << "Loese Spiel\n";
 		cout << "######################################\n\n";
-		output("Lösen augefürt\n", "logfile.txt");
+		output("\n\n#################################\n\nLösen ausgeführt\n\n#################################\n\n", "logfile.txt");
 		solvealgo(field_stack, win); //solve the game
 	}
 	else
@@ -427,7 +423,7 @@ void solve(window& win, vector<field_stack>&  field_stack)
 /* draw button_statistik			*/
 /* and							    */
 /* sourch for a mouseclick (win)    */
-void statistik_button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)
+	void statistik_button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards)
 	{
 
 		int apx = 255;//anfangspunkt x
@@ -491,7 +487,7 @@ int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards) 
 /* sourch for a mouseclick all stacks							  */
 /* and															  */
 /* save choosen card in window& win 							  */
-void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& cards)
+void click_window(vector<field_stack>& field_stack, window& win )
 {
 	win.second_click_card = 100;	//mouseclick on card_number (100= no card is seleced)
 	win.second_click_stack = 13;	//mouseclick on field_number (13= no stack is seleced)

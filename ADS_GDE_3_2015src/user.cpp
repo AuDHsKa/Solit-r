@@ -30,10 +30,6 @@
 #include	"Eingabe_Ausgabe.h"
 #endif // !Eingabe_Ausgabe.h
 
-#ifndef __window__
-#include "window.h"
-#endif
-
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
 #endif
@@ -44,6 +40,7 @@ void user_main()
 	window win;
 	win.wide = 700;
 	win.height = 600;
+	win.statistik = 0;
 
 	set_windowpos(0, 0, win.wide, win.height);	//windowsfenster öffnen
 	set_drawarea(win.wide, win.height);		// Setzen des Zeichenbereiches arbeitsfeld
@@ -62,17 +59,13 @@ void user_main()
 	initialize_cards(cards);
 	initialize_target(field_stack, cards);
 
-	get_arr(cards);
-
-	//read_data(field_stack);
-
 	austeilen(field_stack);
 
 	newwindow(win);
-
-#ifdef Auswerten
-	statistik(field_stack, win, cards);
-#endif // !Auswerten
+	output("\n\n#################################\n\nDas Programm wurde gestartet\n\n#################################\n\n", "logfile.txt");
+//#ifdef Auswerten
+//	statistik(field_stack, win, cards);
+//#endif // !Auswerten
 
 	while (1)
 	{
@@ -80,9 +73,9 @@ void user_main()
 		//win.second_click_stack = 13; //reset second mouseclick
 
 		button(win, field_stack, cards); // sourch for a click on buttons
-		click_window(field_stack, win, cards); // sourch for a click on stacks
+		click_window(field_stack, win); // sourch for a click on stacks
 		window_move(field_stack, win); // look for a turn (spielzug)
-		click_window(field_stack, win, cards); // draw the window after a move
+		click_window(field_stack, win); // draw the window after a move
 
 		updatescr();
 

@@ -4,6 +4,8 @@
 #include "math.h"
 #include <time.h>
 
+#include "graphics\graphicfunctions.h"
+
 #ifndef __Klassen__
 #include "Klassen.h"
 #endif // !__Klassen__
@@ -15,10 +17,6 @@
 #include "graphic.h"
 #endif // !graphic.h
 
-#ifndef __window__
-#include "window.h"
-#endif
-
 #ifndef Spielfunktionen.h
 	#include "Spielfunktionen.h"
 #endif // !Spielfunktionen.h
@@ -26,156 +24,6 @@
 #ifndef __einaus__
 #include "Eingabe_Ausgabe.h"
 #endif
-
-void	copy_cards(vector<Card>& origin, vector<Card*>& copy)
-{
-	for (size_t i = 0; i < 52; i++)
-	{
-		// schreibt in copy die Referenz der Karten
-		copy.at(i) = &origin.at(i);
-	}
-}
-
-void	mein_austeilen(vector<field_stack>& ziel)
-{
-	size_t	mini = 0;
-	size_t	maxi = 13;
-	size_t	min = 0;
-	size_t	max = 7;
-	size_t	hoch = 0;
-	size_t	new_card = 0;
-	size_t	size = 0;
-	size_t	ii = 0;
-	Card*	jojo;
-
-	// time(NULL) und "time.h" eingefügt, füe immer andere Zufallszahl
-	srand(time(NULL));
-
-	//while (Karten.size())
-	//{
-	//	new_card = min + rand() % (maxi - mini + 1);
-	//	hoch = min + rand() % (max - min + 1);
-
-	//	size = Karten.size();
-
-	//	// holt sich die ausgewälte zufällige Referenz 
-	//	jojo = Karten.at(new_card % size);
-
-	//	// löscht die ausgewälte zufällige Referenz
-	//	Karten.erase(Karten.begin() + (new_card % size));
-
-	//	// ueberprüft ob der Feldstapel "voll" ist
-	//	while (ziel[(hoch % 8) + 4].field.size() == ziel[(hoch % 8) + 4].get_stack_count())
-	//	{
-	//		hoch++;
-	//	}
-
-	//	// setzt die ausgewählte Karte auf den Feldstapel
-	//	ziel[(hoch % 8) + 4].field.push_back(jojo);
-	//}
-
-	//// take every card of every stack on the target field 
-	//for (size_t i = 0; i < 13; i++)
-	//{
-	//	// go for every stack on the target field
-	//	for (size_t ii = 0; ii < 4; ii++)
-	//	{
-	while (ziel.at(0).field.size() || ziel.at(1).field.size() || ziel.at(2).field.size() || ziel.at(3).field.size())
-	{
-		if (ii < 4)
-		{
-			if (ziel.at(ii).field.size())
-			{
-				maxi = ziel.at(ii).field.size() - 1;
-				new_card = min + rand() % (maxi - mini + 1);
-				hoch = min + rand() % (max - min + 1);
-
-				jojo = ziel.at(ii).field.at(new_card);
-				ziel.at(ii).field.erase((ziel.at(ii).field.begin() + new_card));
-
-				while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
-				{
-					hoch++;
-				}
-
-				// set the card from target stack on the (hoch) field stack
-				ziel.at((hoch % 8) + 4).field.push_back(jojo);
-				ii++;
-			}
-			else
-			{
-				ii++;
-			}
-		}
-		else
-		{
-			ii = 0;
-		}
-	}
-
-
-	//Versteckt die Karten beim austeilen
-
-	for (size_t i = 4; i < 12; i++)
-	{
-		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
-		{
-			ziel.at(i).field.at(ii)->hide_card();
-		}
-	}
-}
-
-void	austeilen(vector<field_stack>& ziel)
-{
-	size_t	pp = 0;
-	size_t	min = 0;
-	size_t	max = 7;
-	size_t	hoch = 0;
-	size_t	iii = 0;
-	Card*	jojo;
-
-	// eingefügt 
-	srand(time(NULL));
-
-	// take every card of every stack on the target field 
-	for (size_t i = 0; i < 13; i++)
-	{
-		// go for every stack on the target field
-		for (size_t ii = 0; ii < 4; ii++)
-		{
-			jojo = ziel.at(ii).field.back();
-			ziel.at(ii).field.pop_back();
-
-			if (pp == 53)
-			{	
-				pp = 0;
-				hoch = 7; 
-			}
-			else
-			{
-				hoch = min + rand() % (max - min + 1);
-			}
-
-			while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
-			{
-				hoch++;
-			}
-
-			// set the card from target stack on the (hoch) field stack
-			ziel.at((hoch % 8) + 4).field.push_back(jojo);
-			pp++;
-		}
-
-	}
-
-	for (size_t i = 4; i < 12; i++)
-	{
-		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
-		{
-			ziel.at(i).field.at(ii)->hide_card();
-		}
-	}
-}
 
 /****************window_move*****************************************/
 /*if the turn (Spielzug) possile, Yes = move card	no= no change	*/
@@ -277,7 +125,7 @@ void	undiscover(vector<field_stack>& field_stack, window& win)
 }
 
 /******************target_rules*************************************/
-/*look for a possible move on target							 ????????????????????????  */
+/*look for a possible move on target							   */
 void	target_rules(vector<field_stack>& field_stack, window& win)
 {
 	bool first_stack_empty = field_empty(field_stack, win.first_click_stack);
@@ -292,7 +140,7 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 	{
 		if(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 1) 
 		{
-		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
+		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour(); //sourch for the right target_field 
 		move_cards(field_stack, win);
 		undiscover(field_stack, win);
 
@@ -304,7 +152,7 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 	}
 	else
 	{
-		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();
+		win.second_click_stack = field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour();//sourch for the right target_field
 
 			if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
 				(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() + 1)))
@@ -320,6 +168,8 @@ void	target_rules(vector<field_stack>& field_stack, window& win)
 	}
 }
 
+/******************field_rules*************************************/
+/*look for a possible move on field_Stack						   */
 void	field_rules(vector<field_stack>& field_stack, window& win)
 {
 	bool same_col = same_colour(field_stack, win);
@@ -333,7 +183,7 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 
 	if (second_stack_empty)
 	{
-		if (field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13)
+		if (field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == 13)//is the card a king
 		{
 			move_cards(field_stack, win);
 			undiscover(field_stack, win);
@@ -345,7 +195,7 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 		}
 	}
 	else
-	{
+	{	//is the move possible (colour, card number)
 		if (((field_stack[win.first_click_stack].field.empty() == false) && (field_stack[win.second_click_stack].field.empty() == false)) &&
 			(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_value() == (field_stack[win.second_click_stack].field.back()->get_card_value() - 1)) &&
 			(field_stack[win.first_click_stack].field[win.first_click_card]->get_card_colour() != field_stack[win.second_click_stack].field[win.second_click_card]->get_card_colour()) &&
@@ -364,6 +214,8 @@ void	field_rules(vector<field_stack>& field_stack, window& win)
 
 }
 
+/******************playing_rules*************************************/
+/*call the right rules (target or field rules) 					    */
 void	playing_rules(vector<field_stack>& field_stack, window& win)
 {
 	if (win.second_click_stack < 4)
@@ -384,9 +236,10 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 
 	if (select.first_click_stack == 11 || select.first_click_stack < 4 || select.second_click_stack < 4)
 	{
-#ifndef Auswerten
-		write_log_data(field_stack, select);
-#endif
+		if (!select.statistik)
+		{
+			write_log_data(field_stack, select);
+		}
 		jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 		field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
@@ -396,9 +249,10 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 	{
 		while (field_stack[select.first_click_stack].field.size()	>	select.first_click_card)
 		{
-#ifndef Auswerten
-			write_log_data(field_stack, select);
-#endif
+			if (!select.statistik)
+			{
+				write_log_data(field_stack, select);
+			}
 			jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
 			field_stack[select.first_click_stack].field.erase(field_stack[select.first_click_stack].field.begin() + select.first_click_card);
 
@@ -408,21 +262,24 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 }
 
 
-//sven big ki
+/******************ki_field_field*************************************/
+/*KI Move: sourch for a move from field to field					 */
+/*move only one card												 */
+/*return: someting_game (0= no change, 1= one card has been change	 */
 int ki_field_field(vector<field_stack>&	field_stack, window& win)
 {
 	int something_game = 0;
 	int hide = 0;
 
-	win.old_card_one = NULL;
-	win.old_card_second = NULL;
+	win.old_card_one = NULL; //set old card1 0, is used to stop the same turn
+	win.old_card_second = NULL; //set old card2 0, is used to stop the same turn
 
 		for (int i = 4; i < 11; i++)
 		{
-			win.x_mouse = 1;
-			win.y_mouse = 1;
+			win.x_mouse = 1;// set to 1 to look for a moved card
+			win.y_mouse = 1;// set to 1 to look for a moved card
 
-			hide = 0;
+			hide = 0; // search for unhidden cards
 			if (field_stack[i].field.size() != 0)
 			{
 				while (field_stack[i].field[hide]->is_card_hidden())
@@ -439,7 +296,7 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 				{
 					if (i != y)
 					{
-						win.first_click_stack = i;
+						win.first_click_stack = i; // set cards
 						win.first_click_card = hide;
 						win.second_click_stack = y;
 						if (field_stack[win.second_click_stack].field.size())
@@ -452,7 +309,7 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 						}
 
 						if (win.second_click_card != 53)
-						{
+						{ //if the card will be turn to the old place: break
 							if ( (field_stack[win.first_click_stack].field.at(win.first_click_card) == win.old_card_one)
 								&& (field_stack[win.second_click_stack].field.at(win.second_click_card) == win.old_card_second) )
 							{
@@ -467,7 +324,7 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 
 						
 
-						if (win.x_mouse == 0 && win.y_mouse == 0)
+						if (win.x_mouse == 0 && win.y_mouse == 0)// a move was made
 						{
 							something_game = 1;
 							if (win.second_click_card != 53)
@@ -489,23 +346,25 @@ int ki_field_field(vector<field_stack>&	field_stack, window& win)
 	return something_game;
 }
 
+/******************ki_deck_field*************************************/
+/*KI Move: sourch for a move from deck  to field					 */
+/*move only one card												 */
+/*return: someting_game (0= no change, 1= one card has been change	 */
 int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 {
 	int something_game = 0;
-	int no_change = 0;
 	int hide = 0;
 
 	win.first_click_stack = 11;
 
-		win.x_mouse = 1;
-		win.y_mouse = 1;
+		win.x_mouse = 1;// set to 1 to look for a moved card
+		win.y_mouse = 1;// set to 1 to look for a moved card
 
 			if (field_stack[11].field.size() == 0)
 			{
 				something_game = 0;
 				return something_game;
 			}
-			no_change = 1;
 
 			for (int i = 0; i < field_stack[11].field.size(); i++)
 			{
@@ -513,21 +372,20 @@ int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 
 				for (int y = 4; y < 11; y++)
 				{
-					win.second_click_stack = y;
-					win.second_click_card = field_stack[y].field.size() - 1;
+					win.second_click_stack = y; // set cards
+					win.second_click_card = field_stack[y].field.size() - 1;// set cards
 
 					playing_rules(field_stack, win);
 
-					if (win.x_mouse == 0 && win.y_mouse == 0)
+					if (win.x_mouse == 0 && win.y_mouse == 0)// a move was made
 					{
-						no_change = 0;
 						something_game = 1;
 						break;
 					}
 				}
-				if (win.x_mouse == 0 && win.y_mouse == 0)
+
+				if (win.x_mouse == 0 && win.y_mouse == 0)// a move was made
 				{
-					no_change = 0;
 					something_game = 1;
 					break;
 				}
@@ -535,19 +393,23 @@ int ki_deck_field(vector<field_stack>&	field_stack, window& win)
 		return something_game;
 }
 
+/******************ki_field_target*************************************/
+/*KI Move: sourch for a move from field  to target					 */
+/*move only one card												 */
+/*return: someting_game (0= no change, 1= one card has been change	 */
 int ki_field_target(vector<field_stack>&	field_stack, window& win)
 {
 	int something_game = 0;
 
 	for (int i = 4; i < 11; i++)
 	{
-		win.x_mouse = 1;
-		win.y_mouse = 1;
+		win.x_mouse = 1;// set to 1 to look for a moved card
+		win.y_mouse = 1;// set to 1 to look for a moved card
 
-			win.first_click_stack = i;
+			win.first_click_stack = i; //set stack
 			if (field_stack[i].field.size())
 			{
-				win.first_click_card = field_stack[i].field.size()-1;
+				win.first_click_card = field_stack[i].field.size()-1;//set card
 			}
 			else
 			{
@@ -556,10 +418,10 @@ int ki_field_target(vector<field_stack>&	field_stack, window& win)
 
 			for (int y = 0; y < 4; y++)
 			{
-				win.second_click_stack = y;
+				win.second_click_stack = y;//set stack
 				if (field_stack[y].field.size())
 				{
-					win.second_click_card = field_stack[y].field.size()-1;
+					win.second_click_card = field_stack[y].field.size()-1;////set card
 				}
 				else
 				{
@@ -568,7 +430,7 @@ int ki_field_target(vector<field_stack>&	field_stack, window& win)
 
 				playing_rules(field_stack, win);
 
-				if (win.x_mouse == 0 && win.y_mouse == 0)
+				if (win.x_mouse == 0 && win.y_mouse == 0)// a move was made
 				{
 					something_game = 1;
 					return something_game;
@@ -578,14 +440,18 @@ int ki_field_target(vector<field_stack>&	field_stack, window& win)
 	return something_game;
 }
 
+/******************ki_deck_target*************************************/
+/*KI Move: sourch for a move from deck  to target					 */
+/*move only one card												 */
+/*return: someting_game (0= no change, 1= one card has been change	 */
 int ki_deck_target(vector<field_stack>&	field_stack, window& win)
 {
 	int something_game = 0;
 
 	win.first_click_stack = 11;
 
-	win.x_mouse = 1;
-	win.y_mouse = 1;
+	win.x_mouse = 1;// set to 1 to look for a moved card
+	win.y_mouse = 1;// set to 1 to look for a moved card
 
 	if (field_stack[11].field.size() == 0)
 	{
@@ -595,16 +461,16 @@ int ki_deck_target(vector<field_stack>&	field_stack, window& win)
 
 	for (int i = 0; i < field_stack[11].field.size(); i++)
 	{
-		win.first_click_card = i;
+		win.first_click_card = i;//set stack
 
 		for (int y = 0; y < 4; y++)
 		{
-			win.second_click_stack = y;
-			win.second_click_card = field_stack[y].field.size() - 1;
+			win.second_click_stack = y;//set stack
+			win.second_click_card = field_stack[y].field.size() - 1;//set card
 
 			playing_rules(field_stack, win);
 
-			if (win.x_mouse == 0 && win.y_mouse == 0)
+			if (win.x_mouse == 0 && win.y_mouse == 0)// a move was made
 			{
 				something_game = 1;
 				return something_game;
@@ -614,15 +480,18 @@ int ki_deck_target(vector<field_stack>&	field_stack, window& win)
 	return something_game;
 }
 
-
+/******************solvealgo******************************************/
+/*KI: call the KI_function in loops									 */
+/*move card till game is won or no change after a loop				 */
+/*return:	size_t 0= no solution 1= game is solved					 */
 size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 {
 	int loop_field = 1;
 	int loop_deck = 0;
 	int loop_field_target = 0;
 	int loop_deck_target = 0;
-	int unterbrechung = 0;
-	int loop_deck_anz = 0;
+	int unterbrechung = 0; // for field to field, do the loop more often 
+	int loop_deck_anz = 0;// for deck to field, do the loop more often
 
 	if (field_stack[11].field.size() != 0)
 	{
@@ -638,9 +507,9 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 
 
 		loop_field = 1;
-		while (loop_field == 1)
+		while (loop_field == 1)//loop field to field
 		{
-			loop_field = ki_field_field(field_stack, win);/// fehler wenn karte immer verschiebarist!!S
+			loop_field = ki_field_field(field_stack, win);/// fehler wenn karte immer verschiebarist!!
 			unterbrechung++;
 			if (unterbrechung > 3)
 			{
@@ -651,7 +520,7 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 
 		loop_deck_anz = 0;
 		loop_deck = 1;
-		while (loop_deck == 1)
+		while (loop_deck == 1)//loop deck to field
 		{
 			loop_deck = ki_deck_field(field_stack, win);
 			loop_deck_anz++;
@@ -660,15 +529,20 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 		{
 			loop_field = 1;
 		}
-
+		
 		loop_field_target = 1;
 		loop_field_target = ki_field_target(field_stack, win);
 
 		loop_deck_target = 1;
 		loop_deck_target = ki_deck_target(field_stack, win);
+		if (win.statistik <= 10)
+		{
+			click_window(field_stack, win);//lösungsweg anzeigen
+			updatescr();//lösungsweg anzeigen
+		}
 	}
 
-
+	//won the game
 	if ((field_stack.at(0).field.size() == 13) &&
 		(field_stack.at(1).field.size() == 13) &&
 		(field_stack.at(2).field.size() == 13) &&
@@ -691,17 +565,27 @@ void	gewonnen()
 	cout << "				\n Sie haben das Spiel gewonnen!\n";
 	cout << "\n*************************************************************\n";
 	cout << "*************************************************************\n";
-	output("Das Spiel wurde gewonnen\n", "logfile.txt");
+	output("\n\n#################################\n\nDas Spiel wurde gewonnen\n\n#################################\n\n", "logfile.txt");
 }
 
 void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
 {
 	size_t	n = 0;
 	size_t	gewonnen = 0;
+	char  nchar;
+	char ncharlang[10];
+
+	win.statistik = true;
 
 	cout << "Statistik. Wie viele Versuche moechten sie Durchlaufen?\n(Bitte die Anzahl eingeben)\n";
 	cin >> n ;
+	win.statistik =n;
+	output("\n\n#################################\n\nDie Statistik wurde aufgerufen.\n\n#################################\n\nDabei werden ", "logfile.txt");
+	nchar = _itoa_s(n,ncharlang,10);
+	output(ncharlang, "logfile.txt");
+	output(" Versuche ausgeführt.\n", "logfile.txt");
 
+	
 	while (n)
 	{
 		set_win_clicks(win);
@@ -718,6 +602,11 @@ void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& card
 	}
 
 	cout << "Es wurden: " << gewonnen << " Spiele gewonnen!\n";
+	output("Es wurden dabei: ", "logfile.txt");
+	nchar = _itoa_s(gewonnen, ncharlang, 10);
+	output(ncharlang, "logfile.txt");
+	output(" Spiele gewonnen.\n", "logfile.txt");
+	win.statistik = 0;
 }
 
 size_t	look_for_game_won(vector<field_stack>&	field_stack)
@@ -733,45 +622,4 @@ size_t	look_for_game_won(vector<field_stack>&	field_stack)
 	{
 		return 0;
 	}
-}
-
-void	clear_field(vector<field_stack>&	field_stack)
-{
-	for (size_t yy = 0; yy < 12; yy++)
-	{
-		if (!(field_stack.at(yy).field.empty()))
-		{
-			field_stack.at(yy).field.erase(field_stack.at(yy).field.begin(), (field_stack.at(yy).field.begin() + field_stack.at(yy).field.size()));
-		}
-	}
-}
-
-void	initialize_field(vector<field_stack>&	field_stack)
-{
-	for (size_t i = 4; i < 11; i++)
-	{
-		field_stack.at(i).set_stack_count(i - 3);
-	}
-
-	field_stack.at(11).set_stack_count(24);
-}
-
-void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards)
-{
-	for (size_t yy = 0; yy < 4; yy++)
-	{
-		for (size_t ii = 0; ii < 13; ii++)
-		{
-			field_stack.at(yy).field.push_back(&cards.at(13 * yy + ii));
-			field_stack.at(yy).field.at(ii)->undiscover_card();
-		}
-	}
-}
-
-void	set_win_clicks(window& win)
-{
-	win.first_click_card = 100;
-	win.first_click_stack = 13;
-	win.second_click_card = 100;
-	win.second_click_stack = 13;
 }

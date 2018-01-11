@@ -65,3 +65,27 @@ public:
 void	initialize_cards(vector<Card>&	ca);
 
 void	show_cards(Card*	rd, size_t	length);
+
+class window
+{
+public:
+	window();
+	~window();
+
+	int wide;
+	int height;
+
+	int x_mouse;
+	int y_mouse;
+
+	int test;
+	int first_click_stack;
+	int first_click_card;
+	int second_click_stack;
+	int second_click_card;
+	size_t statistik;
+
+	Card*	old_card_one;
+	Card*	old_card_second;
+
+};

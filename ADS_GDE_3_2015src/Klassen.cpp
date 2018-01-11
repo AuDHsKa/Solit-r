@@ -165,3 +165,12 @@ void	initialize_cards(vector<Card>&	ca)
 		}
 	}
 }
+
+window::window()
+{
+}
+
+
+window::~window()
+{
+}

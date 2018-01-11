@@ -6,9 +6,6 @@
 #include "Klassen.h"
 #endif // !__Klassen__
 
-#ifndef __window__
-#include "window.h"
-#endif
 
 void	copy_cards(vector<Card>& origin, vector<Card*>& copy);
 

@@ -69,7 +69,7 @@
     <ClCompile Include="Eingabe_Ausgabe.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
+    <ClCompile Include="Init_Spielfeld.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClInclude Include="Eingabe_Ausgabe.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="window.h">
+    <ClInclude Include="Init_Spielfeld.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

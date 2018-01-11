@@ -16,13 +16,7 @@
 /*
 //David Kommentar
 */
-const	size_t	length = 52;
-vector<Card> arr(length);
 
-void get_arr(vector<Card>& arrl)
-{
-	arr = arrl;
-}
 
 void	read_data(vector<field_stack>& feld, vector<Card>& arrl)
 /*	Von k7scan2 übernommenes "Main" zum Aufruf der einzulesenden Datei
@@ -38,7 +32,7 @@ und zur Ausfürhrung von k7scan2
 	{
 		strcpy_s(fistr, "daten.txt");
 	}
-	if (fopen_s(&inf,fistr, "r") == NULL) 
+	if (fopen_s(&inf,fistr, "r") != NULL) // Achtung neue Fopen gibt Null zurück wenn die Datei geöffnet wurde 
 	{
 		printf("Cannot open input file %s\n", fistr);
 	}
@@ -95,7 +89,7 @@ keine Datei vorhanden ist wird sie Erzeugt.
 	}
 	else
 	{
-		cout << "Datei konnte nicht geöfnet werden";
+		cout << "\nDatei konnte nicht geöfnet werden\n";
 	}
 
 }
