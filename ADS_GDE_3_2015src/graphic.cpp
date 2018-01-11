@@ -321,7 +321,7 @@ void load(window& win, vector<field_stack>&  field_stack, vector<Card>& arrl)
 		cout << "######################################\n\n";
 		delete_data(field_stack);
 		read_data(field_stack, arrl);
-		output("Datei geladen und augefürt\n", "logfile.txt");
+		output("Datei geladen und ausgeführt\n", "logfile.txt");
 	}
 	else
 	{

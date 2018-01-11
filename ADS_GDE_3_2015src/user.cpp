@@ -70,9 +70,9 @@ void user_main()
 
 	newwindow(win);
 
-#ifdef Auswerten
-	statistik(field_stack, win, cards);
-#endif // !Auswerten
+//#ifdef Auswerten
+//	statistik(field_stack, win, cards);
+//#endif // !Auswerten
 
 	while (1)
 	{

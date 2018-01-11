@@ -376,7 +376,7 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 
 	if (select.first_click_stack == 11 || select.first_click_stack < 4 || select.second_click_stack < 4)
 	{
-#ifndef Auswerten
+#ifdef Auswerten
 		write_log_data(field_stack, select);
 #endif
 		jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);
@@ -388,7 +388,7 @@ void	move_cards(vector<field_stack>& field_stack, window&	select)
 	{
 		while (field_stack[select.first_click_stack].field.size()	>	select.first_click_card)
 		{
-#ifndef Auswerten
+#ifdef Auswerten
 			write_log_data(field_stack, select);
 #endif
 			jojo = field_stack[select.first_click_stack].field.at(select.first_click_card);

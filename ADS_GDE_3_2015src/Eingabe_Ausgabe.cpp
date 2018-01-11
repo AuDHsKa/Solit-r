@@ -38,7 +38,7 @@ und zur Ausfürhrung von k7scan2
 	{
 		strcpy_s(fistr, "daten.txt");
 	}
-	if (fopen_s(&inf,fistr, "r") == NULL) 
+	if (fopen_s(&inf,fistr, "r") != NULL) // Achtung neue Fopen gibt Null zurück wenn die Datei geöffnet wurde 
 	{
 		printf("Cannot open input file %s\n", fistr);
 	}
@@ -95,7 +95,7 @@ keine Datei vorhanden ist wird sie Erzeugt.
 	}
 	else
 	{
-		cout << "Datei konnte nicht geöfnet werden";
+		cout << "\nDatei konnte nicht geöfnet werden\n";
 	}
 
 }
