@@ -80,9 +80,9 @@ void user_main()
 		//win.second_click_stack = 13; //reset second mouseclick
 
 		button(win, field_stack, cards); // sourch for a click on buttons
-		click_window(field_stack, win, cards); // sourch for a click on stacks
+		click_window(field_stack, win); // sourch for a click on stacks
 		window_move(field_stack, win); // look for a turn (spielzug)
-		click_window(field_stack, win, cards); // draw the window after a move
+		click_window(field_stack, win); // draw the window after a move
 
 		updatescr();
 

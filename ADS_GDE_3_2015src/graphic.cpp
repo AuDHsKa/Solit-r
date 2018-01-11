@@ -491,7 +491,7 @@ int button(window& win, vector<field_stack>&  field_stack, vector<Card>& cards) 
 /* sourch for a mouseclick all stacks							  */
 /* and															  */
 /* save choosen card in window& win 							  */
-void click_window(vector<field_stack>& field_stack, window& win , vector<Card>& cards)
+void click_window(vector<field_stack>& field_stack, window& win )
 {
 	win.second_click_card = 100;	//mouseclick on card_number (100= no card is seleced)
 	win.second_click_stack = 13;	//mouseclick on field_number (13= no stack is seleced)
