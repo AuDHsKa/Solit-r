@@ -9437,3 +9437,232 @@ Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zi
 Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  1	 Zielreihe 13
 Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
 Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  2	 Zielreihe 13
+
+
+#################################
+
+Das Programm wurde gestartet
+
+#################################
+
+
+
+#################################
+
+Datei gespeichert
+
+#################################
+
+
+
+#################################
+
+Lösen ausgeführt
+
+#################################
+
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 2	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Herz Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 2
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Kreuz 6 		Von: Startstapel 11	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 5
+Karte: Kreuz 4 		Von: Startstapel 11	 Startreihe 13	 -> Nach:  Zielstapel  9	 Zielreihe 6
+Karte: Herz 3 		Von: Startstapel 11	 Startreihe 4	 -> Nach:  Zielstapel  9	 Zielreihe 7
+Karte: Kreuz 3 		Von: Startstapel 11	 Startreihe 13	 -> Nach:  Zielstapel  10	 Zielreihe 7
+Karte: Herz 2 		Von: Startstapel 11	 Startreihe 6	 -> Nach:  Zielstapel  10	 Zielreihe 8
+Karte: Kreuz 2 		Von: Startstapel 11	 Startreihe 13	 -> Nach:  Zielstapel  9	 Zielreihe 8
+Karte: Herz ASS 	Von: Startstapel 11	 Startreihe 8	 -> Nach:  Zielstapel  9	 Zielreihe 9
+Karte: Kreuz ASS 	Von: Startstapel 11	 Startreihe 13	 -> Nach:  Zielstapel  10	 Zielreihe 9
+Karte: Herz ASS 	Von: Startstapel 9	 Startreihe 9	 -> Nach:  Zielstapel  2	 Zielreihe 0
+Karte: Karo ASS 	Von: Startstapel 11	 Startreihe 9	 -> Nach:  Zielstapel  0	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Karo 5 		Von: Startstapel 9	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 6
+Karte: Kreuz 4 		Von: Startstapel 9	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 6
+Karte: Herz 3 		Von: Startstapel 9	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 6
+Karte: Kreuz 2 		Von: Startstapel 9	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 6
+Karte: Kreuz ASS 	Von: Startstapel 10	 Startreihe 9	 -> Nach:  Zielstapel  3	 Zielreihe 0
+Karte: Karo 2 		Von: Startstapel 11	 Startreihe 8	 -> Nach:  Zielstapel  0	 Zielreihe 1
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Pik ASS 		Von: Startstapel 11	 Startreihe 13	 -> Nach:  Zielstapel  10	 Zielreihe 9
+Karte: Kreuz 2 		Von: Startstapel 8	 Startreihe 9	 -> Nach:  Zielstapel  3	 Zielreihe 2
+Karte: Karo 3 		Von: Startstapel 11	 Startreihe 5	 -> Nach:  Zielstapel  0	 Zielreihe 2
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Pik 2 		Von: Startstapel 11	 Startreihe 11	 -> Nach:  Zielstapel  8	 Zielreihe 9
+Karte: Pik ASS 		Von: Startstapel 10	 Startreihe 9	 -> Nach:  Zielstapel  1	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Pik 2 		Von: Startstapel 8	 Startreihe 9	 -> Nach:  Zielstapel  1	 Zielreihe 3
+Karte: Pik 3 		Von: Startstapel 11	 Startreihe 10	 -> Nach:  Zielstapel  1	 Zielreihe 3
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Herz 2 		Von: Startstapel 10	 Startreihe 8	 -> Nach:  Zielstapel  2	 Zielreihe 3
+Karte: Pik 4 		Von: Startstapel 11	 Startreihe 9	 -> Nach:  Zielstapel  1	 Zielreihe 3
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Herz 3 		Von: Startstapel 8	 Startreihe 8	 -> Nach:  Zielstapel  2	 Zielreihe 3
+Karte: Herz 4 		Von: Startstapel 11	 Startreihe 2	 -> Nach:  Zielstapel  2	 Zielreihe 3
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Kreuz 3 		Von: Startstapel 10	 Startreihe 7	 -> Nach:  Zielstapel  3	 Zielreihe 3
+Karte: Pik 5 		Von: Startstapel 11	 Startreihe 7	 -> Nach:  Zielstapel  1	 Zielreihe 3
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Kreuz 4 		Von: Startstapel 8	 Startreihe 7	 -> Nach:  Zielstapel  3	 Zielreihe 3
+Karte: Kreuz 5 		Von: Startstapel 11	 Startreihe 4	 -> Nach:  Zielstapel  3	 Zielreihe 3
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Karo 4 		Von: Startstapel 10	 Startreihe 6	 -> Nach:  Zielstapel  0	 Zielreihe 3
+Karte: Pik 6 		Von: Startstapel 11	 Startreihe 5	 -> Nach:  Zielstapel  1	 Zielreihe 4
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Karo 5 		Von: Startstapel 8	 Startreihe 6	 -> Nach:  Zielstapel  0	 Zielreihe 4
+Karte: Pik 7 		Von: Startstapel 11	 Startreihe 4	 -> Nach:  Zielstapel  1	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Herz 5 		Von: Startstapel 10	 Startreihe 5	 -> Nach:  Zielstapel  8	 Zielreihe 6
+Karte: Herz 5 		Von: Startstapel 8	 Startreihe 6	 -> Nach:  Zielstapel  2	 Zielreihe 5
+Karte: Pik 8 		Von: Startstapel 11	 Startreihe 3	 -> Nach:  Zielstapel  1	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Pik 9 		Von: Startstapel 7	 Startreihe 3	 -> Nach:  Zielstapel  1	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Pik 10 		Von: Startstapel 7	 Startreihe 2	 -> Nach:  Zielstapel  1	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Kreuz Bube 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 3
+Karte: Kreuz 6 		Von: Startstapel 8	 Startreihe 5	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Kreuz 7 		Von: Startstapel 11	 Startreihe 2	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Kreuz Dame 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Kreuz König 	Von: Startstapel 11	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Kreuz 8 		Von: Startstapel 11	 Startreihe 0	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 2	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Kreuz Bube 	Von: Startstapel 5	 Startreihe 2	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Kreuz 9 		Von: Startstapel 10	 Startreihe 4	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Herz Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 2
+Karte: Kreuz Bube 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 2
+Karte: Kreuz 10 	Von: Startstapel 9	 Startreihe 4	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 2	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Kreuz Bube 	Von: Startstapel 5	 Startreihe 2	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Kreuz Bube 	Von: Startstapel 7	 Startreihe 2	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Herz Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 2
+Karte: Kreuz Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 2	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 1
+Karte: Herz Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  5	 Zielreihe 2
+Karte: Kreuz König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  3	 Zielreihe 5
+Karte: Karo König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 1	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Karo 6 		Von: Startstapel 9	 Startreihe 3	 -> Nach:  Zielstapel  0	 Zielreihe 5
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Karo 7 		Von: Startstapel 8	 Startreihe 4	 -> Nach:  Zielstapel  0	 Zielreihe 6
+Karte: Pik Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Karo 8 		Von: Startstapel 8	 Startreihe 3	 -> Nach:  Zielstapel  0	 Zielreihe 7
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Karo 9 		Von: Startstapel 8	 Startreihe 2	 -> Nach:  Zielstapel  0	 Zielreihe 8
+Karte: Pik Dame 	Von: Startstapel 7	 Startreihe 1	 -> Nach:  Zielstapel  6	 Zielreihe 1
+Karte: Karo 10 		Von: Startstapel 8	 Startreihe 1	 -> Nach:  Zielstapel  0	 Zielreihe 9
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 1	 -> Nach:  Zielstapel  7	 Zielreihe 1
+Karte: Karo Bube 	Von: Startstapel 8	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 2
+Karte: Karo Bube 	Von: Startstapel 7	 Startreihe 2	 -> Nach:  Zielstapel  0	 Zielreihe 10
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  8	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  8	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 8	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 8	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Karo Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  0	 Zielreihe 11
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz 6 		Von: Startstapel 10	 Startreihe 3	 -> Nach:  Zielstapel  2	 Zielreihe 12
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz 7 		Von: Startstapel 9	 Startreihe 2	 -> Nach:  Zielstapel  2	 Zielreihe 12
+Karte: Karo König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz 8 		Von: Startstapel 9	 Startreihe 1	 -> Nach:  Zielstapel  2	 Zielreihe 12
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik Bube 	Von: Startstapel 9	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 2
+Karte: Pik Bube 	Von: Startstapel 6	 Startreihe 2	 -> Nach:  Zielstapel  1	 Zielreihe 12
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  1	 Zielreihe 12
+Karte: Karo König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  7	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 7	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Karo König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  0	 Zielreihe 12
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz 9 		Von: Startstapel 10	 Startreihe 2	 -> Nach:  Zielstapel  2	 Zielreihe 13
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz 10 		Von: Startstapel 10	 Startreihe 1	 -> Nach:  Zielstapel  2	 Zielreihe 13
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Bube 	Von: Startstapel 10	 Startreihe 0	 -> Nach:  Zielstapel  2	 Zielreihe 13
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz Dame 	Von: Startstapel 4	 Startreihe 1	 -> Nach:  Zielstapel  2	 Zielreihe 13
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  6	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 6	 Startreihe 0	 -> Nach:  Zielstapel  5	 Zielreihe 0
+Karte: Herz König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  2	 Zielreihe 13
+Karte: Pik König 	Von: Startstapel 5	 Startreihe 0	 -> Nach:  Zielstapel  4	 Zielreihe 0
+Karte: Pik König 	Von: Startstapel 4	 Startreihe 0	 -> Nach:  Zielstapel  1	 Zielreihe 13
+
+
+#################################
+
+Das Spiel wurde gewonnen
+
+#################################
+
+
+
+#################################
+
+Die Statistik wurde aufgerufen.
+
+#################################
+
+Dabei werden 100 Versuche ausgeführt.
+Es wurden dabei: 86 Spiele gewonnen.
+
+
+#################################
+
+Die Statistik wurde aufgerufen.
+
+#################################
+
+Dabei werden 1000 Versuche ausgeführt.
+Es wurden dabei: 679 Spiele gewonnen.

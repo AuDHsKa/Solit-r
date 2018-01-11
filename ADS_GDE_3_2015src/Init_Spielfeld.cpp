@@ -93,13 +93,12 @@ void	austeilen(vector<field_stack>& ziel)
 	srand(time(NULL));
 
 	// take every card of every stack on the target field 
-	for (size_t i = 0; i < 13; i++)
+	for (size_t i = 0; i < 52; i++)
 	{
-		// go for every stack on the target field
-		for (size_t ii = 0; ii < 4; ii++)
-		{
-			jojo = ziel.at(ii).field.back();
-			ziel.at(ii).field.pop_back();
+		//// go for every stack on the target field
+		//for (size_t ii = 0; ii < 4; ii++)
+		//{
+
 
 			if (pp == 53)
 			{
@@ -111,6 +110,14 @@ void	austeilen(vector<field_stack>& ziel)
 				hoch = min + rand() % (max - min + 1);
 			}
 
+			while (ziel.at(hoch % 4).field.empty())
+			{
+				hoch++;
+			}
+
+			jojo = ziel.at(hoch % 4).field.back();
+			ziel.at(hoch % 4).field.pop_back();
+
 			while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
 			{
 				hoch++;
@@ -119,7 +126,7 @@ void	austeilen(vector<field_stack>& ziel)
 			// set the card from target stack on the (hoch) field stack
 			ziel.at((hoch % 8) + 4).field.push_back(jojo);
 			pp++;
-		}
+		//}
 
 	}
 
