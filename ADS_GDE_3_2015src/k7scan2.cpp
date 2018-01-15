@@ -42,22 +42,35 @@ const int lengt = 52;
 using namespace std;
 #define	Getc(s)			getc(s)
 #define	Ungetc(c)		{ungetc(c,IP_Input); ugetflag=1;}
+/***********************************************************************************************
+Funktion:				k7scan2
+Bestimmung/Zweck:		Rahmenprogramm wurde aus der Vorlesung Algorithmen und  Datenstruckturen
+						Übernommen. An Programmteilen an denen etwas geändert wurde ist 
+						ein solcher Kommemtarkopf voran gestellt.
 
+************************************************************************************************/
+
+/***************************************************************************************
+Funktion:				int CParser::Sucheadresse(int col, int val, vector<Card>& arr)
+Bestimmung/Zweck:		Suchen der Kartenadresse im Array und rück gabe dessen
+Eingangsparameter:		col(Farbe), val(Wert), Card Array
+Ausgangsparameter:		Adresse der Karte im Array
+****************************************************************************************/
 int CParser::Sucheadresse(int col, int val, vector<Card>& arr)
 {
 
-	int zz;
-	for (zz = 0; zz < 52; zz++)
+	int Adersse;
+	for (Adersse = 0; Adersse < 52; Adersse++)
 	{
-		//cout << "Wir sind hierher gekommen!";
-		if (arr[zz].get_card_colour() == col &&  arr[zz].get_card_value() == val)
+		
+		if (arr[Adersse].get_card_colour() == col &&  arr[Adersse].get_card_value() == val)
 		{
-			//cout << zz << "\n";
-			return zz; // adressrückgabe
+			//cout << Adersse << "\n";
+			return Adersse; // adressrückgabe
 		}
-		//else return NULL;
+		
 	}
-	//return nullptr;
+	return 53; // Keine Kartenadresse gefungen
 }
 
 //------------------------------------------------------------------------
@@ -72,6 +85,11 @@ void CParser::Load_tokenentry(string str, int index)
 	IP_Token_table[str] = index;
 	IP_revToken_table[index] = str;
 }
+/***************************************************************************************
+Funktion:				void CParser::IP_init_token_table()
+Bestimmung/Zweck:		Die Tabelle wurde um die Stapel  zur Erkenung erweitert 
+
+****************************************************************************************/
 void CParser::IP_init_token_table()
 {
 	Load_tokenentry("STRING1", 3);
@@ -115,7 +133,12 @@ void CParser::pr_tokentable()
 	}
 }
 //------------------------------------------------------------------------
-
+/***************************************************************************************
+Funktion:				int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
+Bestimmung/Zweck:		Auswertung der eingelensen Werte und deren weiter Verarbeitung
+Eingangsparameter:		Card, field_stack
+Ausgangsparameter:		kein Rückgabewert
+****************************************************************************************/
 int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 {
 
@@ -123,7 +146,7 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 	int wert = 1;
 	int farb;
 	int hidden;
-	int wo = 0;
+	//int wo = 0; unten nur für den Else Zweig ist aber auskommentiert
 
 	if (prflag)fprintf(IP_List, "%5d ", (int)IP_LineNumber);
 	/*
@@ -138,7 +161,7 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			break;
 		case(INTEGER1):
-			//printf("%s %d ", IP_revToken_table[tok].c_str(), yylval.i);
+			// Erkennung der Karte und Auswertung
 			//cout << stapel << "\n";
 			farb = yylval.i;
 			farb = farb / 1000; // Berechnung der Farbe
@@ -148,16 +171,16 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 								   //field_stack. = 
 			if (hidden == 1)
 			{
-				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();
+				arr[CParser::Sucheadresse(farb, wert, arr)].hide_card();// Verdecken 
 			}
 			else
 			{
-				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card();
+				arr[CParser::Sucheadresse(farb, wert, arr)].undiscover_card(); // Aufdecken
 			}
-
-			feld[stapel].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);
-
 			//Übergabe
+			feld[stapel].field.push_back(&arr[CParser::Sucheadresse(farb, wert, arr)]);// Erstellung der Karte
+
+			
 			break;
 		case(REALNUMBER):
 			printf("%s %g ", IP_revToken_table[tok].c_str(), yylval.d);
@@ -165,75 +188,67 @@ int	CParser::yyparse(vector<Card>&	arr, vector<field_stack>& feld)
 		case(IDENTIFIER):
 			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			break;
+			//Stapel Übergabe und Speicherung
 		case(CLUBS):// Kreuz
-					//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 3;
 			//cout << stapel << "\n";
 			break;
 		case(SPADES): //Pik
-					  //printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 0;
 			//cout << stapel << "\n";
 			break;
 		case(HEARDS): // Herz
-					  //printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 1;
 			//cout << stapel << "\n";
 			break;
 		case(DIAMONDS): //Karo
-						//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 2;
 			//cout << stapel << "\n";
 			break;
 		case(STACKA):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 4;
 			//cout << stapel << "\n";
 			break;
 		case(STACKB):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 5;
 			//cout << stapel << "\n";
 			break;
 		case(STACKC):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 6;
 			//cout << stapel << "\n";
 			break;
 		case(STACKD):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 7;
 			//cout << stapel << "\n";
 			break;
 		case(STACKE):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 8;
 			//cout << stapel << "\n";
 			break;
 		case(STACKF):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 9;
 			//cout << stapel << "\n";
 			break;
 		case(STACKG):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 10;
 			//cout << stapel << "\n";
 			break;
 		case(STACKDECK):
-			//printf("%s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 			stapel = 11;
 			//cout << stapel << "\n";
 			break;
 		default:
 
 			if (tok >= TOKENSTART)
-				printf("%s ", IP_revToken_table[tok].c_str());
-			else
 			{
-				//printf("%c ", tok);
-				wo++;
+				printf("%s ", IP_revToken_table[tok].c_str());
 			}
+				
+			//else
+			//{
+				//printf("%c ", tok);
+			//	wo++; // Damit der Else Zweig ausgeführt wird 
+			//}
 
 			break;
 
