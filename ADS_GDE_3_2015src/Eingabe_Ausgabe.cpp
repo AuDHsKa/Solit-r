@@ -13,14 +13,17 @@
 
 #include "Eingabe_Ausgabe.h"
 
-/*
-//David Kommentar
-*/
 
 
+/***************************************************************************************
+Funktion:				void	read_data(vector<field_stack>& feld, vector<Card>& arrl)
+Bestimmung/Zweck:		Von k7scan2 übernommenes "Main" zum Aufruf der einzulesenden Datei
+						und zur Ausfürhrung von k7scan2
+Eingangsparameter:		field_stack, Card
+Ausgangsparameter:		kein Rückgabewert
+****************************************************************************************/
 void	read_data(vector<field_stack>& feld, vector<Card>& arrl)
-/*	Von k7scan2 übernommenes "Main" zum Aufruf der einzulesenden Datei
-und zur Ausfürhrung von k7scan2
+/*	
 */
 {
 	FILE *inf;
@@ -49,8 +52,13 @@ und zur Ausfürhrung von k7scan2
 
 	fclose(inf);
 }
-
-char*	zeit()
+/***************************************************************************************
+Funktion:				sting	zeit()
+Bestimmung/Zweck:		Ermittelt die Aktuelle Zeit und gibt sie als char* zurück
+Eingangsparameter:		kein Eingsabewert
+Ausgangsparameter:		string
+****************************************************************************************/
+string	zeit()
 {
 	char ccw[100];
 	char ddw[100];
@@ -61,31 +69,36 @@ char*	zeit()
 	localtime_s( &uhr ,&sekunden);
 	cct = _itoa_s((uhr.tm_year + 1900), ccw, 10);
 	dd = _itoa_s((uhr.tm_mon + 1), ddw, 10);
-	strcat(ccw, ddw);
+	strcat_s(ccw, ddw);
 	dd = _itoa_s(uhr.tm_mday, ddw, 10);
-	strcat(ccw, ddw);
+	strcat_s(ccw, ddw);
 	dd = _itoa_s(uhr.tm_hour, ddw, 10);
-	strcat(ccw, ddw);
+	strcat_s(ccw, ddw);
 	dd = _itoa_s(uhr.tm_min, ddw, 10);
-	strcat(ccw, ddw);
+	strcat_s(ccw, ddw);
 	dd = _itoa_s(uhr.tm_sec, ddw, 10);
-	strcat(ccw, ddw);
+	strcat_s(ccw, ddw);
 	
-	return ccw;
+	return std::string(ccw);
 }
-
+/***************************************************************************************
+Funktion:				void	output(char *Ausgabetext, char* dateiname)
+Bestimmung/Zweck:		Schreiben in die Ausgabedatei, dabei wird der Übergeben
+						Text an die auf zu rufenden Datei angefügt bzw. wenn noch
+						keine Datei vorhanden ist wird sie Erzeugt
+Eingangsparameter:		char* für Inhalt ,char für Dateiname
+Ausgangsparameter:		Kein Rückgabewert
+****************************************************************************************/
 void	output(char *Ausgabetext, char* dateiname)
-/*  Schreiben in die Ausgabedatei, dabei wird der Übergeben
-Text an die auf zu rufenden Datei angefügt bzw. wenn noch
-keine Datei vorhanden ist wird sie Erzeugt.
+/*  .
 */
 {
 	FILE *Ausgabedatei;
-
+	// Suchen bzw. Erstellen der Datei und Öffen
 	if ((Ausgabedatei = _fsopen(dateiname, "a", _SH_DENYWR)) != NULL)// "a" Die  Daten werden an die Datei hinten angefügt
 	{
-		fprintf(Ausgabedatei, Ausgabetext);
-		fclose(Ausgabedatei);
+		fprintf(Ausgabedatei, Ausgabetext);// In die Datei schreiben
+		fclose(Ausgabedatei); //Schließen
 	}
 	else
 	{
@@ -93,31 +106,38 @@ keine Datei vorhanden ist wird sie Erzeugt.
 	}
 
 }
-
+/***************************************************************************************
+Funktion:				void	write_data(vector<field_stack>& feldw)
+Bestimmung/Zweck:		zur erzeugeung des aktuellen Spielstandes in einer Extradatei,
+						welche wieder eingelesen werden kann. Der Speicherungsname ist 
+						<Aktuellesdatun>outdaten.txt
+Eingangsparameter:		field_stack
+Ausgangsparameter:		Kein Rückgabewert
+****************************************************************************************/
 void	write_data(vector<field_stack>& feldw)
 {
-	//stack<Card*> helpstack;
 	int Felstapelgroesse = 0;
 	int Feldstapelnummer = 0;
 	int  coll;
 	int  wall = 0;
 	bool hidd;
 	int  hidden;
+	char errorkarte;
 	char  karte[20];
 	char*  karten;
-	char Datanamen[100] = "";
-	char* Datazeitstempel;
+	char* Datanamen = "";
+	string Datazeitstempel;
 
 	char* leer;
 	int len;
-	char ausgabedatennam[100] = "outdaten.txt";// Grundnamen der Ausgabedatei
+	string ausgabedatennam = "outdaten.txt";// Grundnamen der Ausgabedatei
 	
 	Datazeitstempel = zeit();// Suchen der Aktuellenzeit und Rückgabe zur Dateinamen Erstellung
 	
-	strcat(Datazeitstempel, ausgabedatennam);
-	strcat(Datanamen, Datazeitstempel);
-
-
+	Datazeitstempel = Datazeitstempel + ausgabedatennam;
+	
+	Datanamen = const_cast<char*>(Datazeitstempel.c_str());
+	// Die Stapel werden durch laufen
 	for (Feldstapelnummer = 0; Feldstapelnummer < 12; Feldstapelnummer++)
 	{
 		Felstapelgroesse = feldw[Feldstapelnummer].field.size();
@@ -163,17 +183,17 @@ void	write_data(vector<field_stack>& feldw)
 		default:
 			break;
 		}
-
 		output(karten, Datanamen);
+		// Auslesen der auf dem Stapel ligenden Karten
 		for (int zz = 0; zz < Felstapelgroesse; zz++)
 		{
 
 
 
 
-			coll = feldw[Feldstapelnummer].field[zz]->get_card_colour();
-			wall = feldw[Feldstapelnummer].field[zz]->get_card_value();
-			hidd = feldw[Feldstapelnummer].field[zz]->is_card_hidden();
+			coll = feldw[Feldstapelnummer].field[zz]->get_card_colour(); // Farbe
+			wall = feldw[Feldstapelnummer].field[zz]->get_card_value();  // Wert
+			hidd = feldw[Feldstapelnummer].field[zz]->is_card_hidden();  //Verdekt / nicht Verdekt
 			if (hidd == true)
 			{
 				hidden = 1;
@@ -182,9 +202,12 @@ void	write_data(vector<field_stack>& feldw)
 			{
 				hidden = 0;
 			}
-			karten = _itoa((coll * 1000 + wall * 10 + hidden), karte, 10);
+			errorkarte = _itoa_s((coll * 1000 + wall * 10 + hidden), karte, 10);// Wandlung der Kartenwete in einen char
+			karten = const_cast<char*>(karte); // Umwandeln in char *
 			len = strlen(karten);
-			while (len< 4)
+			/* Da manche Karten mit der der Nummer Null anfangen müssen nach der Umwandlung noch Nullen 
+			für die Karten bis auf vier Stellen hinzugefügt werden*/
+			while (len< 4) 
 			{
 				leer = "0";
 				output(leer, Datanamen);
@@ -205,23 +228,33 @@ void	write_data(vector<field_stack>& feldw)
 
 }
 
-
+/***************************************************************************************
+Funktion:				void	delete_data(vector<field_stack>& felde)
+Bestimmung/Zweck:		Löscht alle Karten in dem Spiel 
+Eingangsparameter:		field_stack
+Ausgangsparameter:		Kein Rückgabewert
+****************************************************************************************/
 void	delete_data(vector<field_stack>& felde)
 {
 	int sz = 0;
-	for (int del = 0; del < 12; del++)
+	for (int del = 0; del < 12; del++)// Die Stapel nacheinander
 	{
 		sz = (felde.at(del).field.size());
 
 		while (sz > 0)
 		{
-			felde.at(del).field.pop_back();
-			sz = (felde.at(del).field.size());
+			felde.at(del).field.pop_back(); // Löschen
+			sz = (felde.at(del).field.size());// 
 		}
 	}
 	;
 }
-
+/***************************************************************************************
+Funktion:				void	write_log_data(vector<field_stack>& feldl, window& wind)
+Bestimmung/Zweck:		Löscht alle Karten in dem Spiel
+Eingangsparameter:		field_stack
+Ausgangsparameter:		Kein Rückgabewert
+****************************************************************************************/
 
 
 void	write_log_data(vector<field_stack>& feldl, window& wind)
@@ -231,15 +264,10 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	*/
 	int colo;
 	int vaul;
-	//int feldw;
-	//int reihew;
-	//int stzi;
 	char cfeldw[5]; // Variabel zur Umwandlung von einem Interger in einen Char benötigt
-	//char* cfelwst;
 	string Text; // Zwischenspeicher um den Text an printout dran zu hängen
 	char logname[100] = "logfile.txt";
 	string printout; // Hier wird der kommpelte Text zur Ausgabe gesammelt
-	//char* printarr;
 	colo = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_colour();
 	vaul = feldl[wind.first_click_stack].field[wind.first_click_card]->get_card_value();
 	printout = "Karte: ";
@@ -318,18 +346,18 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	printout = printout + Text;
 	if ((strlen(const_cast<char*>(printout.c_str())))<16) //Nur zur Schönheit des Logfiles kann man auch weglassen 
 	{
-		Text = "\t"; // 
+		Text = "\t"; // fügt einen Tabulator ein
 		printout = printout + Text;
 	}
 	Text = "\tVon: Startstapel ";
 	printout = printout + Text;
-	Text = _itoa(wind.first_click_stack, cfeldw, 10); //Stapel
+	Text = _itoa_s(wind.first_click_stack, cfeldw, 10); //Stapel
 	printout = printout + Text;
 	Text = "\t Startreihe ";
 	printout = printout + Text;
 	if (wind.first_click_card < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = _itoa(wind.first_click_card, cfeldw, 10); // Reihe
+		Text = _itoa_s(wind.first_click_card, cfeldw, 10); // Reihe
 	}
 	else
 	{
@@ -340,13 +368,13 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	printout = printout + Text;
 	Text = " Zielstapel  ";
 	printout = printout + Text;
-	Text = _itoa(wind.second_click_stack, cfeldw, 10); // Stapel
+	Text = _itoa_s(wind.second_click_stack, cfeldw, 10); // Stapel
 	printout = printout + Text;
 	Text = "\t Zielreihe ";
 	printout = printout + Text;
 	if ((wind.second_click_card + 1) < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = _itoa((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+		Text = _itoa_s((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
 	}
 	else
 	{

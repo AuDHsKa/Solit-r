@@ -9,7 +9,7 @@ void	read_data(vector<field_stack>& feld, vector<Card>& arrl);
 
 void	write_data(vector<field_stack>& feldW);
 
-char*	zeit();
+string	zeit();
 
 void	output(char *karten, char * name);
 
