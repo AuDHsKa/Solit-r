@@ -351,13 +351,13 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	}
 	Text = "\tVon: Startstapel ";
 	printout = printout + Text;
-	Text = _itoa_s(wind.first_click_stack, cfeldw, 10); //Stapel
+	Text = _itoa(wind.first_click_stack, cfeldw ,10); //Stapel
 	printout = printout + Text;
 	Text = "\t Startreihe ";
 	printout = printout + Text;
 	if (wind.first_click_card < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = _itoa_s(wind.first_click_card, cfeldw, 10); // Reihe
+		Text = _itoa(wind.first_click_card, cfeldw, 10); // Reihe
 	}
 	else
 	{
@@ -368,13 +368,13 @@ void	write_log_data(vector<field_stack>& feldl, window& wind)
 	printout = printout + Text;
 	Text = " Zielstapel  ";
 	printout = printout + Text;
-	Text = _itoa_s(wind.second_click_stack, cfeldw, 10); // Stapel
+	Text = _itoa(wind.second_click_stack,cfeldw, 10); // Stapel
 	printout = printout + Text;
 	Text = "\t Zielreihe ";
 	printout = printout + Text;
 	if ((wind.second_click_card + 1) < 53) //Wenn noch keine Karte auf dem Stapel liegt
 	{
-		Text = _itoa_s((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
+		Text = _itoa((wind.second_click_card + 1), cfeldw, 10);// +1 weil die Karte oben drauf gelegt wird also Reihe +1
 	}
 	else
 	{
