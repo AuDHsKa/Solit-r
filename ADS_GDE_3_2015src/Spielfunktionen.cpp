@@ -230,6 +230,13 @@ void	playing_rules(vector<field_stack>& field_stack, window& win)
 
 }
 
+/*************************************************************************************************************
+Funktion:				void	move_cards(vector<field_stack>& field_stack, window&	select)
+Bestimmung/Zweck:		Legt eine Karte um; die Informationen, welcher Anfangs und Enstapel liegt in window
+Eingangsparameter:		field_stack, window
+Ausgangsparameter:		void
+**************************************************************************************************************/
+
 void	move_cards(vector<field_stack>& field_stack, window&	select)
 {
 	Card*	jojo;
@@ -556,6 +563,12 @@ size_t solvealgo(vector<field_stack>&	field_stack, window& win)
 	}
 }
 
+/*************************************************************************************************************
+Funktion:				void gewonnen()
+Bestimmung/Zweck:		Gewinnausgabe für die Konsole
+Eingangsparameter:		()
+Ausgangsparameter:		void
+**************************************************************************************************************/
 
 void	gewonnen()
 {
@@ -568,52 +581,67 @@ void	gewonnen()
 	output("\n\n#################################\n\nDas Spiel wurde gewonnen\n\n#################################\n\n", "logfile.txt");
 }
 
+/*************************************************************************************************************
+Funktion:				void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
+Bestimmung/Zweck:		Führt eine statistische Auswertung des Auslege- und Lösealgorithmus aus
+Eingangsparameter:		field_stack, window, cards
+Ausgangsparameter:		void
+**************************************************************************************************************/
+
 void statistik(vector<field_stack>&	field_stack, window& win, vector<Card>& cards)
 {
-	size_t	n = 0;
-	size_t	gewonnen = 0;
-	char  nchar;
-	char ncharlang[10];
+	size_t	n = 0;						// Anzahl der Stichproben
+	size_t	gewonnen = 0;				// Anzahl der Gewonnenen Spiele; Spiele, welche erfolgreich gelöst wurden
+	float	stat = 0;					// gibt die Prozentzahl der gewonnen Spiele zurück
+	char  nchar;						// Ausgabe für das Logfile 
+	char ncharlang[10];					// Buffer für die Ausgabe im Logfile
 
-	win.statistik = true;
+	win.statistik = true;				// Hilfsvariable für die Ausführung der Statistik; wichtig für die Grafische Ausgabe und das Logfile
+										// bei Statistikauswertungen mit hohem n, wird nicht in das logfile geschrieben 
 
-	cout << "Statistik. Wie viele Versuche moechten sie Durchlaufen?\n(Bitte die Anzahl eingeben)\n";
+	cout << "Statistik. Wie viele Versuche moechten sie Durchlaufen?\n(Bitte die Anzahl eingeben)\n";		// Ausgabe Konsole
 	cin >> n ;
 	win.statistik =n;
 	output("\n\n#################################\n\nDie Statistik wurde aufgerufen.\n\n#################################\n\nDabei werden ", "logfile.txt");
-	nchar = _itoa_s(n,ncharlang,10);
-	output(ncharlang, "logfile.txt");
-	output(" Versuche ausgeführt.\n", "logfile.txt");
+	nchar = _itoa_s(n,ncharlang,10);						// Umwandlung in einen String
+	output(ncharlang, "logfile.txt");						// Schreibt in das Logfile 
+	output(" Versuche ausgeführt.\n", "logfile.txt");		// Schreibt in das Logfile 
 
 	
 	while (n)
 	{
-		set_win_clicks(win);
-		gewonnen += solvealgo(field_stack, win);
-		delete_data(field_stack);
-		initialize_target(field_stack, cards);
-#ifdef mydistri
-		austeilen(field_stack);
-#endif // mydistri
-#ifdef zufall
-		zuf_austeilen(field_stack);
-#endif // !mydistri
+		set_win_clicks(win);						// setzt die "Mausklicks", die zugriffe auf die Karten zurück
+		gewonnen += solvealgo(field_stack, win);	// ruft den Lösealgorithmus auf, dieser gibt zurück ob das Spiel gewonnen oder nicht gelöst werden konnte
+		delete_data(field_stack);					// löscht das Spielfeld
+		initialize_target(field_stack, cards);		// legt die Karten vorsortiert in richtiger reihenfolge auf die Zielstapel
+		austeilen(field_stack);						// haben mehrere Austeilalgorithmen geschrieben 
 		n--;
 	}
 
-	cout << "Es wurden: " << gewonnen << " Spiele gewonnen!\n";
-	output("Es wurden dabei: ", "logfile.txt");
+	stat = ((gewonnen * 100 / win.statistik));		// reine Statistikberechnung für die Konsole
+
+	cout << "Es wurden:" << win.statistik << "Spiele durchlaufen.\n\n";	// Ausgabe Konsole
+	cout << "Dabei wurden: " << gewonnen << " Spiele gewonnen!\n";	// Ausgabe Konsole
+	cout << "Dies entspricht:" << stat << "%";	// Ausgabe Konsole
+	output("Es wurden dabei: ", "logfile.txt");	// Schreibt in das Logfile
 	nchar = _itoa_s(gewonnen, ncharlang, 10);
-	output(ncharlang, "logfile.txt");
-	output(" Spiele gewonnen.\n", "logfile.txt");
+	output(ncharlang, "logfile.txt");	// Schreibt in das Logfile
+	output(" Spiele gewonnen.\n", "logfile.txt");	// Schreibt in das Logfile
 	win.statistik = 0;
 }
 
+/***************************************************************************************
+Funktion:				size_t	look_for_game_won(vector<field_stack>&	field_stack)
+Bestimmung/Zweck:		schaut, ob alle 13 Karten auf den Zielstapel liegen -> Gewonnen
+Eingangsparameter:		field_stack
+Ausgangsparameter:		Bool; Gewonnen(true), verloren(false)
+****************************************************************************************/
+
 size_t	look_for_game_won(vector<field_stack>&	field_stack)
 {
-	if ((field_stack[0].field.size() == 13) &&
-		(field_stack[1].field.size() == 13) &&
-		(field_stack[2].field.size() == 13) &&
+	if ((field_stack[0].field.size() == 13) &&		// Bei 13 Karten ist der Stack voll 
+		(field_stack[1].field.size() == 13) &&		// Überprüft werden die Zeilstapel 
+		(field_stack[2].field.size() == 13) &&		// Wenn diese mit 13 Karten voll sind muss das Spiel gewonnen sein 
 		(field_stack[3].field.size() == 13))
 	{
 		return 1;

@@ -7,73 +7,6 @@
 
 
 /***************************************************************************************
-Funktion:				void	mein_austeilen(vector<field_stack>& ziel)
-Bestimmung/Zweck:		teilt die Karten auf dem Spielfeld aus
-Eingangsparameter:		field_stack
-Ausgangsparameter:		kein Rückgabewert
-****************************************************************************************/
-
-void	mein_austeilen(vector<field_stack>& ziel)
-{
-	size_t	mini = 0;
-	size_t	maxi = 13;
-	size_t	min = 0;
-	size_t	max = 7;
-	size_t	hoch = 0;
-	size_t	new_card = 0;
-	size_t	size = 0;
-	size_t	ii = 0;
-	Card*	jojo;
-
-	// time(NULL) und "time.h" eingefügt, füe immer andere Zufallszahl
-	srand(time(NULL));
-
-	while (ziel.at(0).field.size() || ziel.at(1).field.size() || ziel.at(2).field.size() || ziel.at(3).field.size())
-	{
-		if (ii < 4)
-		{
-			if (ziel.at(ii).field.size())
-			{
-				maxi = ziel.at(ii).field.size() - 1;
-				new_card = min + rand() % (maxi - mini + 1);
-				hoch = min + rand() % (max - min + 1);
-
-				jojo = ziel.at(ii).field.at(new_card);
-				ziel.at(ii).field.erase((ziel.at(ii).field.begin() + new_card));
-
-				while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
-				{
-					hoch++;
-				}
-
-				// set the card from target stack on the (hoch) field stack
-				ziel.at((hoch % 8) + 4).field.push_back(jojo);
-				ii++;
-			}
-			else
-			{
-				ii++;
-			}
-		}
-		else
-		{
-			ii = 0;
-		}
-	}
-
-
-	//Versteckt die Karten beim austeilen
-
-	for (size_t i = 4; i < 12; i++)
-	{
-		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
-		{
-			ziel.at(i).field.at(ii)->hide_card();
-		}
-	}
-}
-
-/***************************************************************************************
 Funktion:				void	austeilen(vector<field_stack>& ziel)
 Bestimmung/Zweck:		teilt die Karten auf dem Spielfeld aus
 Eingangsparameter:		field_stack
@@ -83,53 +16,40 @@ Ausgangsparameter:		kein Rückgabewert
 void	austeilen(vector<field_stack>& ziel)
 {
 	size_t	pp = 0;
-	size_t	min = 0;
-	size_t	max = 7;
-	size_t	hoch = 0;
+	size_t	min = 0;		// minimalzahl der pseudozufallsvariable
+	size_t	max = 7;		// maximalzahl der pseudozufallsvariable
+	size_t	hoch = 0;		// Pseudozufallsvariable
 	size_t	iii = 0;
-	Card*	jojo;
+	Card*	jojo;			// zwischenspeicher einer Kartenreferenz
 
-	// eingefügt 
+	// eingefügt; holt die aktuelle Zeit
 	srand(time(NULL));
 
 	// take every card of every stack on the target field 
 	for (size_t i = 0; i < 52; i++)
 	{
-		//// go for every stack on the target field
-		//for (size_t ii = 0; ii < 4; ii++)
-		//{
+		
+			hoch = min + rand() % (max - min + 1);		// die Pseudozufallszahl im Interval [min;max] wird gebildet
 
-
-			if (pp == 53)
+			while (ziel.at(hoch % 4).field.empty())		// es wird geprüft, ob der Zielstapel auf den man zugreifen möchte leer ist
 			{
-				pp = 0;
-				hoch = 7;
-			}
-			else
-			{
-				hoch = min + rand() % (max - min + 1);
+				hoch++;									// wenn der Stapel leer ist, erhöhe die zufallszahl => gehe zum nächsten Stapel
 			}
 
-			while (ziel.at(hoch % 4).field.empty())
-			{
-				hoch++;
-			}
+			jojo = ziel.at(hoch % 4).field.back();		// hole die oberste Karte vom Zielstapel
+			ziel.at(hoch % 4).field.pop_back();			// lösche die oberste Karte vom Zielstapel
 
-			jojo = ziel.at(hoch % 4).field.back();
-			ziel.at(hoch % 4).field.pop_back();
-
-			while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())
+			while (ziel.at((hoch % 8) + 4).field.size() == ziel.at((hoch % 8) + 4).get_stack_count())	// Überprüft, ob der Feldstapel die maximalanzahl an karten bereits aufgenommen hat
 			{
-				hoch++;
+				hoch++;									// wenn der Stapel "voll" ist, erhöhe die Variable => gehe zum nächsten Feldstapel
 			}
 
 			// set the card from target stack on the (hoch) field stack
-			ziel.at((hoch % 8) + 4).field.push_back(jojo);
-			pp++;
-		//}
-
+			ziel.at((hoch % 8) + 4).field.push_back(jojo);				// lege die Ausgewählte Karte oben auf den neuen Feldstapel
 	}
 
+
+	// verdecke alle Karten auf den Feldstapel, bis auf die oberste
 	for (size_t i = 4; i < 12; i++)
 	{
 		for (size_t ii = 0; ii < (ziel.at(i).field.size() - 1); ii++)
@@ -150,7 +70,7 @@ void	clear_field(vector<field_stack>&	field_stack)
 {
 	for (size_t yy = 0; yy < 12; yy++)
 	{
-		if (!(field_stack.at(yy).field.empty()))
+		if (!(field_stack.at(yy).field.empty()))		// wenn der Stapel nicht leer ist, leere ihn 
 		{
 			field_stack.at(yy).field.erase(field_stack.at(yy).field.begin(), (field_stack.at(yy).field.begin() + field_stack.at(yy).field.size()));
 		}
@@ -169,10 +89,10 @@ void	initialize_field(vector<field_stack>&	field_stack)
 {
 	for (size_t i = 4; i < 11; i++)
 	{
-		field_stack.at(i).set_stack_count(i - 3);
+		field_stack.at(i).set_stack_count(i - 3);		// setze die Anzahl an Karten, welche beim Auslegen auf diesem Stapel erlaubt sind
 	}
 
-	field_stack.at(11).set_stack_count(24);
+	field_stack.at(11).set_stack_count(24);				// setze die Anzahl an Karten, welche beim Auslegen auf diesem Stapel erlaubt sind
 }
 
 /********************************************************************************************************************
@@ -188,8 +108,8 @@ void	initialize_target(vector<field_stack>& field_stack, vector<Card>& cards)
 	{
 		for (size_t ii = 0; ii < 13; ii++)
 		{
-			field_stack.at(yy).field.push_back(&cards.at(13 * yy + ii));
-			field_stack.at(yy).field.at(ii)->undiscover_card();
+			field_stack.at(yy).field.push_back(&cards.at(13 * yy + ii));		// lege die Refernez der Karten in der Richtigen Reihenfolge auf die Zielstapel
+			field_stack.at(yy).field.at(ii)->undiscover_card();					// decke alle Karten auf den Zielstapel auf
 		}
 	}
 }
@@ -203,8 +123,8 @@ Ausgangsparameter:		kein Rückgabewert
 
 void	set_win_clicks(window& win)
 {
-	win.first_click_card = 100;
-	win.first_click_stack = 13;
-	win.second_click_card = 100;
-	win.second_click_stack = 13;
+	win.first_click_card = 100;			// lege einen Defaultwert für die Mausclicks fest
+	win.first_click_stack = 13;			// lege einen Defaultwert für die Mausclicks fest
+	win.second_click_card = 100;		// lege einen Defaultwert für die Mausclicks fest
+	win.second_click_stack = 13;		// lege einen Defaultwert für die Mausclicks fest
 }

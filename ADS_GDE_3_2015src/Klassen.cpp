@@ -81,9 +81,12 @@ size_t	field_stack::get_cards_hidden()
 
 
 
-/********************************************************************************
-		functions for operate with cards and stacks
-********************************************************************************/
+/***************************************************************************************
+Funktion:				void	show_cards(Card*	rd, size_t	length)
+Bestimmung/Zweck:		Gibt die Farbe und Werte der Karten aus
+Eingangsparameter:		cards*, länge
+Ausgangsparameter:		kein Rückgabewert
+****************************************************************************************/
 
 void	show_cards(Card*	rd, size_t	length)
 {
@@ -134,6 +137,14 @@ void	show_cards(Card*	rd, size_t	length)
 		}
 	}
 }
+
+/***************************************************************************************
+Funktion:				void	initialize_cards(vector<Card>&	ca)
+Bestimmung/Zweck:		initialisert den Vector vom Typ Klasse mit den entsprechenden
+						Kartenfarben und Kartenwerten
+Eingangsparameter:		cards
+Ausgangsparameter:		kein Rückgabewert
+****************************************************************************************/
 
 void	initialize_cards(vector<Card>&	ca)
 {

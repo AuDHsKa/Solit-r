@@ -42,31 +42,35 @@ void user_main()
 	win.height = 600;
 	win.statistik = 0;
 
+	// GDE funktionen
 	set_windowpos(0, 0, win.wide, win.height);	//windowsfenster öffnen
 	set_drawarea(win.wide, win.height);		// Setzen des Zeichenbereiches arbeitsfeld
 
+	// Mausklicks initialisieren
 	win.x_mouse = 0;
 	win.y_mouse = 0;
 
-	//karten anlegen
+	// karten anlegen
 	const	size_t	length = 52;
 	vector<Card>	cards(length);
-	vector<Card*>	copycards(length);
-
+	
+	// Kartenstapel anlegen (4 Zielfelder + 7 Spielfelder + Kartendeck = 12)
 	vector<field_stack> field_stack(12);
 
+	// Initialisierungsroutinen
 	initialize_field(field_stack);
 	initialize_cards(cards);
 	initialize_target(field_stack, cards);
 
 	austeilen(field_stack);
 
+	// neues Spielfeld wird gezeichnen; Grafische Ausgabe
 	newwindow(win);
-	output("\n\n#################################\n\nDas Programm wurde gestartet\n\n#################################\n\n", "logfile.txt");
-//#ifdef Auswerten
-//	statistik(field_stack, win, cards);
-//#endif // !Auswerten
 
+	// Ausgabe für das Logfile
+	output("\n\n#################################\n\nDas Programm wurde gestartet\n\n#################################\n\n", "logfile.txt");
+
+	// Hauptroutine
 	while (1)
 	{
 		//win.second_click_card = 100; //reset second mouseclick
@@ -77,13 +81,16 @@ void user_main()
 		window_move(field_stack, win); // look for a turn (spielzug)
 		click_window(field_stack, win); // draw the window after a move
 
+		// GDE funktion
 		updatescr();
 
+		// Überprüfe, ob das Spiel gewonnen wurde
 		if (look_for_game_won(field_stack))
 		{
 			gewonnen();
 		}
 
+		// Warten auf ein Mausklick'Event
 		while (!mouseclick(&win.x_mouse, &win.y_mouse) == 1){}
 		if (StopProcess())break;				
 	}
